@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Games" textAlignment="CENTER" />
+            <ChoiceBox prefWidth="150.0" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Box" />
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" text="&lt;" />
+                  <Button mnemonicParsing="false" text="&gt;" />
+               </children>
+            </HBox>
+            <Canvas height="200.0" width="200.0" />
+         </children>
+      </VBox>
+      <HBox>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pokemon" />
+                  <Canvas height="200.0" width="200.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Some descriptor" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</HBox>
