@@ -23,16 +23,20 @@
             <Canvas height="200.0" width="200.0" />
          </children>
       </VBox>
-      <HBox>
+      <Pane>
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <HBox>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pokemon" />
-                  <Canvas height="200.0" width="200.0" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Some descriptor" />
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pokemon" />
+                        <Canvas height="200.0" width="200.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Some descriptor" />
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
+            </HBox>
          </children>
-      </HBox>
+      </Pane>
    </children>
 </HBox>
