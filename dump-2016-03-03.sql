@@ -1,0 +1,206 @@
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'SYSTEM_SEQUENCE_3284576C_CBD1_4A5A_B727_5AAA50182CED',
+  'SEQUENCE',
+  NULL,
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'SYSTEM_SEQUENCE_45876471_7255_4564_9849_C3E10140BF6F',
+  'SEQUENCE',
+  NULL,
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'SYSTEM_SEQUENCE_ADA3F37A_6FFA_4002_A4FE_781AADA9B0EB',
+  'SEQUENCE',
+  NULL,
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'SYSTEM_SEQUENCE_C8AAD7E1_F491_4FC9_AD0A_BC6B00E9524E',
+  'SEQUENCE',
+  NULL,
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'SYSTEM_SEQUENCE_CC257498_D437_44D9_8045_95B30019CC83',
+  'SEQUENCE',
+  NULL,
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'SYSTEM_SEQUENCE_F28A819F_3A4F_4A66_89C9_F8C726B947EF',
+  'SEQUENCE',
+  NULL,
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'generation_boxes',
+  'TABLE',
+  'TEST',
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'generations',
+  'TABLE',
+  'TEST',
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'pokemon',
+  'TABLE',
+  'TEST',
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'user_boxes',
+  'TABLE',
+  'TEST',
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'user_games',
+  'TABLE',
+  'TEST',
+  'PUBLIC',
+  ''
+);
+
+INSERT INTO target_table
+(
+  NAME,
+  TYPE,
+  CATALOG,
+  SCHEMA,
+  REMARKS
+)
+VALUES
+(
+  'user_pokemon',
+  'TABLE',
+  'TEST',
+  'PUBLIC',
+  ''
+);
+
+
+COMMIT;
