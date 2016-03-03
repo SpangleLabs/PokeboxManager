@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "\"generations\"")
+@Table(name = "generations")
 public class Generation {
 
     private int id;
@@ -24,7 +24,7 @@ public class Generation {
     }
 
     @Id
-    @Column(name="\"generation_id\"")
+    @Column(name="generation_id")
     public int getId() {
         return id;
     }
@@ -33,7 +33,7 @@ public class Generation {
         this.id = id;
     }
 
-    @Column(name = "\"name\"")
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -42,7 +42,7 @@ public class Generation {
         this.name = name;
     }
 
-    @Column(name = "\"description\"")
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
