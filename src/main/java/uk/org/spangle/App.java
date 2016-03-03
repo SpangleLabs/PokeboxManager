@@ -10,6 +10,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class App extends Application {
 
@@ -45,10 +51,7 @@ public class App extends Application {
 
     public void updateSideBar() {
         Text titleText = new Text("Game");
-        ChoiceBox<String> gameDropdown = new ChoiceBox<>();
-        gameDropdown.setItems(FXCollections.observableArrayList(
-                "Pokebank", "Omega Ruby ", "Alpha Sapphire", "Save as")
-        );
+        ChoiceBox<String> gameDropdown = createGameDropdown();
         Text boxText = new Text("Box");
 
         Button boxLeft = new Button("<");
@@ -59,6 +62,30 @@ public class App extends Application {
         // Add everything to the sidebar
         sideBar = new VBox();
         sideBar.getChildren().addAll(titleText,gameDropdown,boxText,boxButtons);
+    }
+
+    public ChoiceBox<String> createGameDropdown() {
+
+        SessionFactory sessionFactory = new Configuration().configure(getClass().getResource("/hibernate.cfg.xml")).buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        // now lets pull events from the database and list them
+        session.beginTransaction();
+        List result = session.createQuery("from Generation").list();
+        List<String> nameList = new ArrayList<>();
+        for (Object obj : result) {
+            Generation event = (Generation) obj;
+            System.out.println(event.getName());
+            nameList.add(event.getName());
+        }
+        session.getTransaction().commit();
+        session.close();
+
+        sessionFactory.close();
+
+        ChoiceBox<String> gameDropdown = new ChoiceBox<>();
+        gameDropdown.setItems(FXCollections.observableArrayList(nameList));
+        return gameDropdown;
     }
 
     public void updateInfoPanel() {
