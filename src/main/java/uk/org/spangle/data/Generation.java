@@ -1,4 +1,4 @@
-package uk.org.spangle;
+package uk.org.spangle.data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

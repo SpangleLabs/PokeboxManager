@@ -31,7 +31,12 @@
         <!-- Drop and re-create the database schema on startup -->
         <!-- <property name="hbm2ddl.auto">create</property> -->
 
-        <mapping class="uk.org.spangle.Generation"/>
+        <mapping class="uk.org.spangle.data.Generation"/>
+        <mapping class="uk.org.spangle.data.GenerationBox"/>
+        <mapping class="uk.org.spangle.data.Pokemon"/>
+        <mapping class="uk.org.spangle.data.UserBox"/>
+        <mapping class="uk.org.spangle.data.UserGame"/>
+        <mapping class="uk.org.spangle.data.UserPokemon"/>
 
     </session-factory>
 

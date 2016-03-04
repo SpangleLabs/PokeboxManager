@@ -1,0 +1,86 @@
+package uk.org.spangle.data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user_boxes")
+public class UserBox {
+
+    private int id;
+    private int userGameId;
+    private int ordinal;
+    private int size;
+    private int columns;
+    private String name;
+
+    public UserBox() {
+        // this form used by Hibernate
+    }
+
+    public UserBox(int id, int userGameId, int ordinal, int size, int columns, String name) {
+        this.id = id;
+        this.userGameId = userGameId;
+        this.ordinal = ordinal;
+        this.size = size;
+        this.columns = columns;
+        this.name = name;
+    }
+
+    @Id
+    @Column(name="user_box_id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Column(name = "user_game_id")
+    public int getUserGameId() {
+        return userGameId;
+    }
+
+    public void setUserGameId(int userGameId) {
+        this.userGameId = userGameId;
+    }
+
+    @Column(name = "ordinal")
+    public int getOrdinal() {
+        return ordinal;
+    }
+
+    public void setOrdinal(int ordinal) {
+        this.ordinal = ordinal;
+    }
+
+    @Column(name = "size")
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    @Column(name = "columns")
+    public int getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
