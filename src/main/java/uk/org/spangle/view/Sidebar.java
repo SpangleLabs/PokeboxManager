@@ -17,18 +17,25 @@ import java.util.List;
 
 public class SideBar {
     Pane sideBarPane;
+    ChoiceBox<String> gameDropdown;
+    ChoiceBox<String> boxDropdown;
+    UserGame currentGame = null;
 
     public SideBar(Pane sideBarPane) {
         this.sideBarPane = sideBarPane;
-    }
 
-    public void update() {
+        // Get current game
+        uk.org.spangle.model.Configuration conf = new uk.org.spangle.model.Configuration();
+        currentGame = conf.getCurrentGame();
+
+        // Game selector and titles
         Text titleText = new Text("Game");
-        ChoiceBox<String> gameDropdown = createGameDropdown();
-        Text boxText = new Text("Box");
+        gameDropdown = createGameDropdown();
 
+        // Boxes selector and buttons
+        Text boxText = new Text("Box");
         Button boxLeft = new Button("<");
-        ChoiceBox<String> boxDropdown = new ChoiceBox<>();
+        boxDropdown = new ChoiceBox<>();
         boxDropdown.setItems(FXCollections.observableArrayList("A","B","C"));
         Button boxRight = new Button(">");
         HBox boxButtons = new HBox();
@@ -52,8 +59,8 @@ public class SideBar {
         List<String> nameList = new ArrayList<>();
         for (Object obj : result) {
             UserGame event = (UserGame) obj;
-            System.out.println(event.getName());
             nameList.add(event.getName());
+            if(currentGame == null) currentGame = event;
         }
         session.getTransaction().commit();
         session.close();
@@ -62,7 +69,16 @@ public class SideBar {
 
         ChoiceBox<String> gameDropdown = new ChoiceBox<>();
         gameDropdown.setItems(FXCollections.observableArrayList(nameList));
-        gameDropdown.setValue(nameList.get(0));
+
+        gameDropdown.setValue(currentGame.getName());
         return gameDropdown;
+    }
+
+    public void setGame(int gameId) {
+        // Update box dropdown
+    }
+
+    public void setBox(int userBoxId) {
+        // Update box canvas and such
     }
 }
