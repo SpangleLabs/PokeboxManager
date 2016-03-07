@@ -6,6 +6,8 @@ import uk.org.spangle.data.UserGame;
 import uk.org.spangle.model.Configuration;
 import uk.org.spangle.view.App;
 
+import java.util.List;
+
 public class Controller {
     Session session;
     Configuration conf;
@@ -27,5 +29,29 @@ public class Controller {
         session.beginTransaction();
         currentGame.setCurrentBox(userBox);
         session.getTransaction().commit();
+    }
+
+    public void prevBox(UserGame currentGame) {
+        UserBox currentBox = currentGame.getCurrentBox();
+        List<UserBox> listBoxes = currentGame.getUserBoxes();
+        int index = listBoxes.indexOf(currentBox);
+        int newIndex = (index-1) % listBoxes.size();
+        UserBox newBox = listBoxes.get(newIndex);
+        session.beginTransaction();
+        currentGame.setCurrentBox(newBox);
+        session.getTransaction().commit();
+        app.getSideBar().updateBoxDropdown();
+    }
+
+    public void nextBox(UserGame currentGame) {
+        UserBox currentBox = currentGame.getCurrentBox();
+        List<UserBox> listBoxes = currentGame.getUserBoxes();
+        int index = listBoxes.indexOf(currentBox);
+        int newIndex = (index+1) % listBoxes.size();
+        UserBox newBox = listBoxes.get(newIndex);
+        session.beginTransaction();
+        currentGame.setCurrentBox(newBox);
+        session.getTransaction().commit();
+        app.getSideBar().updateBoxDropdown();
     }
 }

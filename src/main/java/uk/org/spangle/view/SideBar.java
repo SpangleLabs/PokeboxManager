@@ -3,6 +3,8 @@ package uk.org.spangle.view;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.HBox;
@@ -27,7 +29,7 @@ public class SideBar {
     Configuration conf;
     Controller controller;
 
-    public SideBar(Pane sideBarPane, Session session, Configuration conf, Controller controller) {
+    public SideBar(Pane sideBarPane, Session session, Configuration conf, final Controller controller) {
         this.sideBarPane = sideBarPane;
         this.session = session;
         this.conf = conf;
@@ -43,9 +45,21 @@ public class SideBar {
         // Boxes selector and buttons
         Text boxText = new Text("Box");
         Button boxLeft = new Button("<");
+        boxLeft.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                controller.prevBox(currentGame);
+            }
+        });
         boxDropdown = createBoxDropdown();
         updateBoxDropdown();
         Button boxRight = new Button(">");
+        boxRight.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                controller.nextBox(currentGame);
+            }
+        });
         HBox boxButtons = new HBox();
         boxButtons.getChildren().addAll(boxLeft,boxDropdown,boxRight);
 
@@ -116,7 +130,7 @@ public class SideBar {
         updateBoxDropdown();
     }
 
-    public void setBox(int userBoxId) {
+    public void setBox(UserBox userBox) {
         // Update box canvas and such
     }
 }
