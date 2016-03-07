@@ -39,8 +39,7 @@ public class App extends Application {
 
         // Create info panel
         Pane infoPanelPane = new Pane();
-        infoBox = new InfoBox(infoPanelPane);
-        infoBox.update();
+        infoBox = new InfoBox(infoPanelPane,dbSession,conf,controller);
 
         // Root HBox
         root = new HBox();
