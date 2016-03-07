@@ -4,6 +4,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uk.org.spangle.data.UserConfig;
+import uk.org.spangle.data.UserGame;
+
 import java.util.List;
 
 public class Configuration {
@@ -38,6 +40,28 @@ public class Configuration {
     public void setCurrentGameId(int currentGameId) {
         return;
         //TODO:
+    }
+
+    public UserGame getCurrentGame() {
+        Integer currentGameId = this.getCurrentGameId();
+        if(currentGameId == null) return null;
+
+        SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure(getClass().getResource("/hibernate.cfg.xml")).buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from UserGame where id = :id");
+        query.setInteger("id",currentGameId);
+        List list = query.list();
+
+        String value = null;
+        UserGame userGame = null;
+        for (Object obj : list) {
+            userGame = (UserGame) obj;
+        }
+
+        session.getTransaction().commit();
+        session.close();
+        return userGame;
     }
 
     public Integer getCurrentBoxId() {
