@@ -14,12 +14,16 @@ public class App extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        // Update side bar
+    public void start(Stage primaryStage) throws Exception {
+        // TODO :Create database connection
+
+        // TODO :Create controller
+
+        // Create side bar
         Pane sideBarPane = new Pane();
         sideBar = new SideBar(sideBarPane);
 
-        // Update info panel
+        // Create info panel
         Pane infoPanelPane = new Pane();
         infoBox = new InfoBox(infoPanelPane);
         infoBox.update();
