@@ -83,7 +83,7 @@ public class SideBar {
         return gameDropdown;
     }
 
-    public void setGame(int gameId) {
+    public void setGame(UserGame userGame) {
         // Update box dropdown
     }
 

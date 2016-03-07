@@ -31,7 +31,7 @@ public class App extends Application {
         conf = new Configuration(dbSession);
 
         // Create controller
-        Controller controller = new Controller(dbSession,conf);
+        Controller controller = new Controller(dbSession,conf,this);
 
         // Create side bar
         Pane sideBarPane = new Pane();
@@ -64,5 +64,13 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public SideBar getSideBar() {
+        return sideBar;
+    }
+
+    public InfoBox getInfoBox() {
+        return infoBox;
     }
 }
