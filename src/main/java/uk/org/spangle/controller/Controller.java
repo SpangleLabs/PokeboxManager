@@ -14,11 +14,6 @@ public class Controller {
     }
 
     public void updateGame(UserGame value) {
-        System.out.println(value.getName());
-        try {
-            conf.setCurrentGameId(value.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        conf.setCurrentGame(value);
     }
 }

@@ -41,13 +41,25 @@ public class Configuration {
         return Integer.parseInt(gameId);
     }
 
-    public void setCurrentGameId(int currentGameId) throws Exception {
+    public void setCurrentGameId(int currentGameId) {
         UserConfig currentGameConfig = this.getUserConfig("current_game");
-        if(currentGameConfig == null) throw new Exception();
+        if(currentGameConfig == null) {
+            session.beginTransaction();
+            UserConfig userConfig = new UserConfig();
+            userConfig.setKey("current_game");
+            userConfig.setValue(String.valueOf(currentGameId));
+            session.getTransaction().commit();
+            return;
+        }
 
         session.beginTransaction();
         currentGameConfig.setValue(String.valueOf(currentGameId));
         session.getTransaction().commit();
+    }
+
+    public void setCurrentGame(UserGame currentGame) {
+        int currentGameId = currentGame.getId();
+        this.setCurrentGameId(currentGameId);
     }
 
     public UserGame getCurrentGame() {
