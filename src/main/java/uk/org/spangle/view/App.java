@@ -1,4 +1,4 @@
-package uk.org.spangle;
+package uk.org.spangle.view;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import uk.org.spangle.data.Generation;
+import uk.org.spangle.data.UserGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +57,11 @@ public class App extends Application {
         Text boxText = new Text("Box");
 
         Button boxLeft = new Button("<");
+        ChoiceBox<String> boxDropdown = new ChoiceBox<>();
+        boxDropdown.setItems(FXCollections.<String>observableArrayList("A","B","C"));
         Button boxRight = new Button(">");
         HBox boxButtons = new HBox();
-        boxButtons.getChildren().addAll(boxLeft,boxRight);
+        boxButtons.getChildren().addAll(boxLeft,boxDropdown,boxRight);
 
         // Add everything to the sidebar
         sideBar = new VBox();
@@ -72,10 +75,10 @@ public class App extends Application {
 
         // now lets pull events from the database and list them
         session.beginTransaction();
-        List result = session.createQuery("from Generation").list();
+        List result = session.createQuery("from UserGame").list();
         List<String> nameList = new ArrayList<>();
         for (Object obj : result) {
-            Generation event = (Generation) obj;
+            UserGame event = (UserGame) obj;
             System.out.println(event.getName());
             nameList.add(event.getName());
         }
@@ -85,7 +88,8 @@ public class App extends Application {
         sessionFactory.close();
 
         ChoiceBox<String> gameDropdown = new ChoiceBox<>();
-        gameDropdown.setItems(FXCollections.observableArrayList(nameList));
+        gameDropdown.setItems(FXCollections.<String>observableArrayList(nameList));
+        gameDropdown.setValue(nameList.get(0));
         return gameDropdown;
     }
 
