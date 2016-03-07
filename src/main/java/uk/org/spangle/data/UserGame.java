@@ -1,9 +1,8 @@
 package uk.org.spangle.data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_games")
@@ -13,6 +12,8 @@ public class UserGame {
     private int generationId;
     private String name;
     private int ordinal;
+    private List<UserBox> userBoxes;
+    private UserBox currentBox;
 
     public UserGame() {
         // this form used by Hibernate
@@ -60,5 +61,25 @@ public class UserGame {
 
     public void setOrdinal(int ordinal) {
         this.ordinal = ordinal;
+    }
+
+    @OneToMany(mappedBy="userGame")
+    @OrderBy("ordinal")
+    public List<UserBox> getUserBoxes() {
+        return userBoxes;
+    }
+
+    public void setUserBoxes(List<UserBox> userBoxes) {
+        this.userBoxes = userBoxes;
+    }
+
+    @OneToOne()
+    @JoinColumn(name="current_box_id")
+    public UserBox getCurrentBox() {
+        return currentBox;
+    }
+
+    public void setCurrentBox(UserBox currentBox) {
+        this.currentBox = currentBox;
     }
 }

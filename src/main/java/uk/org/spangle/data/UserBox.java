@@ -1,16 +1,14 @@
 package uk.org.spangle.data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user_boxes")
 public class UserBox {
 
     private int id;
-    private int userGameId;
+    //private int userGameId;
+    private UserGame userGame;
     private int ordinal;
     private int size;
     private int columns;
@@ -22,7 +20,7 @@ public class UserBox {
 
     public UserBox(int id, int userGameId, int ordinal, int size, int columns, String name) {
         this.id = id;
-        this.userGameId = userGameId;
+        //this.userGameId = userGameId;
         this.ordinal = ordinal;
         this.size = size;
         this.columns = columns;
@@ -39,13 +37,23 @@ public class UserBox {
         this.id = id;
     }
 
-    @Column(name = "user_game_id")
-    public int getUserGameId() {
-        return userGameId;
+    //@Column(name = "user_game_id")
+    //public int getUserGameId() {
+    //    return userGameId;
+    //}
+
+    //public void setUserGameId(int userGameId) {
+    //    this.userGameId = userGameId;
+    //}
+
+    @ManyToOne
+    @JoinColumn(name="user_game_id", updatable=false)
+    public UserGame getUserGame() {
+        return userGame;
     }
 
-    public void setUserGameId(int userGameId) {
-        this.userGameId = userGameId;
+    public void setUserGame(UserGame userGame) {
+        this.userGame = userGame;
     }
 
     @Column(name = "ordinal")
