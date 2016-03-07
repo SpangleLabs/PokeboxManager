@@ -18,7 +18,6 @@ public class App extends Application {
         // Update side bar
         Pane sideBarPane = new Pane();
         sideBar = new SideBar(sideBarPane);
-        sideBar.update();
 
         // Update info panel
         Pane infoPanelPane = new Pane();
