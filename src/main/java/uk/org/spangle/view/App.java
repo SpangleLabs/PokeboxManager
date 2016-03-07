@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import uk.org.spangle.data.Generation;
 import uk.org.spangle.data.UserGame;
 
 import java.util.ArrayList;
