@@ -10,10 +10,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.UserGame;
+import uk.org.spangle.model.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +22,17 @@ public class SideBar {
     ChoiceBox<String> gameDropdown;
     ChoiceBox<String> boxDropdown;
     UserGame currentGame = null;
+    Session session;
+    Configuration conf;
+    Controller controller;
 
-    public SideBar(Pane sideBarPane) {
+    public SideBar(Pane sideBarPane, Session session, Configuration conf, Controller controller) {
         this.sideBarPane = sideBarPane;
+        this.session = session;
+        this.conf = conf;
+        this.controller = controller;
 
         // Get current game
-        uk.org.spangle.model.Configuration conf = new uk.org.spangle.model.Configuration();
         currentGame = conf.getCurrentGame();
 
         // Game selector and titles
@@ -53,9 +57,6 @@ public class SideBar {
 
     public ChoiceBox<String> createGameDropdown() {
 
-        SessionFactory sessionFactory = new Configuration().configure(getClass().getResource("/hibernate.cfg.xml")).buildSessionFactory();
-        Session session = sessionFactory.openSession();
-
         // now lets pull events from the database and list them
         session.beginTransaction();
         List result = session.createQuery("from UserGame").list();
@@ -68,9 +69,6 @@ public class SideBar {
             if(currentGame == null) currentGame = event;
         }
         session.getTransaction().commit();
-        session.close();
-
-        sessionFactory.close();
 
         ChoiceBox<String> gameDropdown = new ChoiceBox<>();
         gameDropdown.setItems(FXCollections.observableArrayList(nameList));
@@ -79,7 +77,7 @@ public class SideBar {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number old_value, Number new_value) {
                 UserGame selectedGame = gameList.get(new_value.intValue());
-                Controller.updateGame(selectedGame);
+                controller.updateGame(selectedGame);
             }
         });
         return gameDropdown;
