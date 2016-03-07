@@ -45,8 +45,9 @@ public class Configuration {
         UserConfig currentGameConfig = this.getUserConfig("current_game");
         if(currentGameConfig == null) throw new Exception();
 
+        session.beginTransaction();
         currentGameConfig.setValue(String.valueOf(currentGameId));
-        session.merge(currentGameConfig);
+        session.getTransaction().commit();
     }
 
     public UserGame getCurrentGame() {
