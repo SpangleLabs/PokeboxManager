@@ -1,5 +1,7 @@
 package uk.org.spangle.view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -10,6 +12,7 @@ import javafx.scene.text.Text;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.UserGame;
 
 import java.util.ArrayList;
@@ -57,9 +60,11 @@ public class SideBar {
         session.beginTransaction();
         List result = session.createQuery("from UserGame").list();
         List<String> nameList = new ArrayList<>();
+        final List<UserGame> gameList = new ArrayList<>();
         for (Object obj : result) {
             UserGame event = (UserGame) obj;
             nameList.add(event.getName());
+            gameList.add(event);
             if(currentGame == null) currentGame = event;
         }
         session.getTransaction().commit();
@@ -69,8 +74,14 @@ public class SideBar {
 
         ChoiceBox<String> gameDropdown = new ChoiceBox<>();
         gameDropdown.setItems(FXCollections.observableArrayList(nameList));
-
         gameDropdown.setValue(currentGame.getName());
+        gameDropdown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number old_value, Number new_value) {
+                UserGame selectedGame = gameList.get(new_value.intValue());
+                Controller.updateGame(selectedGame);
+            }
+        });
         return gameDropdown;
     }
 
