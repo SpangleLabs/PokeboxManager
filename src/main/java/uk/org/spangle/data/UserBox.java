@@ -37,15 +37,6 @@ public class UserBox {
         this.id = id;
     }
 
-    //@Column(name = "user_game_id")
-    //public int getUserGameId() {
-    //    return userGameId;
-    //}
-
-    //public void setUserGameId(int userGameId) {
-    //    this.userGameId = userGameId;
-    //}
-
     @ManyToOne
     @JoinColumn(name="user_game_id", updatable=false)
     public UserGame getUserGame() {
