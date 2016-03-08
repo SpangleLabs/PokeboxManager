@@ -34,6 +34,7 @@
         <mapping class="uk.org.spangle.data.Generation"/>
         <mapping class="uk.org.spangle.data.GenerationBox"/>
         <mapping class="uk.org.spangle.data.Pokemon"/>
+        <mapping class="uk.org.spangle.data.PokemonForm"/>
         <mapping class="uk.org.spangle.data.UserBox"/>
         <mapping class="uk.org.spangle.data.UserConfig"/>
         <mapping class="uk.org.spangle.data.UserGame"/>

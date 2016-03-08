@@ -1,9 +1,7 @@
 package uk.org.spangle.data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "pokemon")
@@ -12,6 +10,7 @@ public class Pokemon {
     private int id;
     private String name;
     private int nationalDex;
+    private List<PokemonForm> pokemonForms;
 
     public Pokemon() {
         // this form used by Hibernate
@@ -24,6 +23,7 @@ public class Pokemon {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="pokemon_id")
     public int getId() {
         return id;
@@ -49,5 +49,23 @@ public class Pokemon {
 
     public void setNationalDex(int nationDex) {
         this.nationalDex = nationDex;
+    }
+
+    @OneToMany(mappedBy="pokemon")
+    @OrderBy("id")
+    public List<PokemonForm> getPokemonForms() {
+        return pokemonForms;
+    }
+
+    public void setPokemonForms(List<PokemonForm> pokemonForms) {
+        this.pokemonForms = pokemonForms;
+    }
+
+    public void addPokemonForm(PokemonForm pokemonForm) {
+        this.pokemonForms.add(pokemonForm);
+    }
+
+    public String toString() {
+        return Integer.toString(id);
     }
 }
