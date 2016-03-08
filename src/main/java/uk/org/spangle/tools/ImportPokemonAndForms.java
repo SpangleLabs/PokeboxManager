@@ -82,7 +82,8 @@ public class ImportPokemonAndForms {
                 monForm.setSpriteFemaleX(x);
                 monForm.setSpriteFemaleY(y);
                 monForm.setIsShiny(is_shiny);
-                dbSession.saveOrUpdate(monForm);
+                dbSession.update(monForm);
+                dbSession.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
