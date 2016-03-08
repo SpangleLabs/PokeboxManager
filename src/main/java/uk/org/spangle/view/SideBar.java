@@ -5,6 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.HBox;
@@ -63,9 +64,14 @@ public class SideBar {
         HBox boxButtons = new HBox();
         boxButtons.getChildren().addAll(boxLeft,boxDropdown,boxRight);
 
+        // Box canvas
+        Canvas boxCanvas = new Canvas();
+        boxCanvas.setWidth(40*6);
+        boxCanvas.setHeight(30*5);
+
         // Add everything to the sidebar
         VBox sideBarVBox = new VBox();
-        sideBarVBox.getChildren().addAll(titleText,gameDropdown,boxText,boxButtons);
+        sideBarVBox.getChildren().addAll(titleText,gameDropdown,boxText,boxButtons,boxCanvas);
 
         sideBarPane.getChildren().add(sideBarVBox);
     }
