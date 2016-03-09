@@ -17,8 +17,7 @@ import javafx.scene.text.Text;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import uk.org.spangle.controller.Controller;
-import uk.org.spangle.data.UserBox;
-import uk.org.spangle.data.UserGame;
+import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
 import java.util.ArrayList;
@@ -149,13 +148,17 @@ public class SideBar {
         // Get sprite
         //BufferedImage bulbaImage = bigImage.getSubimage(0,0,40,30);
 
-        // Put image on canvas
-        graphicsContext.drawImage(image,0,0,40,30,0,0,40,30);
-        graphicsContext.drawImage(image,600,1110,40,30,40,0,40,30);
-        graphicsContext.drawImage(image,720,690,40,30,80,0,40,30);
-        graphicsContext.drawImage(image,520,390,40,30,120,0,40,30);
-        graphicsContext.drawImage(image,480,630,40,30,160,0,40,30);
-        graphicsContext.drawImage(image,800,720,40,30,200,0,40,30);
+        // Get list of user pokemon:
+        List<UserPokemon> pokemonList = currentGame.getCurrentBox().getUserPokemons();
+        for(UserPokemon userPokemon : pokemonList) {
+            Pokemon pokemon = userPokemon.getPokemon();
+            PokemonForm form = pokemon.getPokemonForms().get(0);
+            int x_coord = form.getSpriteMaleX();
+            int y_coord = form.getSpriteMaleY();
+            int box_x = ((userPokemon.getPosition()-1) % currentGame.getCurrentBox().getColumns()) *40;
+            int box_y = ((userPokemon.getPosition()-1) / currentGame.getCurrentBox().getColumns()) *30;
+            graphicsContext.drawImage(image,x_coord,y_coord,40,30,box_x,box_y,40,30);
+        }
 
         return boxCanvas;
     }
