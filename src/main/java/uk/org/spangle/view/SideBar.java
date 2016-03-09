@@ -142,11 +142,7 @@ public class SideBar {
         GraphicsContext graphicsContext = boxCanvas.getGraphicsContext2D();
 
         // Box sprite sheet
-        //BufferedImage bigImage = ImageIO.read(new File(getClass().getResource("/box_sprites.png").getFile()));
         Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
-
-        // Get sprite
-        //BufferedImage bulbaImage = bigImage.getSubimage(0,0,40,30);
 
         // Get list of user pokemon:
         List<UserPokemon> pokemonList = currentGame.getCurrentBox().getUserPokemons();
