@@ -86,7 +86,7 @@ public class UserBox {
         this.name = name;
     }
 
-    @OneToMany(mappedBy="userPokemon")
+    @OneToMany(mappedBy="userBox")
     @OrderBy("position")
     public List<UserPokemon> getUserPokemons() {
         return userPokemons;
