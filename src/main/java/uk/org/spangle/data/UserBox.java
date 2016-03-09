@@ -1,6 +1,7 @@
 package uk.org.spangle.data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user_boxes")
@@ -13,6 +14,7 @@ public class UserBox {
     private int size;
     private int columns;
     private String name;
+    private List<UserPokemon> userPokemons;
 
     public UserBox() {
         // this form used by Hibernate
@@ -82,5 +84,15 @@ public class UserBox {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @OneToMany(mappedBy="userPokemon")
+    @OrderBy("position")
+    public List<UserPokemon> getUserPokemons() {
+        return userPokemons;
+    }
+
+    public void setUserPokemons(List<UserPokemon> userPokemons) {
+        this.userPokemons = userPokemons;
     }
 }

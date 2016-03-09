@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class UserPokemon {
 
     private int id;
-    private int userBoxId;
+    private UserBox userBox;
     private int position;
     private int pokemonId;
     private String nickname;
@@ -16,9 +16,8 @@ public class UserPokemon {
         // this form used by Hibernate
     }
 
-    public UserPokemon(int id, int userBoxId, int position, int pokemonId, String nickname) {
+    public UserPokemon(int id, int position, int pokemonId, String nickname) {
         this.id = id;
-        this.userBoxId = userBoxId;
         this.position = position;
         this.pokemonId = pokemonId;
         this.nickname = nickname;
@@ -35,13 +34,14 @@ public class UserPokemon {
         this.id = id;
     }
 
-    @Column(name = "user_box_id")
-    public int getUserBoxId() {
-        return userBoxId;
+    @ManyToOne
+    @JoinColumn(name="user_box_id")
+    public UserBox getUserBox() {
+        return userBox;
     }
 
-    public void setUserBoxId(int userBoxId) {
-        this.userBoxId = userBoxId;
+    public void setUserBox(UserBox userBox) {
+        this.userBox = userBox;
     }
 
     @Column(name = "position")
