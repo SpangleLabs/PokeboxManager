@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -136,6 +137,14 @@ public class SideBar {
         boxCanvas.setWidth(30*6);
         boxCanvas.setHeight(30*5);
         updateBoxCanvas();
+        boxCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent t) {
+                        System.out.println(t.getX());
+                        System.out.println(t.getY());
+                    }
+                });
         return boxCanvas;
     }
 
