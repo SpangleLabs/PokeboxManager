@@ -1,7 +1,7 @@
 package uk.org.spangle.model;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.UserConfig;
 import uk.org.spangle.data.UserGame;
 
@@ -16,9 +16,7 @@ public class Configuration {
 
     private UserConfig getUserConfig(String key) {
         session.beginTransaction();
-        Query query = session.createQuery("from UserConfig where key = :key");
-        query.setString("key",key);
-        List list = query.list();
+        List list = session.createCriteria(UserConfig.class).add(Restrictions.eq("key",key)).list();
 
         UserConfig userConfig = null;
         for (Object obj : list) {
@@ -67,9 +65,7 @@ public class Configuration {
         if(currentGameId == null) return null;
 
         session.beginTransaction();
-        Query query = session.createQuery("from UserGame where id = :id");
-        query.setInteger("id",currentGameId);
-        List list = query.list();
+        List list = session.createCriteria(UserGame.class).add(Restrictions.eq("id",currentGameId)).list();
 
         UserGame userGame = null;
         for (Object obj : list) {

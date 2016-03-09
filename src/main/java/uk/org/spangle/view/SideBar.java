@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserGame;
@@ -81,7 +82,7 @@ public class SideBar {
         // now lets pull events from the database and list them
         session.beginTransaction();
         @SuppressWarnings("unchecked")
-        final List<UserGame> gameList = (List<UserGame>) session.createQuery("FROM UserGame G ORDER BY G.ordinal ASC").list();
+        final List<UserGame> gameList = (List<UserGame>) session.createCriteria(UserGame.class).addOrder(Order.asc("ordinal")).list();
         List<String> nameList = new ArrayList<>();
         for (Object obj : gameList) {
             UserGame event = (UserGame) obj;
