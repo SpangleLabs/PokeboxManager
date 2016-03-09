@@ -27,6 +27,7 @@ public class SideBar {
     Pane sideBarPane;
     ChoiceBox<String> gameDropdown;
     ChoiceBox<String> boxDropdown;
+    Canvas boxCanvas;
     UserGame currentGame = null;
     Session session;
     Configuration conf;
@@ -55,7 +56,6 @@ public class SideBar {
             }
         });
         boxDropdown = createBoxDropdown();
-        updateBoxDropdown();
         Button boxRight = new Button(">");
         boxRight.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -67,12 +67,7 @@ public class SideBar {
         boxButtons.getChildren().addAll(boxLeft,boxDropdown,boxRight);
 
         // Box canvas
-        Canvas boxCanvas = null;
-        try {
-            boxCanvas = createBoxCanvas();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        boxCanvas = createBoxCanvas();
 
         // Add everything to the sidebar
         VBox sideBarVBox = new VBox();
@@ -110,6 +105,7 @@ public class SideBar {
 
     public ChoiceBox<String> createBoxDropdown() {
         boxDropdown = new ChoiceBox<>();
+        updateBoxDropdown();
         boxDropdown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number old_value, Number new_value) {
@@ -135,12 +131,18 @@ public class SideBar {
         }
     }
 
-    public Canvas createBoxCanvas() throws Exception {
-        Canvas boxCanvas = new Canvas();
-        boxCanvas.setWidth(40*6);
+    public Canvas createBoxCanvas() {
+        boxCanvas = new Canvas();
+        boxCanvas.setWidth(30*6);
         boxCanvas.setHeight(30*5);
+        updateBoxCanvas();
+        return boxCanvas;
+    }
+
+    public void updateBoxCanvas() {
         GraphicsContext graphicsContext = boxCanvas.getGraphicsContext2D();
 
+        graphicsContext.clearRect(0,0,boxCanvas.getWidth(),boxCanvas.getHeight());
         // Box sprite sheet
         Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
 
@@ -151,21 +153,15 @@ public class SideBar {
             PokemonForm form = pokemon.getPokemonForms().get(0);
             int x_coord = form.getSpriteMaleX();
             int y_coord = form.getSpriteMaleY();
-            int box_x = ((userPokemon.getPosition()-1) % currentGame.getCurrentBox().getColumns()) *40;
+            int box_x = ((userPokemon.getPosition()-1) % currentGame.getCurrentBox().getColumns()) *30;
             int box_y = ((userPokemon.getPosition()-1) / currentGame.getCurrentBox().getColumns()) *30;
             graphicsContext.drawImage(image,x_coord,y_coord,40,30,box_x,box_y,40,30);
         }
-
-        return boxCanvas;
     }
 
     public void setGame(UserGame userGame) {
         // Update box dropdown
         this.currentGame = userGame;
         updateBoxDropdown();
-    }
-
-    public void setBox(UserBox userBox) {
-        // Update box canvas and such
     }
 }

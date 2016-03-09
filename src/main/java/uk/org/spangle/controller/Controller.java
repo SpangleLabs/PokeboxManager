@@ -29,18 +29,21 @@ public class Controller {
         session.beginTransaction();
         currentGame.setCurrentBox(userBox);
         session.getTransaction().commit();
+        app.getSideBar().updateBoxCanvas();
     }
 
     public void prevBox(UserGame currentGame) {
         UserBox currentBox = currentGame.getCurrentBox();
         List<UserBox> listBoxes = currentGame.getUserBoxes();
         int index = listBoxes.indexOf(currentBox);
-        int newIndex = (index-1) % listBoxes.size();
+        // Remove 1 from index and wrap it around
+        int newIndex = ((index-1) % listBoxes.size() + listBoxes.size()) % listBoxes.size();
         UserBox newBox = listBoxes.get(newIndex);
         session.beginTransaction();
         currentGame.setCurrentBox(newBox);
         session.getTransaction().commit();
         app.getSideBar().updateBoxDropdown();
+        app.getSideBar().updateBoxCanvas();
     }
 
     public void nextBox(UserGame currentGame) {
@@ -53,5 +56,6 @@ public class Controller {
         currentGame.setCurrentBox(newBox);
         session.getTransaction().commit();
         app.getSideBar().updateBoxDropdown();
+        app.getSideBar().updateBoxCanvas();
     }
 }
