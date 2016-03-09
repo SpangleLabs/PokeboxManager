@@ -6,8 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -66,9 +68,12 @@ public class SideBar {
         boxButtons.getChildren().addAll(boxLeft,boxDropdown,boxRight);
 
         // Box canvas
-        Canvas boxCanvas = new Canvas();
-        boxCanvas.setWidth(40*6);
-        boxCanvas.setHeight(30*5);
+        Canvas boxCanvas = null;
+        try {
+            boxCanvas = createBoxCanvas();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Add everything to the sidebar
         VBox sideBarVBox = new VBox();
@@ -129,6 +134,30 @@ public class SideBar {
         if(currentBox != null) {
             boxDropdown.setValue(currentBox.getName());
         }
+    }
+
+    public Canvas createBoxCanvas() throws Exception {
+        Canvas boxCanvas = new Canvas();
+        boxCanvas.setWidth(40*6);
+        boxCanvas.setHeight(30*5);
+        GraphicsContext graphicsContext = boxCanvas.getGraphicsContext2D();
+
+        // Box sprite sheet
+        //BufferedImage bigImage = ImageIO.read(new File(getClass().getResource("/box_sprites.png").getFile()));
+        Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
+
+        // Get sprite
+        //BufferedImage bulbaImage = bigImage.getSubimage(0,0,40,30);
+
+        // Put image on canvas
+        graphicsContext.drawImage(image,0,0,40,30,0,0,40,30);
+        graphicsContext.drawImage(image,600,1110,40,30,40,0,40,30);
+        graphicsContext.drawImage(image,720,690,40,30,80,0,40,30);
+        graphicsContext.drawImage(image,520,390,40,30,120,0,40,30);
+        graphicsContext.drawImage(image,480,630,40,30,160,0,40,30);
+        graphicsContext.drawImage(image,800,720,40,30,200,0,40,30);
+
+        return boxCanvas;
     }
 
     public void setGame(UserGame userGame) {
