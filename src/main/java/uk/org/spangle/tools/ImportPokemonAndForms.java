@@ -23,9 +23,8 @@ public class ImportPokemonAndForms {
     }
 
     public static void main(String[] args) {
-        System.out.println("This tool has been disabled, as it will import duplicates otherwise.");
         ImportPokemonAndForms imp = new ImportPokemonAndForms();
-        //imp.run();
+        imp.run();
         System.out.println(imp.pokemonList);
     }
 
@@ -33,6 +32,13 @@ public class ImportPokemonAndForms {
         // Create session
         SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure(getClass().getResource("/hibernate.cfg.xml")).buildSessionFactory();
         dbSession = sessionFactory.openSession();
+
+        // Check if pokemon are already imported
+        List listGens = dbSession.createCriteria(Pokemon.class).list();
+        if(listGens.size() > 0) {
+            System.out.println("Pokemon have already been imported.");
+            return;
+        }
 
         // Load file
         File inputFile = new File(getClass().getResource("/raw_coords.txt").getFile());
