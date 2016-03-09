@@ -9,17 +9,16 @@ public class UserPokemon {
     private int id;
     private UserBox userBox;
     private int position;
-    private int pokemonId;
+    private Pokemon pokemon;
     private String nickname;
 
     public UserPokemon() {
         // this form used by Hibernate
     }
 
-    public UserPokemon(int id, int position, int pokemonId, String nickname) {
+    public UserPokemon(int id, int position, String nickname) {
         this.id = id;
         this.position = position;
-        this.pokemonId = pokemonId;
         this.nickname = nickname;
     }
 
@@ -53,13 +52,14 @@ public class UserPokemon {
         this.position = position;
     }
 
-    @Column(name = "pokemon_id")
-    public int getPokemonId() {
-        return pokemonId;
+    @ManyToOne
+    @JoinColumn(name="pokemon_id")
+    public Pokemon getPokemon() {
+        return pokemon;
     }
 
-    public void setPokemonId(int pokemonId) {
-        this.pokemonId = pokemonId;
+    public void setPokemon(Pokemon pokemon) {
+        this.pokemon = pokemon;
     }
 
     @Column(name = "nickname")
