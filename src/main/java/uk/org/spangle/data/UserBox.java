@@ -28,6 +28,7 @@ public class UserBox {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="user_box_id")
     public int getId() {
         return id;

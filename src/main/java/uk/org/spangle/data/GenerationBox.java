@@ -1,9 +1,6 @@
 package uk.org.spangle.data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "generation_boxes")
@@ -30,6 +27,7 @@ public class GenerationBox {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="generation_box_id")
     public int getId() {
         return id;

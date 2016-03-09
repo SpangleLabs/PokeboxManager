@@ -1,9 +1,6 @@
 package uk.org.spangle.data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user_pokemon")
@@ -28,6 +25,7 @@ public class UserPokemon {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="user_pokemon_id")
     public int getId() {
         return id;

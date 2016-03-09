@@ -27,6 +27,7 @@ public class UserGame {
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="user_game_id")
     public int getId() {
         return id;
