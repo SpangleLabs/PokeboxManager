@@ -1,6 +1,7 @@
 package uk.org.spangle.data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "generations")
@@ -9,6 +10,7 @@ public class Generation {
     private int id;
     private String name;
     private String description;
+    private List<GenerationBox> generationBoxes;
 
     public Generation() {
         // this form used by Hibernate
@@ -47,5 +49,15 @@ public class Generation {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @OneToMany(mappedBy="generation")
+    @OrderBy("ordinal")
+    public List<GenerationBox> getGenerationBoxes() {
+        return generationBoxes;
+    }
+
+    public void setGenerationBoxes(List<GenerationBox> generationBoxes) {
+        this.generationBoxes = generationBoxes;
     }
 }

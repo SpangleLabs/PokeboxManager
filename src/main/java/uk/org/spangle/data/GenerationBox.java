@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class GenerationBox {
 
     private int id;
-    private int generationId;
+    private Generation generation;
     private int ordinal;
     private int size;
     private int columns;
@@ -17,9 +17,8 @@ public class GenerationBox {
         // this form used by Hibernate
     }
 
-    public GenerationBox(int id, int generationId, int ordinal, int size, int columns, String name) {
+    public GenerationBox(int id, int ordinal, int size, int columns, String name) {
         this.id = id;
-        this.generationId = generationId;
         this.ordinal = ordinal;
         this.size = size;
         this.columns = columns;
@@ -37,13 +36,14 @@ public class GenerationBox {
         this.id = id;
     }
 
-    @Column(name = "generation_id")
-    public int getGenerationId() {
-        return generationId;
+    @ManyToOne
+    @JoinColumn(name="generation_id", updatable=false)
+    public Generation getGeneration() {
+        return generation;
     }
 
-    public void setGenerationId(int generationId) {
-        this.generationId = generationId;
+    public void setGeneration(Generation generation) {
+        this.generation = generation;
     }
 
     @Column(name = "ordinal")
