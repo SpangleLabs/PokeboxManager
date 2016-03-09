@@ -37,6 +37,8 @@ public class ImportPokemonAndForms {
         List listGens = dbSession.createCriteria(Pokemon.class).list();
         if(listGens.size() > 0) {
             System.out.println("Pokemon have already been imported.");
+            dbSession.close();
+            sessionFactory.close();
             return;
         }
 
