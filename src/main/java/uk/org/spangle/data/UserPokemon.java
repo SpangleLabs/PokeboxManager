@@ -11,6 +11,7 @@ public class UserPokemon {
     private int position;
     private Pokemon pokemon;
     private String nickname;
+    private UserPokemonForm userPokemonForm;
 
     public UserPokemon() {
         // this form used by Hibernate
@@ -69,5 +70,14 @@ public class UserPokemon {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonForm getUserPokemonForm() {
+        return userPokemonForm;
+    }
+
+    public void setUserPokemonForm(UserPokemonForm userPokemonForm) {
+        this.userPokemonForm = userPokemonForm;
     }
 }
