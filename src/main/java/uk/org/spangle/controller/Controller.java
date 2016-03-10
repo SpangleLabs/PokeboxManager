@@ -1,8 +1,11 @@
 package uk.org.spangle.controller;
 
+import javafx.scene.input.MouseEvent;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserGame;
+import uk.org.spangle.data.UserPokemon;
 import uk.org.spangle.model.Configuration;
 import uk.org.spangle.view.App;
 
@@ -57,5 +60,22 @@ public class Controller {
         session.getTransaction().commit();
         app.getSideBar().updateBoxDropdown();
         app.getSideBar().updateBoxCanvas();
+    }
+
+    public void clickCanvas(MouseEvent t) {
+        int x = (int) t.getX();
+        int y = (int) t.getY();
+        int box_x = x/30;
+        int box_y = y/30;
+        int position = box_y*6 + box_x + 1;
+        UserBox userBox = conf.getCurrentGame().getCurrentBox();
+        List list = session.createCriteria(UserPokemon.class).add(Restrictions.eq("userBox",userBox)).add(Restrictions.eq("position",position)).list();
+        if(list.size() == 0) {
+            System.out.println("No pokemon here");
+        } else {
+            UserPokemon userPokemon = (UserPokemon) list.get(0);
+            System.out.println(userPokemon.getNickname());
+        }
+
     }
 }

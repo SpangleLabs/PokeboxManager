@@ -141,8 +141,7 @@ public class SideBar {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent t) {
-                        System.out.println(t.getX());
-                        System.out.println(t.getY());
+                        controller.clickCanvas(t);
                     }
                 });
         return boxCanvas;
