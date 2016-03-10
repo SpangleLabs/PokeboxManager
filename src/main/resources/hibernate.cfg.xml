@@ -10,7 +10,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.h2.Driver</property>
-        <property name="connection.url">jdbc:h2:~/test;DATABASE_TO_UPPER=false</property>
+        <property name="connection.url">jdbc:h2:~/test</property>
         <property name="connection.username">sa</property>
         <property name="connection.password"/>
 
@@ -29,7 +29,7 @@
         <property name="show_sql">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
-        <!-- <property name="hbm2ddl.auto">create</property> -->
+        <property name="hbm2ddl.auto">update</property>
 
         <mapping class="uk.org.spangle.data.Generation"/>
         <mapping class="uk.org.spangle.data.GenerationBox"/>
@@ -39,6 +39,7 @@
         <mapping class="uk.org.spangle.data.UserConfig"/>
         <mapping class="uk.org.spangle.data.UserGame"/>
         <mapping class="uk.org.spangle.data.UserPokemon"/>
+        <mapping class="uk.org.spangle.data.UserPokemonForm"/>
 
     </session-factory>
 

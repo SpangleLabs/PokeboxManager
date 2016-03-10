@@ -72,10 +72,16 @@ public class Controller {
         List list = session.createCriteria(UserPokemon.class).add(Restrictions.eq("userBox",userBox)).add(Restrictions.eq("position",position)).list();
         if(list.size() == 0) {
             System.out.println("No pokemon here");
+            clickCanvasEmpty(position);
         } else {
             UserPokemon userPokemon = (UserPokemon) list.get(0);
             System.out.println(userPokemon.getNickname());
         }
 
+    }
+
+    public void clickCanvasEmpty(int position) {
+        UserBox userBox = conf.getCurrentGame().getCurrentBox();
+        app.getInfoBox().addNewPokemon(userBox,position);
     }
 }
