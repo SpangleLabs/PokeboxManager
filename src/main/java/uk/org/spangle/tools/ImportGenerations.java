@@ -202,7 +202,7 @@ public class ImportGenerations {
 
     public void createGenV() {
         Generation gen = new Generation();
-        gen.setName("Gen II");
+        gen.setName("Gen V");
         gen.setDescription("Black, White, Black2, White2");
         dbSession.saveOrUpdate(gen);
         // Add party
@@ -251,7 +251,7 @@ public class ImportGenerations {
 
     public void createGenVI() {
         Generation gen = new Generation();
-        gen.setName("Gen II");
+        gen.setName("Gen VI");
         gen.setDescription("X, Y, OmegaRuby, AlphaSapphire");
         dbSession.saveOrUpdate(gen);
         // Add party
