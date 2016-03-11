@@ -47,10 +47,26 @@ public class ImportTestUserData {
         // Create games
         UserGame pokebank = new UserGame(genBank,"PokeBank",1);
         dbSession.save(pokebank);
+        for(UserBox box : pokebank.getUserBoxes()) {
+            dbSession.save(box);
+        }
+        pokebank.setCurrentBox(pokebank.getUserBoxes().get(0));
+        dbSession.update(pokebank);
         UserGame ruby = new UserGame(genSix,"OmegaRuby",2);
         dbSession.save(ruby);
+        for(UserBox box : ruby.getUserBoxes()) {
+            dbSession.save(box);
+        }
+        ruby.setCurrentBox(ruby.getUserBoxes().get(0));
+        dbSession.update(ruby);
         UserGame y = new UserGame(genSix,"Y",3);
         dbSession.save(y);
+        for(UserBox box : y.getUserBoxes()) {
+            dbSession.save(box);
+        }
+        y.setCurrentBox(y.getUserBoxes().get(0));
+        dbSession.update(y);
+        dbSession.flush();
 
         // Add config
         UserConfig currentGameConfig = new UserConfig();
@@ -60,11 +76,11 @@ public class ImportTestUserData {
 
         // Add some test pokemon
         UserBox testBox = ruby.getUserBoxes().get(1);
-        Pokemon bulbasaur = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("national_dex",1)).list().get(0);
-        Pokemon arbok = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("national_dex",24)).list().get(0);
-        Pokemon persian = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("national_dex",53)).list().get(0);
-        Pokemon dragonair = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("national_dex",148)).list().get(0);
-        Pokemon meowstic = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("national_dex",678)).list().get(0);
+        Pokemon bulbasaur = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",1)).list().get(0);
+        Pokemon arbok = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",24)).list().get(0);
+        Pokemon persian = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",53)).list().get(0);
+        Pokemon dragonair = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",148)).list().get(0);
+        Pokemon meowstic = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",678)).list().get(0);
         UserPokemon poke1 = new UserPokemon();
         poke1.setNickname("Bulby");
         poke1.setPosition(1);

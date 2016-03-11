@@ -35,7 +35,6 @@ public class UserGame {
             UserBox newBox = new UserBox(this,box,box.getOrdinal());
             this.userBoxes.add(newBox);
         }
-        this.currentBox = this.userBoxes.get(0);
     }
 
     @Id
