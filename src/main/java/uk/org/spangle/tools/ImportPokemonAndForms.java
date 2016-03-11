@@ -7,6 +7,7 @@ import uk.org.spangle.data.PokemonForm;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ import java.util.List;
  */
 public class ImportPokemonAndForms {
     public final static String[] hyphenSpecies = new String[]{"nidoran-f","nidoran-m","mr-mime","ho-oh","mime-jr","porygon-z"};
+    public final static List<Integer> listGenderless = Arrays.asList(81,82,100,101,120,121,137,233,292,337,338,343,344,374,375,376,436,437,462,474,479,489,490,599,600,601,615,622,623,703);
+    public final static List<Integer> listUnbreedable = Arrays.asList(132,144,145,146,150,151,201,243,244,245,249,250,251,377,378,379,382,383,384,385,386,480,481,482,483,484,486,487,491,492,493,494,638,639,640,643,644,646,647,648,649,716,717,718,719,720,721);
     List<Pokemon> pokemonList;
     Session dbSession;
 
@@ -113,8 +116,10 @@ public class ImportPokemonAndForms {
         //Not found it, make it.
         Pokemon mon = new Pokemon();
         mon.setName(name);
-        mon.setNationalDex(pokemon_id+1);
+        int nationalDex = pokemon_id+1;
+        mon.setNationalDex(nationalDex);
         mon.setPokemonForms(new ArrayList<PokemonForm>());
+        mon.setIsGenderless(listGenderless.contains(nationalDex) || listUnbreedable.contains(nationalDex));
         pokemonList.add(mon);
         dbSession.saveOrUpdate(mon);
         return mon;
