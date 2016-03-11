@@ -40,6 +40,7 @@
         <mapping class="uk.org.spangle.data.UserGame"/>
         <mapping class="uk.org.spangle.data.UserPokemon"/>
         <mapping class="uk.org.spangle.data.UserPokemonForm"/>
+        <mapping class="uk.org.spangle.data.UserPokemonSex"/>
 
     </session-factory>
 
