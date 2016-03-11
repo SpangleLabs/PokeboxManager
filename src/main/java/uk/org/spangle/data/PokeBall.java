@@ -15,6 +15,13 @@ public class PokeBall {
         // this form used by Hibernate
     }
 
+    public PokeBall(String name, String description, int spriteX, int spriteY) {
+        this.name = name;
+        this.description = description;
+        this.spriteX = spriteX;
+        this.spriteY = spriteY;
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="pokeball_id")
