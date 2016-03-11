@@ -29,6 +29,14 @@ public class UserBox {
         this.name = name;
     }
 
+    public UserBox(UserGame game, GenerationBox box, int ordinal) {
+        this.userGame = game;
+        this.ordinal = ordinal;
+        this.size = box.getSize();
+        this.columns = box.getColumns();
+        this.name = box.getName();
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="user_box_id")

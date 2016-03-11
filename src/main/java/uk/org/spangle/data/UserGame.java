@@ -1,6 +1,7 @@
 package uk.org.spangle.data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,18 @@ public class UserGame {
         this.generationId = generationId;
         this.name = name;
         this.ordinal = ordinal;
+    }
+
+    public UserGame(Generation gen, String name, int ordinal) {
+        this.generationId = gen.getId();
+        this.name = name;
+        this.ordinal = ordinal;
+        this.userBoxes = new ArrayList<UserBox>();
+        for(GenerationBox box : gen.getGenerationBoxes()) {
+            UserBox newBox = new UserBox(this,box,box.getOrdinal());
+            this.userBoxes.add(newBox);
+        }
+        this.currentBox = this.userBoxes.get(0);
     }
 
     @Id
