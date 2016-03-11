@@ -10,6 +10,7 @@ public class Pokemon {
     private int id;
     private String name;
     private int nationalDex;
+    private boolean isGenderless;
     private List<PokemonForm> pokemonForms;
 
     public Pokemon() {
@@ -49,6 +50,15 @@ public class Pokemon {
 
     public void setNationalDex(int nationDex) {
         this.nationalDex = nationDex;
+    }
+
+    @Column(name = "is_genderless")
+    public boolean getIsGenderless() {
+        return isGenderless;
+    }
+
+    public void setIsGenderless(boolean isGenderless) {
+        this.isGenderless = isGenderless;
     }
 
     @OneToMany(mappedBy="pokemon")
