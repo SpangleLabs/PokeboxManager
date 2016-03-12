@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "user_boxes")
+@Table(name = "user_box")
 public class UserBox {
 
     private int id;

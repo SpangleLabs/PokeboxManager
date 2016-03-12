@@ -3,7 +3,7 @@ package uk.org.spangle.data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "natures")
+@Table(name = "nature")
 public class Nature {
     private int id;
     private String name;

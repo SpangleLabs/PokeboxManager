@@ -3,7 +3,7 @@ package uk.org.spangle.data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "pokemon_forms")
+@Table(name = "pokemon_form")
 public class PokemonForm {
     private int id;
     private Pokemon pokemon;

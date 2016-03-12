@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user_games")
+@Table(name = "user_gam")
 public class UserGame {
 
     private int id;

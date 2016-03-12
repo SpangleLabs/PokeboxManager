@@ -3,7 +3,7 @@ package uk.org.spangle.data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "generation_boxes")
+@Table(name = "generation_box")
 public class GenerationBox {
 
     private int id;
