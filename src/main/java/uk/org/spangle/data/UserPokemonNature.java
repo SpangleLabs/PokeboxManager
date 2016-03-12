@@ -2,6 +2,7 @@ package uk.org.spangle.data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "user_pokemon_nature")
@@ -14,6 +15,13 @@ public class UserPokemonNature {
 
     public UserPokemonNature() {
         // this form used by Hibernate
+    }
+
+    public UserPokemonNature(UserPokemon userPokemon, Nature nature) {
+        this.userPokemon = userPokemon;
+        this.nature = nature;
+        Date date = new Date();
+        this.timestamp = new Timestamp(date.getTime());
     }
 
     @Id
