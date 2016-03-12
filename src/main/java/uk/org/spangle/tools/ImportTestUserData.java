@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -85,95 +84,68 @@ public class ImportTestUserData {
         Pokemon dragonair = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",148)).list().get(0);
         Pokemon meowstic = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",678)).list().get(0);
         Pokemon unown = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",201)).list().get(0);
-        UserPokemon poke1 = new UserPokemon();
-        poke1.setNickname("Bulby");
-        poke1.setPosition(1);
-        poke1.setPokemon(bulbasaur);
-        poke1.setUserBox(testBox);
+
+        // Add pokemon with nicknames
+        UserPokemon poke1 = new UserPokemon(testBox,1,bulbasaur);
         dbSession.save(poke1);
-        UserPokemon poke2 = new UserPokemon();
-        poke2.setNickname("Charbok");
-        poke2.setPosition(3);
-        poke2.setPokemon(arbok);
-        poke2.setUserBox(testBox);
+        UserPokemonNickname upn1 = new UserPokemonNickname(poke1,"Bulby");
+        dbSession.save(upn1);
+
+        UserPokemon poke2 = new UserPokemon(testBox,3,arbok);
         dbSession.save(poke2);
-        UserPokemon poke3 = new UserPokemon();
-        poke3.setPosition(13);
-        poke3.setPokemon(persian);
-        poke3.setUserBox(testBox);
+        UserPokemonNickname upn2 = new UserPokemonNickname(poke2,"Charbok");
+        dbSession.save(upn2);
+
+
+        // Add pokemon with natures
+        UserPokemon poke3 = new UserPokemon(testBox,13,persian);
         dbSession.save(poke3);
-        UserPokemon poke4 = new UserPokemon();
-        poke4.setPosition(8);
-        poke4.setPokemon(dragonair);
-        poke4.setUserBox(testBox);
+        Nature jolly = (Nature) dbSession.createCriteria(Nature.class).add(Restrictions.eq("name","Jolly")).list().get(0);
+        UserPokemonNature upn3 = new UserPokemonNature(poke3,jolly);
+        dbSession.save(upn3);
+
+        UserPokemon poke4 = new UserPokemon(testBox,8,dragonair);
         dbSession.save(poke4);
+        Nature timid = (Nature) dbSession.createCriteria(Nature.class).add(Restrictions.eq("name","Timid")).list().get(0);
+        UserPokemonNature upn4 = new UserPokemonNature(poke4,timid);
+        dbSession.save(upn4);
+
 
         // Create meowstics for sexed sprites
-        UserPokemon poke5 = new UserPokemon();
-        poke5.setPosition(20);
-        poke5.setPokemon(meowstic);
-        poke5.setUserBox(testBox);
+        UserPokemon poke5 = new UserPokemon(testBox,20,meowstic);
         dbSession.save(poke5);
-        UserPokemonSex pokes5 = new UserPokemonSex();
-        pokes5.setId(poke5.getId());
-        pokes5.setIsMale(false);
-        pokes5.setTimestamp(new Timestamp(0));
-        dbSession.save(pokes5);
-        UserPokemon poke6 = new UserPokemon();
-        poke6.setPosition(21);
-        poke6.setPokemon(meowstic);
-        poke6.setUserBox(testBox);
+        UserPokemonSex ups5 = new UserPokemonSex(poke5,false);
+        dbSession.save(ups5);
+
+        UserPokemon poke6 = new UserPokemon(testBox,21,meowstic);
         dbSession.save(poke6);
-        UserPokemonSex pokes6 = new UserPokemonSex();
-        pokes6.setId(poke6.getId());
-        pokes6.setIsMale(true);
-        pokes6.setTimestamp(new Timestamp(0));
-        dbSession.save(pokes6);
+        UserPokemonSex ups6 = new UserPokemonSex(poke6,true);
+        dbSession.save(ups6);
+
 
         // Create unowns for different forms
-        UserPokemon poke7 = new UserPokemon();
-        poke7.setPosition(26);
-        poke7.setPokemon(unown);
-        poke7.setUserBox(testBox);
+        UserPokemon poke7 = new UserPokemon(testBox,26,unown);
         dbSession.save(poke7);
-        UserPokemonForm pokef7 = new UserPokemonForm();
-        pokef7.setId(poke7.getId());
-        PokemonForm unownb = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","b")).list().get(0);
-        pokef7.setPokemonForm(unownb);
-        pokef7.setTimestamp(new Timestamp(0));
-        dbSession.save(pokef7);
-        UserPokemon poke8 = new UserPokemon();
-        poke8.setPosition(27);
-        poke8.setPokemon(unown);
-        poke8.setUserBox(testBox);
+        PokemonForm unownB = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","b")).list().get(0);
+        UserPokemonForm upf7 = new UserPokemonForm(poke7,unownB);
+        dbSession.save(upf7);
+
+        UserPokemon poke8 = new UserPokemon(testBox,27,unown);
         dbSession.save(poke8);
-        UserPokemonForm pokef8 = new UserPokemonForm();
-        pokef8.setId(poke8.getId());
-        PokemonForm unownu = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","u")).list().get(0);
-        pokef8.setPokemonForm(unownu);
-        pokef8.setTimestamp(new Timestamp(0));
-        dbSession.save(pokef8);
-        UserPokemon poke9 = new UserPokemon();
-        poke9.setPosition(28);
-        poke9.setPokemon(unown);
-        poke9.setUserBox(testBox);
+        PokemonForm unownU = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","u")).list().get(0);
+        UserPokemonForm upf8 = new UserPokemonForm(poke8,unownU);
+        dbSession.save(upf8);
+
+        UserPokemon poke9 = new UserPokemon(testBox,28,unown);
         dbSession.save(poke9);
-        UserPokemonForm pokef9 = new UserPokemonForm();
-        pokef9.setId(poke9.getId());
-        PokemonForm unownt = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","t")).list().get(0);
-        pokef9.setPokemonForm(unownt);
-        pokef9.setTimestamp(new Timestamp(0));
-        dbSession.save(pokef9);
-        UserPokemon poke10 = new UserPokemon();
-        poke10.setPosition(29);
-        poke10.setPokemon(unown);
-        poke10.setUserBox(testBox);
+        PokemonForm unownT = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","t")).list().get(0);
+        UserPokemonForm upf9 = new UserPokemonForm(poke9,unownT);
+        dbSession.save(upf9);
+
+        UserPokemon poke10 = new UserPokemon(testBox,29,unown);
         dbSession.save(poke10);
-        UserPokemonForm pokef10 = new UserPokemonForm();
-        pokef10.setId(poke10.getId());
-        pokef10.setPokemonForm(unownt);
-        pokef10.setTimestamp(new Timestamp(0));
-        dbSession.save(pokef10);
+        UserPokemonForm upf10 = new UserPokemonForm(poke10,unownT);
+        dbSession.save(upf10);
         dbSession.flush();
     }
 }
