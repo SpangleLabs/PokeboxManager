@@ -147,7 +147,6 @@ public class SideBar {
             UserPokemonForm upf = userPokemon.getUserPokemonForm();
             if(upf != null) {
                 form = upf.getPokemonForm();
-                System.out.println(form.getName());
             }
             UserPokemonSex ups = userPokemon.getUserPokemonSex();
             int x_coord = form.getSpriteFemaleX();
