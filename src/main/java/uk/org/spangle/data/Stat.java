@@ -43,7 +43,7 @@ public class Stat {
         return abbr;
     }
 
-    public void setAbbr(String name) {
+    public void setAbbr(String abbr) {
         this.abbr = abbr;
     }
 }
