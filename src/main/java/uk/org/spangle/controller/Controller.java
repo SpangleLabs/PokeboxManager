@@ -66,8 +66,8 @@ public class Controller {
         int y = (int) t.getY();
         int box_x = x/30;
         int box_y = y/30;
-        int position = box_y*6 + box_x + 1;
         UserBox userBox = conf.getCurrentGame().getCurrentBox();
+        int position = box_y*(userBox.getColumns()) + box_x + 1;
         List list = session.createCriteria(UserPokemon.class).add(Restrictions.eq("userBox",userBox)).add(Restrictions.eq("position",position)).list();
         if(list.size() == 0) {
             System.out.println("No pokemon here");
