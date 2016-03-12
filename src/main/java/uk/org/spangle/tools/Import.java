@@ -14,6 +14,8 @@ public class Import {
         imp3.run();
         ImportStatsAndNatures imp4 = new ImportStatsAndNatures();
         imp4.run();
+        ImportLanguages imp6 = new ImportLanguages();
+        imp6.run();
         ImportTestUserData imp5 = new ImportTestUserData();
         imp5.run();
     }
