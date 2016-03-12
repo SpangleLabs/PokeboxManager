@@ -19,8 +19,7 @@ public class UserPokemon {
         // this form used by Hibernate
     }
 
-    public UserPokemon(int id, UserBox userBox, int position, Pokemon pokemon) {
-        this.id = id;
+    public UserPokemon(UserBox userBox, int position, Pokemon pokemon) {
         this.userBox = userBox;
         this.position = position;
         this.pokemon = pokemon;
