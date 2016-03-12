@@ -6,6 +6,7 @@ import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserGame;
 import uk.org.spangle.data.UserPokemon;
+import uk.org.spangle.data.UserPokemonNickname;
 import uk.org.spangle.model.Configuration;
 import uk.org.spangle.view.App;
 
@@ -74,7 +75,12 @@ public class Controller {
             clickCanvasEmpty(position);
         } else {
             UserPokemon userPokemon = (UserPokemon) list.get(0);
-            System.out.println(userPokemon.getNickname());
+            UserPokemonNickname upn = userPokemon.getUserPokemonNickname();
+            if(upn == null) {
+                System.out.println("No nickname.");
+            } else {
+                System.out.println(upn.getNickname());
+            }
         }
 
     }
