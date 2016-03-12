@@ -37,7 +37,8 @@ public class UserPokemonNature {
         this.userPokemon = userPokemon;
     }
 
-    @Column(name = "nature")
+    @ManyToOne
+    @JoinColumn(name="nature_id")
     public Nature getNature() {
         return nature;
     }

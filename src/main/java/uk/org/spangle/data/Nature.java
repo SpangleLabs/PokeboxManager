@@ -40,7 +40,8 @@ public class Nature {
         this.name = name;
     }
 
-    @Column(name="stat_up_id")
+    @ManyToOne
+    @JoinColumn(name="stat_up_id")
     public Stat getStatUp() {
         return statUp;
     }
@@ -49,7 +50,8 @@ public class Nature {
         this.statUp = statUp;
     }
 
-    @Column(name="stat_down_id")
+    @ManyToOne
+    @JoinColumn(name="stat_down_id")
     public Stat getStatDown() {
         return statDown;
     }
