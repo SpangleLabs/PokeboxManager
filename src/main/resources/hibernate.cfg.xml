@@ -47,6 +47,7 @@
         <mapping class="uk.org.spangle.data.UserPokemonEgg"/>
         <mapping class="uk.org.spangle.data.UserPokemonESV"/>
         <mapping class="uk.org.spangle.data.UserPokemonForm"/>
+        <mapping class="uk.org.spangle.data.UserPokemonLanguage"/>
         <mapping class="uk.org.spangle.data.UserPokemonNature"/>
         <mapping class="uk.org.spangle.data.UserPokemonNickname"/>
         <mapping class="uk.org.spangle.data.UserPokemonPokerus"/>

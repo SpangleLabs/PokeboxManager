@@ -14,6 +14,7 @@ public class UserPokemon {
     private UserPokemonEgg userPokemonEgg;
     private UserPokemonESV userPokemonESV;
     private UserPokemonForm userPokemonForm;
+    private UserPokemonLanguage userPokemonLanguage;
     private UserPokemonNature userPokemonNature;
     private UserPokemonNickname userPokemonNickname;
     private UserPokemonPokerus userPokemonPokerus;
@@ -103,6 +104,15 @@ public class UserPokemon {
 
     public void setUserPokemonForm(UserPokemonForm userPokemonForm) {
         this.userPokemonForm = userPokemonForm;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonLanguage getUserPokemonLanguage() {
+        return userPokemonLanguage;
+    }
+
+    public void setUserPokemonLanguage(UserPokemonLanguage userPokemonLanguage) {
+        this.userPokemonLanguage = userPokemonLanguage;
     }
 
     @OneToOne(mappedBy="userPokemon")
