@@ -80,7 +80,7 @@ public class ImportGenerations {
         party.setGeneration(gen);
         party.setOrdinal(1);
         party.setSize(6);
-        party.setColumns(6);
+        party.setColumns(2);
         party.setName("Party");
         dbSession.saveOrUpdate(party);
         // Boxes
@@ -105,7 +105,7 @@ public class ImportGenerations {
         party.setGeneration(gen);
         party.setOrdinal(1);
         party.setSize(6);
-        party.setColumns(6);
+        party.setColumns(2);
         party.setName("Party");
         dbSession.saveOrUpdate(party);
         // Add boxes
@@ -138,7 +138,7 @@ public class ImportGenerations {
         party.setGeneration(gen);
         party.setOrdinal(1);
         party.setSize(6);
-        party.setColumns(6);
+        party.setColumns(2);
         party.setName("Party");
         dbSession.saveOrUpdate(party);
         // Add boxes
@@ -171,7 +171,7 @@ public class ImportGenerations {
         party.setGeneration(gen);
         party.setOrdinal(1);
         party.setSize(6);
-        party.setColumns(6);
+        party.setColumns(2);
         party.setName("Party");
         dbSession.saveOrUpdate(party);
         // Add boxes
@@ -212,7 +212,7 @@ public class ImportGenerations {
         party.setGeneration(gen);
         party.setOrdinal(1);
         party.setSize(6);
-        party.setColumns(6);
+        party.setColumns(2);
         party.setName("Party");
         dbSession.saveOrUpdate(party);
         // Add boxes
@@ -261,7 +261,7 @@ public class ImportGenerations {
         party.setGeneration(gen);
         party.setOrdinal(1);
         party.setSize(6);
-        party.setColumns(6);
+        party.setColumns(2);
         party.setName("Party");
         dbSession.saveOrUpdate(party);
         // Add boxes
