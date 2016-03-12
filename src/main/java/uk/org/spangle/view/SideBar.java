@@ -27,7 +27,7 @@ import java.util.List;
 public class SideBar {
     Pane sideBarPane;
     ChoiceBox<UserGame> gameDropdown;
-    ChoiceBox<String> boxDropdown;
+    ChoiceBox<UserBox> boxDropdown;
     Canvas boxCanvas;
     UserGame currentGame = null;
     Session session;
@@ -95,14 +95,13 @@ public class SideBar {
         return gameDropdown;
     }
 
-    public ChoiceBox<String> createBoxDropdown() {
+    public ChoiceBox<UserBox> createBoxDropdown() {
         boxDropdown = new ChoiceBox<>();
         updateBoxDropdown();
-        boxDropdown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+        boxDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<UserBox>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number old_value, Number new_value) {
-                if(new_value.intValue() == -1) return;
-                controller.updateBox(currentGame,new_value.intValue());
+            public void changed(ObservableValue<? extends UserBox> observableValue, UserBox old_value, UserBox new_value) {
+                if(new_value != null) controller.updateBox(currentGame,new_value);
             }
         });
         return boxDropdown;
@@ -110,16 +109,11 @@ public class SideBar {
 
     public void updateBoxDropdown() {
         List<UserBox> listBoxes = currentGame.getUserBoxes();
-        List<String> listNames = new ArrayList<>();
-        System.out.println(listBoxes);
-        for(UserBox userBox : listBoxes) {
-            listNames.add(userBox.getName());
-        }
-        boxDropdown.setItems(FXCollections.observableArrayList(listNames));
+        boxDropdown.setItems(FXCollections.observableArrayList(listBoxes));
         boxDropdown.setValue(null);
         UserBox currentBox = currentGame.getCurrentBox();
         if(currentBox != null) {
-            boxDropdown.setValue(currentBox.getName());
+            boxDropdown.setValue(currentBox);
         }
     }
 
@@ -146,7 +140,8 @@ public class SideBar {
         Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
 
         // Get list of user pokemon:
-        List<UserPokemon> pokemonList = currentGame.getCurrentBox().getUserPokemons();
+        List<UserPokemon> pokemonList = new ArrayList<>();
+        if(currentGame.getCurrentBox() != null) pokemonList = currentGame.getCurrentBox().getUserPokemons();
         for(UserPokemon userPokemon : pokemonList) {
             Pokemon pokemon = userPokemon.getPokemon();
             PokemonForm form = pokemon.getPokemonForms().get(0);

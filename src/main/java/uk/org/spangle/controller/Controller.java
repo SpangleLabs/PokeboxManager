@@ -27,11 +27,10 @@ public class Controller {
         app.getSideBar().setGame(value);
     }
 
-    public void updateBox(UserGame currentGame, int gameNum) {
-        UserBox userBox = currentGame.getUserBoxes().get(gameNum);
-        session.beginTransaction();
-        currentGame.setCurrentBox(userBox);
-        session.getTransaction().commit();
+    public void updateBox(UserGame currentGame, UserBox currentBox) {
+        currentGame.setCurrentBox(currentBox);
+        session.update(currentGame);
+        session.flush();
         app.getSideBar().updateBoxCanvas();
     }
 

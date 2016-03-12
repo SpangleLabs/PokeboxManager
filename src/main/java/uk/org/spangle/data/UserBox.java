@@ -103,4 +103,9 @@ public class UserBox {
     public void setUserPokemons(List<UserPokemon> userPokemons) {
         this.userPokemons = userPokemons;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
