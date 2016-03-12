@@ -145,8 +145,16 @@ public class SideBar {
         for(UserPokemon userPokemon : pokemonList) {
             Pokemon pokemon = userPokemon.getPokemon();
             PokemonForm form = pokemon.getPokemonForms().get(0);
-            int x_coord = form.getSpriteMaleX();
-            int y_coord = form.getSpriteMaleY();
+            UserPokemonSex ups = userPokemon.getUserPokemonSex();
+            int x_coord;
+            int y_coord;
+            if(ups == null || ups.getIsMale()) {
+                x_coord = form.getSpriteMaleX();
+                y_coord = form.getSpriteMaleY();
+            } else {
+                x_coord = form.getSpriteFemaleX();
+                y_coord = form.getSpriteFemaleY();
+            }
             int box_x = ((userPokemon.getPosition()-1) % currentGame.getCurrentBox().getColumns()) *30;
             int box_y = ((userPokemon.getPosition()-1) / currentGame.getCurrentBox().getColumns()) *30;
             graphicsContext.drawImage(image,x_coord,y_coord,40,30,box_x,box_y,40,30);

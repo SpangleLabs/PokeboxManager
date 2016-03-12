@@ -66,7 +66,12 @@ public class ImportPokemonAndForms {
 
                 // Set is_female
                 boolean is_female = false;
-                if(name.contains("-female")) is_female = true;
+                if(name.contains("female")) {
+                    is_female = true;
+                    name = name.replace("-female-","-");
+                    name = name.replace("-female","");
+                    name = name.replace("female-","");
+                }
 
                 // Set species name
                 String species = name.split("-")[0];
