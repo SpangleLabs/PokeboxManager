@@ -79,17 +79,9 @@ public class SideBar {
 
     public ChoiceBox<UserGame> createGameDropdown() {
 
-        // now lets pull events from the database and list them
-        //session.beginTransaction();
+        // Now lets pull games list from the database
         @SuppressWarnings("unchecked")
         final List<UserGame> gameList = (List<UserGame>) session.createCriteria(UserGame.class).addOrder(Order.asc("ordinal")).list();
-        //List<String> nameList = new ArrayList<>();
-        //for (Object obj : gameList) {
-        //    UserGame event = (UserGame) obj;
-        //    nameList.add(event.getName());
-        //    if(currentGame == null) currentGame = event;
-        //}
-        //session.getTransaction().commit();
 
         ChoiceBox<UserGame> gameDropdown = new ChoiceBox<>();
         gameDropdown.setItems(FXCollections.observableArrayList(gameList));
