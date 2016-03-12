@@ -18,6 +18,7 @@ public class UserPokemonForm {
     }
 
     public UserPokemonForm(UserPokemon userPokemon, PokemonForm pokemonForm) {
+        this.id = userPokemon.getId();
         this.userPokemon = userPokemon;
         this.pokemonForm = pokemonForm;
         Date date = new Date();

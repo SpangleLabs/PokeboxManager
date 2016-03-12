@@ -18,6 +18,7 @@ public class UserPokemonNature {
     }
 
     public UserPokemonNature(UserPokemon userPokemon, Nature nature) {
+        this.id = userPokemon.getId();
         this.userPokemon = userPokemon;
         this.nature = nature;
         Date date = new Date();

@@ -18,6 +18,7 @@ public class UserPokemonSex {
     }
 
     public UserPokemonSex(UserPokemon userPokemon, boolean isMale) {
+        this.id = userPokemon.getId();
         this.userPokemon = userPokemon;
         this.isMale = isMale;
         Date date = new Date();

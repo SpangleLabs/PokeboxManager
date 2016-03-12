@@ -18,6 +18,7 @@ public class UserPokemonNickname {
     }
 
     public UserPokemonNickname(UserPokemon userPokemon, String nickname) {
+        this.id = userPokemon.getId();
         this.userPokemon = userPokemon;
         this.nickname = nickname;
         Date date = new Date();
