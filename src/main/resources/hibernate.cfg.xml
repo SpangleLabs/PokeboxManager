@@ -42,9 +42,13 @@
         <mapping class="uk.org.spangle.data.UserConfig"/>
         <mapping class="uk.org.spangle.data.UserGame"/>
         <mapping class="uk.org.spangle.data.UserPokemon"/>
+        <mapping class="uk.org.spangle.data.UserPokemonBall"/>
+        <mapping class="uk.org.spangle.data.UserPokemonEgg"/>
+        <mapping class="uk.org.spangle.data.UserPokemonESV"/>
         <mapping class="uk.org.spangle.data.UserPokemonForm"/>
         <mapping class="uk.org.spangle.data.UserPokemonNature"/>
         <mapping class="uk.org.spangle.data.UserPokemonNickname"/>
+        <mapping class="uk.org.spangle.data.UserPokemonPokerus"/>
         <mapping class="uk.org.spangle.data.UserPokemonSex"/>
 
     </session-factory>

@@ -10,9 +10,13 @@ public class UserPokemon {
     private UserBox userBox;
     private int position;
     private Pokemon pokemon;
+    private UserPokemonBall userPokemonBall;
+    private UserPokemonEgg userPokemonEgg;
+    private UserPokemonESV userPokemonESV;
     private UserPokemonForm userPokemonForm;
     private UserPokemonNature userPokemonNature;
     private UserPokemonNickname userPokemonNickname;
+    private UserPokemonPokerus userPokemonPokerus;
     private UserPokemonSex userPokemonSex;
 
     public UserPokemon() {
@@ -66,6 +70,33 @@ public class UserPokemon {
     }
 
     @OneToOne(mappedBy="userPokemon")
+    public UserPokemonBall getUserPokemonBall() {
+        return userPokemonBall;
+    }
+
+    public void setUserPokemonBall(UserPokemonBall userPokemonBall) {
+        this.userPokemonBall = userPokemonBall;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonEgg getUserPokemonEgg() {
+        return userPokemonEgg;
+    }
+
+    public void setUserPokemonEgg(UserPokemonEgg userPokemonEgg) {
+        this.userPokemonEgg = userPokemonEgg;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonESV getUserPokemonESV() {
+        return userPokemonESV;
+    }
+
+    public void setUserPokemonESV(UserPokemonESV userPokemonESV) {
+        this.userPokemonESV = userPokemonESV;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
     public UserPokemonForm getUserPokemonForm() {
         return userPokemonForm;
     }
@@ -90,6 +121,15 @@ public class UserPokemon {
 
     public void setUserPokemonNickname(UserPokemonNickname userPokemonNickname) {
         this.userPokemonNickname = userPokemonNickname;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonPokerus getUserPokemonPokerus() {
+        return userPokemonPokerus;
+    }
+
+    public void setUserPokemonPokerus(UserPokemonPokerus userPokemonPokerus) {
+        this.userPokemonPokerus = userPokemonPokerus;
     }
 
     @OneToOne(mappedBy="userPokemon")
