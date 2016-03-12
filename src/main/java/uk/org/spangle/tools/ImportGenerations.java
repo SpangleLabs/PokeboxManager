@@ -27,6 +27,8 @@ public class ImportGenerations {
         List listGens = dbSession.createCriteria(Generation.class).list();
         if(listGens.size() > 0) {
             System.out.println("Generations have already been imported.");
+            dbSession.close();
+            sessionFactory.close();
             return;
         }
 

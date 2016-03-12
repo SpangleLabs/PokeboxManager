@@ -28,6 +28,8 @@ public class ImportTestUserData {
         List listGens = dbSession.createCriteria(UserGame.class).list();
         if(listGens.size() > 0) {
             System.out.println("User data has already been imported.");
+            dbSession.close();
+            sessionFactory.close();
             return;
         }
 

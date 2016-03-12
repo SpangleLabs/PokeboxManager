@@ -27,6 +27,8 @@ public class ImportPokeBalls {
         List listGens = dbSession.createCriteria(PokeBall.class).list();
         if(listGens.size() > 0) {
             System.out.println("PokeBalls have already been imported.");
+            dbSession.close();
+            sessionFactory.close();
             return;
         }
 
