@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -141,7 +142,12 @@ public class SideBar {
 
         // Get list of user pokemon:
         List<UserPokemon> pokemonList = new ArrayList<>();
-        if(currentGame.getCurrentBox() != null) pokemonList = currentGame.getCurrentBox().getUserPokemons();
+        if(currentGame.getCurrentBox() != null) {
+            UserBox currentBox = currentGame.getCurrentBox();
+            graphicsContext.setFill(Color.PALEGREEN);
+            graphicsContext.fillRect(0,0,currentBox.getColumns()*30,currentBox.getSize()/currentBox.getColumns()*30);
+            pokemonList = currentBox.getUserPokemons();
+        }
         for(UserPokemon userPokemon : pokemonList) {
             PokemonForm form = userPokemon.getPokemon().getPokemonForms().get(0);
             UserPokemonForm upf = userPokemon.getUserPokemonForm();
