@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -81,6 +82,7 @@ public class ImportTestUserData {
         Pokemon persian = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",53)).list().get(0);
         Pokemon dragonair = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",148)).list().get(0);
         Pokemon meowstic = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",678)).list().get(0);
+        Pokemon unown = (Pokemon) dbSession.createCriteria(Pokemon.class).add(Restrictions.eq("nationalDex",201)).list().get(0);
         UserPokemon poke1 = new UserPokemon();
         poke1.setNickname("Bulby");
         poke1.setPosition(1);
@@ -103,15 +105,59 @@ public class ImportTestUserData {
         poke4.setPokemon(dragonair);
         poke4.setUserBox(testBox);
         dbSession.save(poke4);
+
+        // Create meowstics for sexed sprites
         UserPokemon poke5 = new UserPokemon();
         poke5.setPosition(20);
         poke5.setPokemon(meowstic);
         poke5.setUserBox(testBox);
         dbSession.save(poke5);
+        UserPokemonSex pokes5 = new UserPokemonSex();
+        pokes5.setId(poke5.getId());
+        pokes5.setIsMale(false);
+        pokes5.setTimestamp(new Timestamp(0));
+        dbSession.save(pokes5);
         UserPokemon poke6 = new UserPokemon();
         poke6.setPosition(21);
         poke6.setPokemon(meowstic);
         poke6.setUserBox(testBox);
         dbSession.save(poke6);
+        UserPokemonSex pokes6 = new UserPokemonSex();
+        pokes6.setId(poke6.getId());
+        pokes6.setIsMale(true);
+        pokes6.setTimestamp(new Timestamp(0));
+        dbSession.save(pokes6);
+
+        // Create unowns for different forms
+        UserPokemon poke7 = new UserPokemon();
+        poke7.setPosition(26);
+        poke7.setPokemon(unown);
+        poke7.setUserBox(testBox);
+        dbSession.save(poke7);
+        UserPokemonForm pokef7 = new UserPokemonForm();
+        pokef7.setId(poke7.getId());
+        pokef7.setPokemonForm(unown.getPokemonForms().get(0));
+        pokef7.setTimestamp(new Timestamp(0));
+        dbSession.save(pokef7);
+        UserPokemon poke8 = new UserPokemon();
+        poke8.setPosition(27);
+        poke8.setPokemon(unown);
+        poke8.setUserBox(testBox);
+        dbSession.save(poke8);
+        UserPokemonForm pokef8 = new UserPokemonForm();
+        pokef8.setId(poke8.getId());
+        pokef8.setPokemonForm(unown.getPokemonForms().get(2));
+        pokef8.setTimestamp(new Timestamp(0));
+        dbSession.save(pokef8);
+        UserPokemon poke9 = new UserPokemon();
+        poke9.setPosition(28);
+        poke9.setPokemon(unown);
+        poke9.setUserBox(testBox);
+        dbSession.save(poke9);
+        UserPokemonForm pokef9 = new UserPokemonForm();
+        pokef9.setId(poke9.getId());
+        pokef9.setPokemonForm(unown.getPokemonForms().get(4));
+        pokef9.setTimestamp(new Timestamp(0));
+        dbSession.save(pokef9);
     }
 }
