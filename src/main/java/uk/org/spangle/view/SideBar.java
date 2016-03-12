@@ -143,8 +143,12 @@ public class SideBar {
         List<UserPokemon> pokemonList = new ArrayList<>();
         if(currentGame.getCurrentBox() != null) pokemonList = currentGame.getCurrentBox().getUserPokemons();
         for(UserPokemon userPokemon : pokemonList) {
-            Pokemon pokemon = userPokemon.getPokemon();
-            PokemonForm form = pokemon.getPokemonForms().get(0);
+            PokemonForm form = userPokemon.getPokemon().getPokemonForms().get(0);
+            UserPokemonForm upf = userPokemon.getUserPokemonForm();
+            if(upf != null) {
+                form = upf.getPokemonForm();
+                System.out.println(form.getName());
+            }
             UserPokemonSex ups = userPokemon.getUserPokemonSex();
             int x_coord = form.getSpriteFemaleX();
             int y_coord = form.getSpriteFemaleY();
