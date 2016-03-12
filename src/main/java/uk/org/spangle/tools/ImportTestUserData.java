@@ -138,7 +138,8 @@ public class ImportTestUserData {
         dbSession.save(poke7);
         UserPokemonForm pokef7 = new UserPokemonForm();
         pokef7.setId(poke7.getId());
-        pokef7.setPokemonForm(unown.getPokemonForms().get(0));
+        PokemonForm unownb = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","b")).list().get(0);
+        pokef7.setPokemonForm(unownb);
         pokef7.setTimestamp(new Timestamp(0));
         dbSession.save(pokef7);
         UserPokemon poke8 = new UserPokemon();
@@ -148,7 +149,8 @@ public class ImportTestUserData {
         dbSession.save(poke8);
         UserPokemonForm pokef8 = new UserPokemonForm();
         pokef8.setId(poke8.getId());
-        pokef8.setPokemonForm(unown.getPokemonForms().get(2));
+        PokemonForm unownu = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","u")).list().get(0);
+        pokef8.setPokemonForm(unownu);
         pokef8.setTimestamp(new Timestamp(0));
         dbSession.save(pokef8);
         UserPokemon poke9 = new UserPokemon();
@@ -158,8 +160,19 @@ public class ImportTestUserData {
         dbSession.save(poke9);
         UserPokemonForm pokef9 = new UserPokemonForm();
         pokef9.setId(poke9.getId());
-        pokef9.setPokemonForm(unown.getPokemonForms().get(4));
+        PokemonForm unownt = (PokemonForm) dbSession.createCriteria(PokemonForm.class).add(Restrictions.eq("pokemon",unown)).add(Restrictions.eq("name","t")).list().get(0);
+        pokef9.setPokemonForm(unownt);
         pokef9.setTimestamp(new Timestamp(0));
         dbSession.save(pokef9);
+        UserPokemon poke10 = new UserPokemon();
+        poke10.setPosition(29);
+        poke10.setPokemon(unown);
+        poke10.setUserBox(testBox);
+        dbSession.save(poke10);
+        UserPokemonForm pokef10 = new UserPokemonForm();
+        pokef10.setId(poke10.getId());
+        pokef10.setPokemonForm(unownt);
+        pokef10.setTimestamp(new Timestamp(0));
+        dbSession.save(pokef10);
     }
 }
