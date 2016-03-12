@@ -17,7 +17,7 @@ public class UserPokemonSex {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    //@GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="user_pokemon_id")
     public int getId() {
         return id;
