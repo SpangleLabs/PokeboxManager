@@ -174,5 +174,6 @@ public class ImportTestUserData {
         pokef10.setPokemonForm(unownt);
         pokef10.setTimestamp(new Timestamp(0));
         dbSession.save(pokef10);
+        dbSession.flush();
     }
 }
