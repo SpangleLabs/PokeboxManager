@@ -10,8 +10,8 @@ public class UserPokemon {
     private UserBox userBox;
     private int position;
     private Pokemon pokemon;
-    private String nickname;
     private UserPokemonForm userPokemonForm;
+    private UserPokemonNature userPokemonNature;
     private UserPokemonNickname userPokemonNickname;
     private UserPokemonSex userPokemonSex;
 
@@ -19,10 +19,11 @@ public class UserPokemon {
         // this form used by Hibernate
     }
 
-    public UserPokemon(int id, int position, String nickname) {
+    public UserPokemon(int id, UserBox userBox, int position, Pokemon pokemon) {
         this.id = id;
+        this.userBox = userBox;
         this.position = position;
-        this.nickname = nickname;
+        this.pokemon = pokemon;
     }
 
     @Id
@@ -65,15 +66,6 @@ public class UserPokemon {
         this.pokemon = pokemon;
     }
 
-    @Column(name = "nickname")
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     @OneToOne(mappedBy="userPokemon")
     public UserPokemonForm getUserPokemonForm() {
         return userPokemonForm;
@@ -81,6 +73,15 @@ public class UserPokemon {
 
     public void setUserPokemonForm(UserPokemonForm userPokemonForm) {
         this.userPokemonForm = userPokemonForm;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonNature getUserPokemonNature() {
+        return userPokemonNature;
+    }
+
+    public void setUserPokemonNature(UserPokemonNature userPokemonNature) {
+        this.userPokemonNature = userPokemonNature;
     }
 
     @OneToOne(mappedBy="userPokemon")
