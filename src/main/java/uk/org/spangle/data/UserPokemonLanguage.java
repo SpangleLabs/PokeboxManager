@@ -47,7 +47,7 @@ public class UserPokemonLanguage {
     }
 
     @ManyToOne
-    @JoinColumn(name="pokemon_form_id")
+    @JoinColumn(name="language_id")
     public Language getLanguage() {
         return language;
     }

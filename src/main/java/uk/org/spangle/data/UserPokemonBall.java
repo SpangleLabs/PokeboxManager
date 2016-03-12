@@ -46,7 +46,8 @@ public class UserPokemonBall {
         this.userPokemon = userPokemon;
     }
 
-    @Column(name = "pokeball_id")
+    @ManyToOne
+    @JoinColumn(name="pokeball_id")
     public PokeBall getPokeBall() {
         return pokeBall;
     }
