@@ -33,14 +33,18 @@
 
         <mapping class="uk.org.spangle.data.Generation"/>
         <mapping class="uk.org.spangle.data.GenerationBox"/>
+        <mapping class="uk.org.spangle.data.Nature"/>
         <mapping class="uk.org.spangle.data.PokeBall"/>
         <mapping class="uk.org.spangle.data.Pokemon"/>
         <mapping class="uk.org.spangle.data.PokemonForm"/>
+        <mapping class="uk.org.spangle.data.Stat"/>
         <mapping class="uk.org.spangle.data.UserBox"/>
         <mapping class="uk.org.spangle.data.UserConfig"/>
         <mapping class="uk.org.spangle.data.UserGame"/>
         <mapping class="uk.org.spangle.data.UserPokemon"/>
         <mapping class="uk.org.spangle.data.UserPokemonForm"/>
+        <mapping class="uk.org.spangle.data.UserPokemonNature"/>
+        <mapping class="uk.org.spangle.data.UserPokemonNickname"/>
         <mapping class="uk.org.spangle.data.UserPokemonSex"/>
 
     </session-factory>
