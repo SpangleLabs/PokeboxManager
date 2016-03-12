@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SideBar {
     Pane sideBarPane;
-    ChoiceBox<String> gameDropdown;
+    ChoiceBox<UserGame> gameDropdown;
     ChoiceBox<String> boxDropdown;
     Canvas boxCanvas;
     UserGame currentGame = null;
@@ -77,28 +77,27 @@ public class SideBar {
         sideBarPane.getChildren().add(sideBarVBox);
     }
 
-    public ChoiceBox<String> createGameDropdown() {
+    public ChoiceBox<UserGame> createGameDropdown() {
 
         // now lets pull events from the database and list them
-        session.beginTransaction();
+        //session.beginTransaction();
         @SuppressWarnings("unchecked")
         final List<UserGame> gameList = (List<UserGame>) session.createCriteria(UserGame.class).addOrder(Order.asc("ordinal")).list();
-        List<String> nameList = new ArrayList<>();
-        for (Object obj : gameList) {
-            UserGame event = (UserGame) obj;
-            nameList.add(event.getName());
-            if(currentGame == null) currentGame = event;
-        }
-        session.getTransaction().commit();
+        //List<String> nameList = new ArrayList<>();
+        //for (Object obj : gameList) {
+        //    UserGame event = (UserGame) obj;
+        //    nameList.add(event.getName());
+        //    if(currentGame == null) currentGame = event;
+        //}
+        //session.getTransaction().commit();
 
-        ChoiceBox<String> gameDropdown = new ChoiceBox<>();
-        gameDropdown.setItems(FXCollections.observableArrayList(nameList));
-        gameDropdown.setValue(currentGame.getName());
-        gameDropdown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+        ChoiceBox<UserGame> gameDropdown = new ChoiceBox<>();
+        gameDropdown.setItems(FXCollections.observableArrayList(gameList));
+        gameDropdown.setValue(currentGame);
+        gameDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<UserGame>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number old_value, Number new_value) {
-                UserGame selectedGame = gameList.get(new_value.intValue());
-                controller.updateGame(selectedGame);
+            public void changed(ObservableValue<? extends UserGame> observableValue, UserGame old_value, UserGame new_value) {
+                controller.updateGame(new_value);
             }
         });
         return gameDropdown;

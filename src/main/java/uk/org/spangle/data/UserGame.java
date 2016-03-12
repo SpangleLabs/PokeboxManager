@@ -94,4 +94,9 @@ public class UserGame {
     public void setCurrentBox(UserBox currentBox) {
         this.currentBox = currentBox;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
