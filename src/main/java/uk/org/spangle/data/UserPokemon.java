@@ -12,6 +12,7 @@ public class UserPokemon {
     private Pokemon pokemon;
     private String nickname;
     private UserPokemonForm userPokemonForm;
+    private UserPokemonNickname userPokemonNickname;
     private UserPokemonSex userPokemonSex;
 
     public UserPokemon() {
@@ -80,6 +81,15 @@ public class UserPokemon {
 
     public void setUserPokemonForm(UserPokemonForm userPokemonForm) {
         this.userPokemonForm = userPokemonForm;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonNickname getUserPokemonNickname() {
+        return userPokemonNickname;
+    }
+
+    public void setUserPokemonNickname(UserPokemonNickname userPokemonNickname) {
+        this.userPokemonNickname = userPokemonNickname;
     }
 
     @OneToOne(mappedBy="userPokemon")
