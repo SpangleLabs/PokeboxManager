@@ -14,8 +14,7 @@ public class UserConfig {
         // this form used by Hibernate
     }
 
-    public UserConfig(int id, String key, String value) {
-        this.id = id;
+    public UserConfig(String key, String value) {
         this.key = key;
         this.value = value;
     }
