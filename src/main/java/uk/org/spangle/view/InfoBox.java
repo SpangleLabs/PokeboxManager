@@ -47,7 +47,7 @@ public class InfoBox {
         AutoCompleteTextField speciesBox = new AutoCompleteTextField();
         List listSpecies = session.createCriteria(Pokemon.class).addOrder(Order.asc("nationalDex")).list();
         for(Object species : listSpecies) {
-            speciesBox.getEntries().add(((Pokemon)species).getName());
+            speciesBox.getEntries().add((Pokemon)species);
         }
         HBox species = new HBox();
         species.getChildren().addAll(speciesText,speciesBox);

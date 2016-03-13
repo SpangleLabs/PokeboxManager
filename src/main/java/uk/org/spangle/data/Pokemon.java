@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "pokemon")
-public class Pokemon {
+public class Pokemon implements Comparable {
 
     private int id;
     private String name;
@@ -77,5 +77,14 @@ public class Pokemon {
 
     public String toString() {
         return Integer.toString(id);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o instanceof Pokemon) {
+            Pokemon other = (Pokemon) o;
+            return this.getName().compareTo(other.getName());
+        }
+        return 0;
     }
 }

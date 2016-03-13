@@ -5,10 +5,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import uk.org.spangle.data.Pokemon;
+import uk.org.spangle.data.PokemonForm;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +40,7 @@ public class AutoCompleteTextField extends TextField {
     /**
      * The existing autocomplete entries.
      */
-    private final SortedSet<String> entries;
+    private final SortedSet<Pokemon> entries;
 
     /**
      * The popup used to select an entry.
@@ -59,14 +66,14 @@ public class AutoCompleteTextField extends TextField {
                 if (getText().length() == 0) {
                     entriesPopup.hide();
                 } else {
-                    LinkedList<String> searchResult = new LinkedList<>();
+                    LinkedList<Pokemon> searchResult = new LinkedList<>();
 
                     //Check if the entered Text is part of some entry
                     String text = getText();
                     Pattern pattern = Pattern.compile(".*" + text + ".*", Pattern.CASE_INSENSITIVE);
 
-                    for (String entry : entries) {
-                        Matcher matcher = pattern.matcher(entry);
+                    for (Pokemon entry : entries) {
+                        Matcher matcher = pattern.matcher(entry.getName());
                         if (matcher.matches()) {
                             searchResult.add(entry);
                         }
@@ -98,7 +105,7 @@ public class AutoCompleteTextField extends TextField {
      *
      * @return The existing autocomplete entries.
      */
-    public SortedSet<String> getEntries() {
+    public SortedSet<Pokemon> getEntries() {
         return entries;
     }
 
@@ -108,13 +115,21 @@ public class AutoCompleteTextField extends TextField {
      *
      * @param searchResult The set of matching strings.
      */
-    private void populatePopup(List<String> searchResult) {
+    private void populatePopup(List<Pokemon> searchResult) {
         List<CustomMenuItem> menuItems = new LinkedList<>();
         int count = Math.min(searchResult.size(), MAX_ENTRIES);
+        Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
         for (int i = 0; i < count; i++) {
-            final String result = searchResult.get(i);
+            Pokemon pokemon = searchResult.get(i);
+            PokemonForm form = pokemon.getPokemonForms().get(0);
+            final String result = pokemon.getName();
             Label entryLabel = new Label(result);
-            CustomMenuItem item = new CustomMenuItem(entryLabel, true);
+            Canvas entrySprite = new Canvas(30,30);
+            GraphicsContext ctx = entrySprite.getGraphicsContext2D();
+            ctx.drawImage(image,form.getSpriteFemaleX(),form.getSpriteFemaleY(),40,30,-5,0,40,30);
+            HBox entry = new HBox();
+            entry.getChildren().setAll(entrySprite,entryLabel);
+            CustomMenuItem item = new CustomMenuItem(entry, true);
             item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
