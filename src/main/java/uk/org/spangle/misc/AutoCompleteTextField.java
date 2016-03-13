@@ -14,43 +14,70 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * This class is a TextField which implements an "autocomplete" functionality, based on a supplied list of entries.
+ * This class is a TextField which implements an "autocomplete" functionality,
+ * based on a supplied list of entries.<p>
+ *
+ * If the entered text matches a part of any of the supplied entries these are
+ * going to be displayed in a popup.
+ * .<p></p>
+ *
  * @author Caleb Brinkman
+ * @author Fabian Ochmann
  */
-public class AutoCompleteTextField extends TextField
-{
-    /** The existing autocomplete entries. */
+public class AutoCompleteTextField extends TextField {
+
+    /**
+     * The existing autocomplete entries.
+     */
     private final SortedSet<String> entries;
-    /** The popup used to select an entry. */
+
+    /**
+     * The popup used to select an entry.
+     */
     private ContextMenu entriesPopup;
 
-    /** Construct a new AutoCompleteTextField. */
+    /**
+     * The maximum Number of entries displayed in the popup.<br>
+     * Default: 10
+     */
+    private static final int MAX_ENTRIES = 10;
+
+    /**
+     * Construct a new AutoCompleteTextField.
+     */
     public AutoCompleteTextField() {
         super();
-        entries = new TreeSet<>();
+        this.entries = new TreeSet<>();
         entriesPopup = new ContextMenu();
-        textProperty().addListener(new ChangeListener<String>()
-        {
+        textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
-                if (getText().length() == 0)
-                {
+                if (getText().length() == 0) {
                     entriesPopup.hide();
-                } else
-                {
+                } else {
                     LinkedList<String> searchResult = new LinkedList<>();
-                    searchResult.addAll(entries.subSet(getText(), getText() + Character.MAX_VALUE));
-                    if (entries.size() > 0)
-                    {
+
+                    //Check if the entered Text is part of some entry
+                    String text = getText();
+                    Pattern pattern = Pattern.compile(".*" + text + ".*", Pattern.CASE_INSENSITIVE);
+
+                    for (String entry : entries) {
+                        Matcher matcher = pattern.matcher(entry);
+                        if (matcher.matches()) {
+                            searchResult.add(entry);
+                        }
+                    }
+
+                    if (entries.size() > 0) {
                         populatePopup(searchResult);
-                        if (!entriesPopup.isShowing())
-                        {
+                        if (!entriesPopup.isShowing()) {
                             entriesPopup.show(AutoCompleteTextField.this, Side.BOTTOM, 0, 0);
                         }
-                    } else
-                    {
+                    } else {
                         entriesPopup.hide();
                     }
                 }
@@ -68,26 +95,27 @@ public class AutoCompleteTextField extends TextField
 
     /**
      * Get the existing set of autocomplete entries.
+     *
      * @return The existing autocomplete entries.
      */
-    public SortedSet<String> getEntries() { return entries; }
+    public SortedSet<String> getEntries() {
+        return entries;
+    }
 
     /**
-     * Populate the entry set with the given search results.  Display is limited to 10 entries, for performance.
+     * Populate the entry set with the given search results. Display is limited
+     * to 10 entries, for performance.
+     *
      * @param searchResult The set of matching strings.
      */
     private void populatePopup(List<String> searchResult) {
         List<CustomMenuItem> menuItems = new LinkedList<>();
-        // If you'd like more entries, modify this line.
-        int maxEntries = 10;
-        int count = Math.min(searchResult.size(), maxEntries);
-        for (int i = 0; i < count; i++)
-        {
+        int count = Math.min(searchResult.size(), MAX_ENTRIES);
+        for (int i = 0; i < count; i++) {
             final String result = searchResult.get(i);
             Label entryLabel = new Label(result);
             CustomMenuItem item = new CustomMenuItem(entryLabel, true);
-            item.setOnAction(new EventHandler<ActionEvent>()
-            {
+            item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     setText(result);
@@ -100,4 +128,5 @@ public class AutoCompleteTextField extends TextField
         entriesPopup.getItems().addAll(menuItems);
 
     }
+
 }
