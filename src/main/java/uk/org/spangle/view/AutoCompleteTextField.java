@@ -1,4 +1,4 @@
-package uk.org.spangle.misc;
+package uk.org.spangle.view;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

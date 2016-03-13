@@ -11,7 +11,6 @@ import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.Pokemon;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserPokemon;
-import uk.org.spangle.misc.AutoCompleteTextField;
 import uk.org.spangle.model.Configuration;
 
 import java.util.*;
