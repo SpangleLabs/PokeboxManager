@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import uk.org.spangle.data.Pokemon;
 import uk.org.spangle.data.PokemonForm;
 
@@ -52,6 +51,8 @@ public class AutoCompleteTextField extends TextField {
      * Default: 10
      */
     private static final int MAX_ENTRIES = 10;
+
+    private Pokemon selectedPokemon;
 
     /**
      * Construct a new AutoCompleteTextField.
@@ -120,7 +121,7 @@ public class AutoCompleteTextField extends TextField {
         int count = Math.min(searchResult.size(), MAX_ENTRIES);
         Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
         for (int i = 0; i < count; i++) {
-            Pokemon pokemon = searchResult.get(i);
+            final Pokemon pokemon = searchResult.get(i);
             PokemonForm form = pokemon.getPokemonForms().get(0);
             final String result = pokemon.getName();
             Label entryLabel = new Label(result);
@@ -134,6 +135,7 @@ public class AutoCompleteTextField extends TextField {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     setText(result);
+                    selectedPokemon = pokemon;
                     entriesPopup.hide();
                 }
             });
@@ -142,6 +144,10 @@ public class AutoCompleteTextField extends TextField {
         entriesPopup.getItems().clear();
         entriesPopup.getItems().addAll(menuItems);
 
+    }
+
+    public Pokemon getSelectedPokemon() {
+        return selectedPokemon;
     }
 
 }
