@@ -47,11 +47,11 @@ public class UserPokemonEgg {
     }
 
     @Column(name = "esv")
-    public boolean getEgg() {
+    public boolean getIsEgg() {
         return isEgg;
     }
 
-    public void setEgg(boolean isEgg) {
+    public void setIsEgg(boolean isEgg) {
         this.isEgg = isEgg;
     }
 
