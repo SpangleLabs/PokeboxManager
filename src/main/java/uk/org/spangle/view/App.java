@@ -47,7 +47,7 @@ public class App extends Application {
 
         // Construct window and show.
         primaryStage.setTitle("Hello World");
-        Scene primaryScene = new Scene(root, 300, 275);
+        Scene primaryScene = new Scene(root, 400, 275);
         primaryScene.getStylesheets().add("sample.css");
         primaryStage.setScene(primaryScene);
         primaryStage.show();
