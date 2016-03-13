@@ -81,6 +81,7 @@ public class Controller {
             } else {
                 System.out.println(upn.getNickname());
             }
+            clickCanvasPokemon(userPokemon);
         }
 
     }
@@ -88,5 +89,9 @@ public class Controller {
     public void clickCanvasEmpty(int position) {
         UserBox userBox = conf.getCurrentGame().getCurrentBox();
         app.getInfoBox().addNewPokemon(userBox,position);
+    }
+
+    public void clickCanvasPokemon(UserPokemon userPokemon) {
+        app.getInfoBox().displayPokemon(userPokemon);
     }
 }

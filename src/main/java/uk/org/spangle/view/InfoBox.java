@@ -1,16 +1,17 @@
 package uk.org.spangle.view;
 
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.Pokemon;
 import uk.org.spangle.data.UserBox;
+import uk.org.spangle.data.UserPokemon;
 import uk.org.spangle.model.Configuration;
 
 import java.util.List;
@@ -56,5 +57,90 @@ public class InfoBox {
         formRows.getChildren().addAll(title,species);
 
         infoBoxPane.getChildren().setAll(formRows);
+    }
+
+    public void displayPokemon(UserPokemon userPokemon) {
+        Text pokemonTitle = new Text(userPokemon.getPokemon().getName());
+
+        Text pokemonImage = new Text("Image would be here");
+        GridPane grid = new GridPane();
+
+        Text labelBall = new Text("Pokeball:");
+        Text pokemonBall = new Text("Unknown");
+        if(userPokemon.getUserPokemonBall() != null) {
+            pokemonBall.setText(userPokemon.getUserPokemonBall().getPokeBall().getName());
+        }
+        grid.add(labelBall,0,0);
+        grid.add(pokemonBall,1,0);
+
+        Text labelEgg = new Text("Egg:");
+        Text pokemonEgg = new Text("Unknown");
+        if(userPokemon.getUserPokemonEgg() != null) {
+            pokemonEgg.setText(userPokemon.getUserPokemonEgg().getIsEgg() ? "Is an egg" : "Not an egg");
+        }
+        grid.add(labelEgg,0,1);
+        grid.add(pokemonEgg,1,1);
+
+        Text labelESV = new Text("ESV:");
+        Text pokemonESV = new Text("Unknown");
+        if(userPokemon.getUserPokemonESV() != null) {
+            pokemonESV.setText(Integer.toString(userPokemon.getUserPokemonESV().getESV()));
+        }
+        grid.add(labelESV,0,2);
+        grid.add(pokemonESV,1,2);
+
+        Text labelForm = new Text("Form:");
+        Text pokemonForm = new Text("Unknown");
+        if(userPokemon.getUserPokemonForm() != null) {
+            pokemonForm.setText(userPokemon.getUserPokemonForm().getPokemonForm().getName());
+        }
+        grid.add(labelForm,0,3);
+        grid.add(pokemonForm,1,3);
+
+        Text labelLang = new Text("Language:");
+        Text pokemonLang = new Text("Unknown");
+        if(userPokemon.getUserPokemonLanguage() != null) {
+            pokemonLang.setText(userPokemon.getUserPokemonLanguage().getLanguage().getName());
+        }
+        grid.add(labelLang,0,4);
+        grid.add(pokemonLang,1,4);
+
+        Text labelNature = new Text("Nature:");
+        Text pokemonNature = new Text("Unknown");
+        if(userPokemon.getUserPokemonNature() != null) {
+            pokemonNature.setText(userPokemon.getUserPokemonNature().getNature().getName());
+        }
+        grid.add(labelNature,0,5);
+        grid.add(pokemonNature,1,5);
+
+        Text labelNick = new Text("Nickname:");
+        Text pokemonNick = new Text("Unknown");
+        if(userPokemon.getUserPokemonNickname() != null) {
+            pokemonNick.setText(userPokemon.getUserPokemonNickname().getNickname());
+        }
+        grid.add(labelNick,0,6);
+        grid.add(pokemonNick,1,6);
+
+        Text labelRus = new Text("Pokerus:");
+        Text pokemonRus = new Text("Unknown");
+        if(userPokemon.getUserPokemonPokerus() != null) {
+            pokemonRus.setText(userPokemon.getUserPokemonPokerus().getHasPokerus() ? "Has pokerus" : "Doesn't have pokerus");
+        }
+        grid.add(labelRus,0,7);
+        grid.add(pokemonRus,1,7);
+
+        Text labelSex = new Text("Sex:");
+        Text pokemonSex = new Text("Unknown");
+        if(userPokemon.getUserPokemonSex() != null) {
+            pokemonNick.setText(userPokemon.getUserPokemonSex().getIsMale() ? "Male" : "Female");
+        }
+        grid.add(labelSex,0,8);
+        grid.add(pokemonSex,1,8);
+
+
+        VBox rows = new VBox();
+        rows.getChildren().addAll(pokemonTitle,pokemonImage,grid);
+
+        infoBoxPane.getChildren().setAll(rows);
     }
 }
