@@ -46,7 +46,7 @@ public class UserPokemonEgg {
         this.userPokemon = userPokemon;
     }
 
-    @Column(name = "esv")
+    @Column(name = "is_egg")
     public boolean getIsEgg() {
         return isEgg;
     }
