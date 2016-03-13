@@ -42,9 +42,8 @@ public class Controller {
         // Remove 1 from index and wrap it around
         int newIndex = ((index-1) % listBoxes.size() + listBoxes.size()) % listBoxes.size();
         UserBox newBox = listBoxes.get(newIndex);
-        session.beginTransaction();
         currentGame.setCurrentBox(newBox);
-        session.getTransaction().commit();
+        session.update(currentGame);
         app.getSideBar().updateBoxDropdown();
         app.getSideBar().updateBoxCanvas();
     }
@@ -55,9 +54,8 @@ public class Controller {
         int index = listBoxes.indexOf(currentBox);
         int newIndex = (index+1) % listBoxes.size();
         UserBox newBox = listBoxes.get(newIndex);
-        session.beginTransaction();
         currentGame.setCurrentBox(newBox);
-        session.getTransaction().commit();
+        session.update(currentGame);
         app.getSideBar().updateBoxDropdown();
         app.getSideBar().updateBoxCanvas();
     }
