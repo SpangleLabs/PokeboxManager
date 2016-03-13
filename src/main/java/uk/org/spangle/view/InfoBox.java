@@ -1,6 +1,5 @@
 package uk.org.spangle.view;
 
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -12,9 +11,10 @@ import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.Pokemon;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserPokemon;
+import uk.org.spangle.misc.AutoCompleteTextField;
 import uk.org.spangle.model.Configuration;
 
-import java.util.List;
+import java.util.*;
 
 public class InfoBox {
     Pane infoBoxPane;
@@ -44,10 +44,11 @@ public class InfoBox {
         Text title = new Text("Add new pokemon");
 
         Text speciesText = new Text("Choose species:");
-        ChoiceBox<String> speciesBox = new ChoiceBox<>();
+        //ChoiceBox<String> speciesBox = new ChoiceBox<>();
+        AutoCompleteTextField speciesBox = new AutoCompleteTextField();
         List listSpecies = session.createCriteria(Pokemon.class).addOrder(Order.asc("nationalDex")).list();
         for(Object species : listSpecies) {
-            speciesBox.getItems().add(((Pokemon)species).getName());
+            speciesBox.getEntries().add(((Pokemon)species).getName());
         }
         HBox species = new HBox();
         species.getChildren().addAll(speciesText,speciesBox);
