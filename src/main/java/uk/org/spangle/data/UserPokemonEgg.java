@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_pokemon_esv")
+@Table(name = "user_pokemon_egg")
 public class UserPokemonEgg {
 
     private int id;
