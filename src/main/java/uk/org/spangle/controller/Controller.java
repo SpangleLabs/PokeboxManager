@@ -3,12 +3,10 @@ package uk.org.spangle.controller;
 import javafx.scene.input.MouseEvent;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import uk.org.spangle.data.UserBox;
-import uk.org.spangle.data.UserGame;
-import uk.org.spangle.data.UserPokemon;
-import uk.org.spangle.data.UserPokemonNickname;
+import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 import uk.org.spangle.view.App;
+import uk.org.spangle.view.AutoCompleteTextField;
 
 import java.util.List;
 
@@ -90,6 +88,24 @@ public class Controller {
     }
 
     public void clickCanvasPokemon(UserPokemon userPokemon) {
+        app.getInfoBox().displayPokemon(userPokemon);
+    }
+
+    public void addPokemon(AutoCompleteTextField speciesBox, UserBox userBox, int position) {
+        Pokemon pokemon = speciesBox.getSelectedPokemon();
+        if(pokemon == null) {
+            String pokemonName = speciesBox.getText();
+            pokemon = (Pokemon) session.createCriteria(Pokemon.class).add(Restrictions.eq("name",pokemonName)).uniqueResult();
+            if(pokemon == null) {
+                System.out.println("Invalid!");
+                return;
+            }
+        }
+        UserPokemon userPokemon = new UserPokemon(userBox,position,pokemon);
+        session.save(userPokemon);
+        session.flush();
+        session.clear();
+        app.getSideBar().updateBoxCanvas();
         app.getInfoBox().displayPokemon(userPokemon);
     }
 }

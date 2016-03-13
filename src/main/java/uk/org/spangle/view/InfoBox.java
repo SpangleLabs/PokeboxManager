@@ -1,5 +1,8 @@
 package uk.org.spangle.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -39,12 +42,12 @@ public class InfoBox {
         infoBoxPane.getChildren().add(infoBoxContents);
     }
 
-    public void addNewPokemon(UserBox userBox, int position) {
+    public void addNewPokemon(final UserBox userBox, final int position) {
         Text title = new Text("Add new pokemon");
 
         Text speciesText = new Text("Choose species:");
         //ChoiceBox<String> speciesBox = new ChoiceBox<>();
-        AutoCompleteTextField speciesBox = new AutoCompleteTextField();
+        final AutoCompleteTextField speciesBox = new AutoCompleteTextField();
         List listSpecies = session.createCriteria(Pokemon.class).addOrder(Order.asc("nationalDex")).list();
         for(Object species : listSpecies) {
             speciesBox.getEntries().add((Pokemon)species);
@@ -52,9 +55,16 @@ public class InfoBox {
         HBox species = new HBox();
         species.getChildren().addAll(speciesText,speciesBox);
 
+        Button addPokemon = new Button("Add pokemon");
+        addPokemon.setOnAction(new EventHandler<ActionEvent>() {
+                                   @Override
+                                   public void handle(ActionEvent actionEvent) {
+                                       controller.addPokemon(speciesBox,userBox,position);
+                                   }
+                               });
 
         VBox formRows = new VBox();
-        formRows.getChildren().addAll(title,species);
+        formRows.getChildren().addAll(title,species,addPokemon);
 
         infoBoxPane.getChildren().setAll(formRows);
     }
