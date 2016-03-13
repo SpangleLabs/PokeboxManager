@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.*;
+import uk.org.spangle.model.Configuration;
 
 import java.util.List;
 
@@ -70,11 +71,15 @@ public class ImportTestUserData {
         dbSession.update(y);
         dbSession.flush();
 
-        // Add config
+        // Add config entries
         UserConfig currentGameConfig = new UserConfig();
-        currentGameConfig.setKey("current_game");
+        currentGameConfig.setKey(Configuration.CURRENT_GAME);
         currentGameConfig.setValue(Integer.toString(pokebank.getId()));
         dbSession.save(currentGameConfig);
+        UserConfig hideEggsConfig = new UserConfig();
+        hideEggsConfig.setKey(Configuration.HIDE_EGGS);
+        hideEggsConfig.setValue("false");
+        dbSession.save(hideEggsConfig);
 
         // Add some test pokemon
         UserBox testBox = ruby.getUserBoxes().get(1);
