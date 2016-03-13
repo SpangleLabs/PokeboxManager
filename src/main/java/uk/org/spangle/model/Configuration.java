@@ -5,6 +5,8 @@ import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.UserConfig;
 import uk.org.spangle.data.UserGame;
 
+import java.util.List;
+
 public class Configuration {
 
     public final static String CURRENT_GAME = "current_game";
@@ -16,7 +18,9 @@ public class Configuration {
     }
 
     private UserConfig getUserConfig(String key) {
-        return (UserConfig) session.createCriteria(UserConfig.class).add(Restrictions.eq("key",key)).list().get(0);
+        List list = session.createCriteria(UserConfig.class).add(Restrictions.eq("key",key)).list();
+        if(list.size() == 0) return null;
+        return (UserConfig) list.get(0);
     }
 
     private String getUserConfigValue(String key) {
