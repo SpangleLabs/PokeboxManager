@@ -169,7 +169,7 @@ public class SideBar {
             }
             int box_x = ((userPokemon.getPosition()-1) % currentGame.getCurrentBox().getColumns()) *30;
             int box_y = ((userPokemon.getPosition()-1) / currentGame.getCurrentBox().getColumns()) *30;
-            graphicsContext.drawImage(image,x_coord,y_coord,40,30,box_x,box_y,40,30);
+            graphicsContext.drawImage(image,x_coord,y_coord,40,30,box_x-5,box_y,40,30);
         }
     }
 
