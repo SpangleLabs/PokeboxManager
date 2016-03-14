@@ -134,7 +134,6 @@ public class SideBar {
     }
 
     public void updateBoxCanvas() {
-        session.refresh(currentGame);
         GraphicsContext graphicsContext = boxCanvas.getGraphicsContext2D();
 
         graphicsContext.clearRect(0,0,boxCanvas.getWidth(),boxCanvas.getHeight());

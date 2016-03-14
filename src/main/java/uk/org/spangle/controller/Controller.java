@@ -103,8 +103,7 @@ public class Controller {
         }
         UserPokemon userPokemon = new UserPokemon(userBox,position,pokemon);
         session.save(userPokemon);
-        session.flush();
-        session.clear();
+        session.refresh(userBox);
         app.getSideBar().updateBoxCanvas();
         app.getInfoBox().displayPokemon(userPokemon);
     }
