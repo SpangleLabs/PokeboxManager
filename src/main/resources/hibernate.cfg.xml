@@ -53,6 +53,7 @@
         <mapping class="uk.org.spangle.data.UserPokemonNickname"/>
         <mapping class="uk.org.spangle.data.UserPokemonPokerus"/>
         <mapping class="uk.org.spangle.data.UserPokemonSex"/>
+        <mapping class="uk.org.spangle.data.UserPokemonShiny"/>
 
     </session-factory>
 
