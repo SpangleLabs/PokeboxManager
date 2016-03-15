@@ -12,7 +12,10 @@ public class PokemonForm {
     private int spriteMaleY;
     private int spriteFemaleX;
     private int spriteFemaleY;
-    private boolean isShiny;
+    private int spriteShinyMaleX;
+    private int spriteShinyMaleY;
+    private int spriteShinyFemaleX;
+    private int spriteShinyFemaleY;
 
     public PokemonForm() {
         // this form used by Hibernate
@@ -84,12 +87,39 @@ public class PokemonForm {
         this.spriteFemaleY = spriteFemaleY;
     }
 
-    @Column(name="is_shiny")
-    public boolean getIsShiny() {
-        return isShiny;
+    @Column(name="sprite_shiny_male_x")
+    public int getSpriteShinyMaleX() {
+        return spriteShinyMaleX;
     }
 
-    public void setIsShiny(boolean isShiny) {
-        this.isShiny = isShiny;
+    public void setSpriteShinyMaleX(int spriteShinyMaleX) {
+        this.spriteShinyMaleX = spriteShinyMaleX;
+    }
+
+    @Column(name="sprite_shiny_male_y")
+    public int getSpriteShinyMaleY() {
+        return spriteShinyMaleY;
+    }
+
+    public void setSpriteShinyMaleY(int spriteShinyMaleY) {
+        this.spriteShinyMaleY = spriteShinyMaleY;
+    }
+
+    @Column(name="sprite_shiny_female_x")
+    public int getSpriteShinyFemaleX() {
+        return spriteShinyFemaleX;
+    }
+
+    public void setSpriteShinyFemaleX(int spriteShinyFemaleX) {
+        this.spriteShinyFemaleX = spriteShinyFemaleX;
+    }
+
+    @Column(name="sprite_shiny_female_y")
+    public int getSpriteShinyFemaleY() {
+        return spriteShinyFemaleY;
+    }
+
+    public void setSpriteShinyFemaleY(int spriteShinyFemaleY) {
+        this.spriteShinyFemaleY = spriteShinyFemaleY;
     }
 }
