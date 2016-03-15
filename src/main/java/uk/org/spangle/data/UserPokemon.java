@@ -162,6 +162,7 @@ public class UserPokemon {
     }
 
     // NON-HIBERNATE METHODS BELOW
+    @Transient
     public int getSpriteX() {
         // Get form
         PokemonForm form = pokemon.getPokemonForms().get(0);
@@ -184,6 +185,7 @@ public class UserPokemon {
         }
     }
 
+    @Transient
     public int getSpriteY() {
         // Get form
         PokemonForm form = pokemon.getPokemonForms().get(0);
