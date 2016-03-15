@@ -6,6 +6,8 @@ import org.apache.commons.csv.CSVRecord;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uk.org.spangle.data.Ability;
+import uk.org.spangle.data.AbilitySlot;
+import uk.org.spangle.model.Configuration;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -115,5 +117,13 @@ public class ImportAbilities {
             System.out.println(entry.getKey());
             dbSession.save(entry.getValue());
         }
+
+        // Create and save all AbilitySlot values
+        AbilitySlot ability1 = new AbilitySlot(Configuration.ABILITY_SLOT_1);
+        dbSession.save(ability1);
+        AbilitySlot ability2 = new AbilitySlot(Configuration.ABILITY_SLOT_2);
+        dbSession.save(ability2);
+        AbilitySlot abilityH = new AbilitySlot(Configuration.ABILITY_SLOT_HIDDEN);
+        dbSession.save(abilityH);
     }
 }
