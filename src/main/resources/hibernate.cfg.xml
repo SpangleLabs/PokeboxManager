@@ -32,6 +32,7 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="uk.org.spangle.data.Ability"/>
+        <mapping class="uk.org.spangle.data.AbilitySlot"/>
         <mapping class="uk.org.spangle.data.Generation"/>
         <mapping class="uk.org.spangle.data.GenerationBox"/>
         <mapping class="uk.org.spangle.data.Language"/>
@@ -44,6 +45,7 @@
         <mapping class="uk.org.spangle.data.UserConfig"/>
         <mapping class="uk.org.spangle.data.UserGame"/>
         <mapping class="uk.org.spangle.data.UserPokemon"/>
+        <mapping class="uk.org.spangle.data.UserPokemonAbilitySlot"/>
         <mapping class="uk.org.spangle.data.UserPokemonBall"/>
         <mapping class="uk.org.spangle.data.UserPokemonEgg"/>
         <mapping class="uk.org.spangle.data.UserPokemonESV"/>
