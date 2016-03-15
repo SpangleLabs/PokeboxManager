@@ -91,13 +91,33 @@ public class ImportPokemonAndForms {
                 Pokemon mon = getOrMakePokemon(species);
 
                 PokemonForm monForm = getOrMakePokemonForm(mon,form);
-                if(!is_female) {
-                    monForm.setSpriteMaleX(x);
-                    monForm.setSpriteMaleY(y);
+                if(is_female) {
+                    if(is_shiny) {
+                        monForm.setSpriteShinyFemaleX(x);
+                        monForm.setSpriteShinyFemaleY(y);
+                    } else {
+                        monForm.setSpriteFemaleX(x);
+                        monForm.setSpriteFemaleY(y);
+                        monForm.setSpriteShinyFemaleX(x);
+                        monForm.setSpriteShinyFemaleY(y);
+                    }
+                } else {
+                    if(is_shiny) {
+                        monForm.setSpriteShinyMaleX(x);
+                        monForm.setSpriteShinyMaleY(y);
+                        monForm.setSpriteShinyFemaleX(x);
+                        monForm.setSpriteShinyFemaleY(y);
+                    } else {
+                        monForm.setSpriteMaleX(x);
+                        monForm.setSpriteMaleY(y);
+                        monForm.setSpriteFemaleX(x);
+                        monForm.setSpriteFemaleY(y);
+                        monForm.setSpriteShinyMaleX(x);
+                        monForm.setSpriteShinyMaleY(y);
+                        monForm.setSpriteShinyFemaleX(x);
+                        monForm.setSpriteShinyFemaleY(y);
+                    }
                 }
-                monForm.setSpriteFemaleX(x);
-                monForm.setSpriteFemaleY(y);
-                monForm.setIsShiny(is_shiny);
                 dbSession.update(monForm);
                 dbSession.flush();
             }
