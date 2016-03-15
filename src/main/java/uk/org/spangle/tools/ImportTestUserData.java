@@ -151,6 +151,8 @@ public class ImportTestUserData {
         dbSession.save(poke10);
         UserPokemonForm upf10 = new UserPokemonForm(poke10,unownT);
         dbSession.save(upf10);
+        UserPokemonShiny ups10 = new UserPokemonShiny(poke10,true);
+        dbSession.save(ups10);
         dbSession.flush();
     }
 }
