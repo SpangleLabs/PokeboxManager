@@ -11,6 +11,18 @@ public class Configuration {
 
     public final static String CURRENT_GAME = "current_game";
     public final static String HIDE_EGGS = "hide_eggs";
+
+    public final static String ABILITY_SLOT_1 = "slot_1";
+    public final static String ABILITY_SLOT_2 = "slot_2";
+    public final static String ABILITY_SLOT_HIDDEN = "hidden";
+
+    public final static String STAT_ATK = "Atk";
+    public final static String STAT_DEF = "Def";
+    public final static String STAT_HP = "HP";
+    public final static String STAT_SPA = "SpA";
+    public final static String STAT_SPD = "SpD";
+    public final static String STAT_SPE = "Spe";
+
     Session session;
 
     public Configuration(Session session) {
