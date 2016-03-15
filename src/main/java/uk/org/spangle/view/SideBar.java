@@ -149,18 +149,8 @@ public class SideBar {
             pokemonList = currentBox.getUserPokemons();
         }
         for(UserPokemon userPokemon : pokemonList) {
-            PokemonForm form = userPokemon.getPokemon().getPokemonForms().get(0);
-            UserPokemonForm upf = userPokemon.getUserPokemonForm();
-            if(upf != null) {
-                form = upf.getPokemonForm();
-            }
-            UserPokemonSex ups = userPokemon.getUserPokemonSex();
-            int x_coord = form.getSpriteFemaleX();
-            int y_coord = form.getSpriteFemaleY();
-            if(ups != null && ups.getIsMale()) {
-                x_coord = form.getSpriteMaleX();
-                y_coord = form.getSpriteMaleY();
-            }
+            int x_coord = userPokemon.getSpriteX();
+            int y_coord = userPokemon.getSpriteY();
             UserPokemonEgg upe = userPokemon.getUserPokemonEgg();
             if(upe != null && upe.getIsEgg() && !conf.getHideEggs()) {
                 x_coord = 0;

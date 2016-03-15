@@ -19,6 +19,7 @@ public class UserPokemon {
     private UserPokemonNickname userPokemonNickname;
     private UserPokemonPokerus userPokemonPokerus;
     private UserPokemonSex userPokemonSex;
+    private UserPokemonShiny userPokemonShiny;
 
     public UserPokemon() {
         // this form used by Hibernate
@@ -149,5 +150,59 @@ public class UserPokemon {
 
     public void setUserPokemonSex(UserPokemonSex userPokemonSex) {
         this.userPokemonSex = userPokemonSex;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonShiny getUserPokemonShiny() {
+        return userPokemonShiny;
+    }
+
+    public void setUserPokemonShiny(UserPokemonShiny userPokemonShiny) {
+        this.userPokemonShiny = userPokemonShiny;
+    }
+
+    // NON-HIBERNATE METHODS BELOW
+    public int getSpriteX() {
+        // Get form
+        PokemonForm form = pokemon.getPokemonForms().get(0);
+        if(userPokemonForm != null) {
+            form = userPokemonForm.getPokemonForm();
+        }
+        // Figure out the right sprite X coord to show
+        if(userPokemonShiny != null && userPokemonShiny.getIsShiny()) {
+            if(userPokemonSex != null && userPokemonSex.getIsMale()) {
+                return form.getSpriteShinyMaleX();
+            } else {
+                return form.getSpriteShinyFemaleX();
+            }
+        } else {
+            if(userPokemonSex != null && userPokemonSex.getIsMale()) {
+                return form.getSpriteMaleX();
+            } else {
+                return form.getSpriteFemaleX();
+            }
+        }
+    }
+
+    public int getSpriteY() {
+        // Get form
+        PokemonForm form = pokemon.getPokemonForms().get(0);
+        if(userPokemonForm != null) {
+            form = userPokemonForm.getPokemonForm();
+        }
+        // Figure out the right sprite X coord to show
+        if(userPokemonShiny != null && userPokemonShiny.getIsShiny()) {
+            if(userPokemonSex != null && userPokemonSex.getIsMale()) {
+                return form.getSpriteShinyMaleY();
+            } else {
+                return form.getSpriteShinyFemaleY();
+            }
+        } else {
+            if(userPokemonSex != null && userPokemonSex.getIsMale()) {
+                return form.getSpriteMaleY();
+            } else {
+                return form.getSpriteFemaleY();
+            }
+        }
     }
 }
