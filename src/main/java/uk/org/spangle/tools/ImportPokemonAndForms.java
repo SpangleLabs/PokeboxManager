@@ -62,7 +62,12 @@ public class ImportPokemonAndForms {
 
                 // Set is_shiny
                 boolean is_shiny = false;
-                if(name.contains("-shiny")) is_shiny = true;
+                if(name.contains("-shiny")) {
+                    is_shiny = true;
+                    name = name.replace("-shiny-","-");
+                    name = name.replace("-shiny","");
+                    name = name.replace("shiny-","");
+                }
 
                 // Set is_female
                 boolean is_female = false;
