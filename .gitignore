@@ -1,0 +1,5 @@
+src/main/resources/pokedex
+src/main/resources/pokedex-media
+src/main/resources/pokesprite
+.idea/
+PokeboxManager.iml
