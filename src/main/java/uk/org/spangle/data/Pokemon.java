@@ -17,10 +17,9 @@ public class Pokemon implements Comparable {
         // this form used by Hibernate
     }
 
-    public Pokemon(int id, String name, int nationalDex) {
-        this.id = id;
-        this.name = name;
+    public Pokemon(int nationalDex, String name) {
         this.nationalDex = nationalDex;
+        this.name = name;
     }
 
     @Id
