@@ -149,6 +149,7 @@ public class ImportVeekun {
                 System.out.println(veekunIconImage);
             }
 
+            boolean isDuplicate = false;
             String pokespriteIcon = "/pokesprite/icons/pokemon/regular/"+speciesIdentifier+formExt+".png";
             try {
                 File pokesprite = new File(getClass().getResource(pokespriteIcon).getFile());
@@ -156,6 +157,7 @@ public class ImportVeekun {
                 pokespriteIcon = "/pokesprite/icons/pokemon/regular/duplicates/"+speciesIdentifier+formExt+".png";
                 try {
                     File pokesprite = new File(getClass().getResource(pokespriteIcon).getFile());
+                    isDuplicate = true;
                 } catch (NullPointerException ex) {
                     System.out.println(pokespriteIcon);
                 }
@@ -169,15 +171,13 @@ public class ImportVeekun {
             }
 
             String pokespriteShinyIcon = "/pokesprite/icons/pokemon/shiny/"+speciesIdentifier+formExt+".png";
+            if(isDuplicate) {
+                pokespriteShinyIcon = "/pokesprite/icons/pokemon/shiny/"+speciesIdentifier+".png";
+            }
             try {
                 File pokespriteShiny = new File(getClass().getResource(pokespriteShinyIcon).getFile());
             } catch (NullPointerException e) {
-                pokespriteShinyIcon = "/pokesprite/icons/pokemon/shiny/duplicates/"+speciesIdentifier+formExt+".png";
-                try {
-                    File pokespriteShiny = new File(getClass().getResource(pokespriteShinyIcon).getFile());
-                } catch (NullPointerException ex) {
-                    System.out.println(pokespriteShinyIcon);
-                }
+                System.out.println(pokespriteShinyIcon);
             }
 
             String pokespriteShinyFemaleIcon = "/pokesprite/icons/pokemon/shiny/female/"+speciesIdentifier+formExt+".png";
