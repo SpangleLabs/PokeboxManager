@@ -143,19 +143,55 @@ public class ImportVeekun {
             String formExt = "";
             if(!formName.equals("")) formExt = "-"+formName;
             String veekunIconImage = "/pokedex-media/pokemon/icons/"+nationalDex+formExt+".png";
-            System.out.println(veekunIconImage);
-            File veekun = new File(getClass().getResource(veekunIconImage).getFile());
-            System.out.println(veekun.exists());
+            try {
+                File veekun = new File(getClass().getResource(veekunIconImage).getFile());
+            } catch (NullPointerException e) {
+                System.out.println(veekunIconImage);
+            }
+
             String pokespriteIcon = "/pokesprite/icons/pokemon/regular/"+speciesIdentifier+formExt+".png";
+            try {
+                File pokesprite = new File(getClass().getResource(pokespriteIcon).getFile());
+            } catch (NullPointerException e) {
+                pokespriteIcon = "/pokesprite/icons/pokemon/regular/duplicates/"+speciesIdentifier+formExt+".png";
+                try {
+                    File pokesprite = new File(getClass().getResource(pokespriteIcon).getFile());
+                } catch (NullPointerException ex) {
+                    System.out.println(pokespriteIcon);
+                }
+            }
+
             String pokespriteFemaleIcon = "/pokesprite/icons/pokemon/regular/female/"+speciesIdentifier+formExt+".png";
+            try {
+                File pokespriteFemale = new File(getClass().getResource(pokespriteFemaleIcon).getFile());
+            } catch (NullPointerException e) {
+                //System.out.println(pokespriteFemaleIcon);
+            }
+
             String pokespriteShinyIcon = "/pokesprite/icons/pokemon/shiny/"+speciesIdentifier+formExt+".png";
+            try {
+                File pokespriteShiny = new File(getClass().getResource(pokespriteShinyIcon).getFile());
+            } catch (NullPointerException e) {
+                pokespriteShinyIcon = "/pokesprite/icons/pokemon/shiny/duplicates/"+speciesIdentifier+formExt+".png";
+                try {
+                    File pokespriteShiny = new File(getClass().getResource(pokespriteShinyIcon).getFile());
+                } catch (NullPointerException ex) {
+                    System.out.println(pokespriteShinyIcon);
+                }
+            }
+
             String pokespriteShinyFemaleIcon = "/pokesprite/icons/pokemon/shiny/female/"+speciesIdentifier+formExt+".png";
+            try {
+                File pokespriteShinyFemale = new File(getClass().getResource(pokespriteShinyFemaleIcon).getFile());
+            } catch (NullPointerException e) {
+                //System.out.println(pokespriteShinyFemaleIcon);
+            }
 
 
-            System.out.println(csvRecord.get("form_identifier"));
+            /*System.out.println(csvRecord.get("form_identifier"));
             System.out.println(csvRecord.get("pokemon_id"));
             System.out.println(pokemonRecord.get("species_id"));
-            System.out.println(speciesIdentifier);
+            System.out.println(speciesIdentifier);*/
         }
     }
 }
