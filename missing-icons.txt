@@ -113,8 +113,7 @@ todo:
 -fix meowstic
 -pikachu mapping
 
-if normal ends up in duplicates/ that means that for shiny sprite, strip the form off.
-
+------if normal ends up in duplicates/ that means that for shiny sprite, strip the form off.
 
 /pokesprite/icons/pokemon/regular/duplicates/furfrou-natural.png
 /pokesprite/icons/pokemon/regular/duplicates/meowstic-male.png
@@ -126,6 +125,7 @@ if normal ends up in duplicates/ that means that for shiny sprite, strip the for
 /pokesprite/icons/pokemon/regular/duplicates/pikachu-pop-star.png
 /pokesprite/icons/pokemon/regular/duplicates/pikachu-phd.png
 /pokesprite/icons/pokemon/regular/duplicates/pikachu-libre.png
+
 /pokesprite/icons/pokemon/shiny/furfrou-natural.png
 /pokesprite/icons/pokemon/shiny/meowstic-male.png
 /pokesprite/icons/pokemon/shiny/arceus-unknown.png
@@ -136,8 +136,47 @@ if normal ends up in duplicates/ that means that for shiny sprite, strip the for
 /pokesprite/icons/pokemon/shiny/pikachu-pop-star.png
 /pokesprite/icons/pokemon/shiny/pikachu-phd.png
 /pokesprite/icons/pokemon/shiny/pikachu-libre.png
+
+ /pokedex-media/pokemon/icons/493-unknown.png
+ /pokedex-media/pokemon/icons/172-spiky-eared.png
+/pokedex-media/pokemon/icons/260-mega.png
+/pokedex-media/pokemon/icons/254-mega.png
+/pokedex-media/pokemon/icons/302-mega.png
+/pokedex-media/pokemon/icons/334-mega.png
+/pokedex-media/pokemon/icons/475-mega.png
+/pokedex-media/pokemon/icons/531-mega.png
+/pokedex-media/pokemon/icons/319-mega.png
+/pokedex-media/pokemon/icons/80-mega.png
+/pokedex-media/pokemon/icons/208-mega.png
+/pokedex-media/pokemon/icons/18-mega.png
+/pokedex-media/pokemon/icons/362-mega.png
+/pokedex-media/pokemon/icons/719-mega.png
+/pokedex-media/pokemon/icons/376-mega.png
+/pokedex-media/pokemon/icons/382-primal.png
+/pokedex-media/pokemon/icons/383-primal.png
+/pokedex-media/pokemon/icons/384-mega.png
+/pokedex-media/pokemon/icons/25-rock-star.png
+/pokedex-media/pokemon/icons/25-belle.png
+/pokedex-media/pokemon/icons/25-pop-star.png
+/pokedex-media/pokemon/icons/25-phd.png
+/pokedex-media/pokemon/icons/25-libre.png
+/pokedex-media/pokemon/icons/25-cosplay.png
+/pokedex-media/pokemon/icons/720-unbound.png
+/pokedex-media/pokemon/icons/323-mega.png
+/pokedex-media/pokemon/icons/428-mega.png
+/pokedex-media/pokemon/icons/373-mega.png
+/pokedex-media/pokemon/icons/15-mega.png
+
+-----list of simple replacements added
+
+/pokesprite/icons/pokemon/regular/duplicates/meowstic-male.png
+/pokesprite/icons/pokemon/shiny/meowstic-male.png
 /pokedex-media/pokemon/icons/493-unknown.png
 /pokedex-media/pokemon/icons/172-spiky-eared.png
+/pokesprite/icons/pokemon/regular/duplicates/pichu-spiky-eared.png
+/pokesprite/icons/pokemon/shiny/pichu-spiky-eared.png
+/pokesprite/icons/pokemon/regular/duplicates/meowstic-female.png
+/pokesprite/icons/pokemon/shiny/meowstic-female.png
 /pokedex-media/pokemon/icons/260-mega.png
 /pokedex-media/pokemon/icons/254-mega.png
 /pokedex-media/pokemon/icons/302-mega.png
