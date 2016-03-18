@@ -170,13 +170,13 @@ todo:
 -----list of simple replacements added
 
 /pokesprite/icons/pokemon/regular/duplicates/meowstic-male.png
+/pokesprite/icons/pokemon/regular/duplicates/pichu-spiky-eared.png
+/pokesprite/icons/pokemon/regular/duplicates/meowstic-female.png
 /pokesprite/icons/pokemon/shiny/meowstic-male.png
+/pokesprite/icons/pokemon/shiny/pichu-spiky-eared.png
+/pokesprite/icons/pokemon/shiny/meowstic-female.png
 /pokedex-media/pokemon/icons/493-unknown.png
 /pokedex-media/pokemon/icons/172-spiky-eared.png
-/pokesprite/icons/pokemon/regular/duplicates/pichu-spiky-eared.png
-/pokesprite/icons/pokemon/shiny/pichu-spiky-eared.png
-/pokesprite/icons/pokemon/regular/duplicates/meowstic-female.png
-/pokesprite/icons/pokemon/shiny/meowstic-female.png
 /pokedex-media/pokemon/icons/260-mega.png
 /pokedex-media/pokemon/icons/254-mega.png
 /pokedex-media/pokemon/icons/302-mega.png
