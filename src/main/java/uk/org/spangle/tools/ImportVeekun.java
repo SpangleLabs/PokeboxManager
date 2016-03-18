@@ -154,17 +154,20 @@ public class ImportVeekun {
             String speciesIdentifier = speciesRecord.get("identifier");
             String formExt = "";
             if(!formName.equals("")) formExt = "-"+formName;
+
+            /*
             String veekunIconImage = "/pokedex-media/pokemon/icons/"+nationalDex+formExt+".png";
             try {
                 File veekun = new File(getClass().getResource(veekunIconImage).getFile());
             } catch (NullPointerException e) {
                 //System.out.println(veekunIconImage);
-            }
+            }/*/
 
             String fileName = speciesIdentifier+formExt+".png";
             if(filenameReplace.containsKey(fileName)) fileName = filenameReplace.get(fileName);
             boolean isDuplicate = false;
             String pokespriteIcon = "/pokesprite/icons/pokemon/regular/"+fileName;
+            if(fileName.equals("pichu-spiky-eared.png")) pokespriteIcon = "/pichu-spiky-eared.png";
             try {
                 File pokesprite = new File(getClass().getResource(pokespriteIcon).getFile());
             } catch (NullPointerException e) {
@@ -173,33 +176,40 @@ public class ImportVeekun {
                     File pokesprite = new File(getClass().getResource(pokespriteIcon).getFile());
                     isDuplicate = true;
                 } catch (NullPointerException ex) {
-                    System.out.println(pokespriteIcon);
+                    System.out.println("FAILED TO FIND: "+pokespriteIcon);
                 }
             }
 
             String pokespriteFemaleIcon = "/pokesprite/icons/pokemon/regular/female/"+fileName;
             try {
                 File pokespriteFemale = new File(getClass().getResource(pokespriteFemaleIcon).getFile());
-            } catch (NullPointerException e) {
                 //System.out.println(pokespriteFemaleIcon);
-            }
+            } catch (NullPointerException e) {
+                pokespriteFemaleIcon = pokespriteIcon;
+                //System.out.println(pokespriteFemaleIcon);
+            }/**/
+
 
             String pokespriteShinyIcon = "/pokesprite/icons/pokemon/shiny/"+fileName;
+            if(fileName.equals("pichu-spiky-eared.png")) pokespriteShinyIcon = "/pichu-spiky-eared-shiny.png";
             if(isDuplicate) {
                 pokespriteShinyIcon = "/pokesprite/icons/pokemon/shiny/"+speciesIdentifier+".png";
             }
             try {
                 File pokespriteShiny = new File(getClass().getResource(pokespriteShinyIcon).getFile());
             } catch (NullPointerException e) {
-                System.out.println(pokespriteShinyIcon);
+                System.out.println("FAILED TO FIND: "+pokespriteShinyIcon);
             }
+
 
             String pokespriteShinyFemaleIcon = "/pokesprite/icons/pokemon/shiny/female/"+fileName;
             try {
                 File pokespriteShinyFemale = new File(getClass().getResource(pokespriteShinyFemaleIcon).getFile());
-            } catch (NullPointerException e) {
                 //System.out.println(pokespriteShinyFemaleIcon);
-            }
+            } catch (NullPointerException e) {
+                pokespriteShinyFemaleIcon = pokespriteShinyIcon;
+                //System.out.println(pokespriteShinyFemaleIcon);
+            }/**/
 
 
             /*System.out.println(csvRecord.get("form_identifier"));
