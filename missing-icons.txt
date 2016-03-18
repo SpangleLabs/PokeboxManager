@@ -1,0 +1,167 @@
+/pokesprite/icons/pokemon/shiny/duplicates/unown-a.png			unown.png
+/pokesprite/icons/pokemon/shiny/duplicates/deoxys-normal.png		deoxys.png
+/pokesprite/icons/pokemon/shiny/duplicates/burmy-plant.png		burmy.png
+/pokesprite/icons/pokemon/shiny/duplicates/wormadam-plant.png		wormadam.png
+/pokesprite/icons/pokemon/shiny/duplicates/cherrim-overcast.png		cherrim.png
+/pokesprite/icons/pokemon/shiny/duplicates/shellos-west.png		shellos.png
+/pokesprite/icons/pokemon/shiny/duplicates/gastrodon-west.png		gastrodon.png
+/pokesprite/icons/pokemon/shiny/duplicates/giratina-altered.png		giratina.png
+/pokesprite/icons/pokemon/shiny/duplicates/shaymin-land.png		shaymin.png
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-normal.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/basculin-red-striped.png	basculin.png
+/pokesprite/icons/pokemon/shiny/duplicates/darmanitan-standard.png	darmanitan.png
+/pokesprite/icons/pokemon/shiny/duplicates/deerling-spring.png		deerling.png
+/pokesprite/icons/pokemon/shiny/duplicates/sawsbuck-spring.png		sawsbuck.png
+/pokesprite/icons/pokemon/shiny/duplicates/tornadus-incarnate.png	tornadus.png
+/pokesprite/icons/pokemon/shiny/duplicates/thundurus-incarnate.png	thundurus.png
+/pokesprite/icons/pokemon/shiny/duplicates/landorus-incarnate.png	landorus.png
+/pokesprite/icons/pokemon/shiny/duplicates/keldeo-ordinary.png		keldeo.png
+/pokesprite/icons/pokemon/shiny/duplicates/meloetta-aria.png		meloetta.png
+/pokesprite/icons/pokemon/shiny/duplicates/vivillon-meadow.png		vivillon.png
+/pokesprite/icons/pokemon/shiny/duplicates/flabebe-red.png		flabebe.png
+/pokesprite/icons/pokemon/shiny/duplicates/floette-red.png		floette.png
+/pokesprite/icons/pokemon/shiny/duplicates/florges-red.png		florges.png
+/pokesprite/icons/pokemon/shiny/duplicates/furfrou-natural.png		furfrou.png
+/pokesprite/icons/pokemon/shiny/duplicates/meowstic-male.png		meowstic.png
+/pokesprite/icons/pokemon/shiny/duplicates/aegislash-shield.png		aegislash.png
+/pokesprite/icons/pokemon/shiny/duplicates/pumpkaboo-average.png	pumpkaboo.png
+/pokesprite/icons/pokemon/shiny/duplicates/gourgeist-average.png	gourgeist.png
+/pokesprite/icons/pokemon/shiny/duplicates/xerneas-active.png		xerneas.png
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-bug.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-dark.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-dragon.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-electric.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-fighting.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-fire.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-flying.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-ghost.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-grass.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-ground.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-ice.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-poison.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-psychic.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-rock.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-steel.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-water.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-unknown.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/pichu-spiky-eared.png	n
+/pokesprite/icons/pokemon/shiny/duplicates/genesect-douse.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/genesect-shock.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/genesect-burn.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/genesect-chill.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/arceus-fairy.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/meowstic-female.png		female/meowstic.png
+/pokesprite/icons/pokemon/shiny/duplicates/pumpkaboo-small.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/pumpkaboo-large.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/pumpkaboo-super.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/gourgeist-small.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/gourgeist-large.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/gourgeist-super.png		n
+/pokesprite/icons/pokemon/shiny/duplicates/pikachu-rock-star.png	pikachu-cool.png
+/pokesprite/icons/pokemon/shiny/duplicates/pikachu-belle.png		pikachu-beautiful.png
+/pokesprite/icons/pokemon/shiny/duplicates/pikachu-pop-star.png		pikachu-cute.png
+/pokesprite/icons/pokemon/shiny/duplicates/pikachu-phd.png		pikachu-clever.png
+/pokesprite/icons/pokemon/shiny/duplicates/pikachu-libre.png		pikachu-tough.png
+
+/pokesprite/icons/pokemon/regular/duplicates/furfrou-natural.png	furfrou.png?
+/pokesprite/icons/pokemon/regular/duplicates/meowstic-male.png		meowstic.png?
+/pokesprite/icons/pokemon/regular/duplicates/arceus-unknown.png		arceus.png?
+/pokesprite/icons/pokemon/regular/duplicates/pichu-spiky-eared.png	n
+/pokesprite/icons/pokemon/regular/duplicates/meowstic-female.png	female/meowstic.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-rock-star.png	pikachu-cool.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-belle.png		pikachu-beautiful.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-pop-star.png	pikachu-cute.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-phd.png		pikachu-clever.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-libre.png		pikachu-tough.png
+
+/pokedex-media/pokemon/icons/493-unknown.png		n
+/pokedex-media/pokemon/icons/172-spiky-eared.png	n
+/pokedex-media/pokemon/icons/260-mega.png		n
+/pokedex-media/pokemon/icons/254-mega.png		n
+/pokedex-media/pokemon/icons/302-mega.png		n
+/pokedex-media/pokemon/icons/334-mega.png		n
+/pokedex-media/pokemon/icons/475-mega.png		n
+/pokedex-media/pokemon/icons/531-mega.png		n
+/pokedex-media/pokemon/icons/319-mega.png		n
+/pokedex-media/pokemon/icons/80-mega.png		n
+/pokedex-media/pokemon/icons/208-mega.png		n
+/pokedex-media/pokemon/icons/18-mega.png		n
+/pokedex-media/pokemon/icons/362-mega.png		n
+/pokedex-media/pokemon/icons/719-mega.png		n
+/pokedex-media/pokemon/icons/376-mega.png		n
+/pokedex-media/pokemon/icons/382-primal.png		n
+/pokedex-media/pokemon/icons/383-primal.png		n
+/pokedex-media/pokemon/icons/384-mega.png		n
+/pokedex-media/pokemon/icons/25-rock-star.png		n
+/pokedex-media/pokemon/icons/25-belle.png		n
+/pokedex-media/pokemon/icons/25-pop-star.png		n
+/pokedex-media/pokemon/icons/25-phd.png			n
+/pokedex-media/pokemon/icons/25-libre.png		n
+/pokedex-media/pokemon/icons/25-cosplay.png		n
+/pokedex-media/pokemon/icons/720-unbound.png		n
+/pokedex-media/pokemon/icons/323-mega.png		n
+/pokedex-media/pokemon/icons/428-mega.png		n
+/pokedex-media/pokemon/icons/373-mega.png		n
+/pokedex-media/pokemon/icons/15-mega.png		n
+
+
+todo:
+-commit megas from pokesprite to pokedex-media?
+-add spikey eared pichu maybe?
+-see if cosplay pikachu are real icons
+-see if unknown arceus is real icon?
+-fix meowstic
+-pikachu mapping
+
+if normal ends up in duplicates/ that means that for shiny sprite, strip the form off.
+
+
+/pokesprite/icons/pokemon/regular/duplicates/furfrou-natural.png
+/pokesprite/icons/pokemon/regular/duplicates/meowstic-male.png
+/pokesprite/icons/pokemon/regular/duplicates/arceus-unknown.png
+/pokesprite/icons/pokemon/regular/duplicates/pichu-spiky-eared.png
+/pokesprite/icons/pokemon/regular/duplicates/meowstic-female.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-rock-star.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-belle.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-pop-star.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-phd.png
+/pokesprite/icons/pokemon/regular/duplicates/pikachu-libre.png
+/pokesprite/icons/pokemon/shiny/furfrou-natural.png
+/pokesprite/icons/pokemon/shiny/meowstic-male.png
+/pokesprite/icons/pokemon/shiny/arceus-unknown.png
+/pokesprite/icons/pokemon/shiny/pichu-spiky-eared.png
+/pokesprite/icons/pokemon/shiny/meowstic-female.png
+/pokesprite/icons/pokemon/shiny/pikachu-rock-star.png
+/pokesprite/icons/pokemon/shiny/pikachu-belle.png
+/pokesprite/icons/pokemon/shiny/pikachu-pop-star.png
+/pokesprite/icons/pokemon/shiny/pikachu-phd.png
+/pokesprite/icons/pokemon/shiny/pikachu-libre.png
+/pokedex-media/pokemon/icons/493-unknown.png
+/pokedex-media/pokemon/icons/172-spiky-eared.png
+/pokedex-media/pokemon/icons/260-mega.png
+/pokedex-media/pokemon/icons/254-mega.png
+/pokedex-media/pokemon/icons/302-mega.png
+/pokedex-media/pokemon/icons/334-mega.png
+/pokedex-media/pokemon/icons/475-mega.png
+/pokedex-media/pokemon/icons/531-mega.png
+/pokedex-media/pokemon/icons/319-mega.png
+/pokedex-media/pokemon/icons/80-mega.png
+/pokedex-media/pokemon/icons/208-mega.png
+/pokedex-media/pokemon/icons/18-mega.png
+/pokedex-media/pokemon/icons/362-mega.png
+/pokedex-media/pokemon/icons/719-mega.png
+/pokedex-media/pokemon/icons/376-mega.png
+/pokedex-media/pokemon/icons/382-primal.png
+/pokedex-media/pokemon/icons/383-primal.png
+/pokedex-media/pokemon/icons/384-mega.png
+/pokedex-media/pokemon/icons/25-rock-star.png
+/pokedex-media/pokemon/icons/25-belle.png
+/pokedex-media/pokemon/icons/25-pop-star.png
+/pokedex-media/pokemon/icons/25-phd.png
+/pokedex-media/pokemon/icons/25-libre.png
+/pokedex-media/pokemon/icons/25-cosplay.png
+/pokedex-media/pokemon/icons/720-unbound.png
+/pokedex-media/pokemon/icons/323-mega.png
+/pokedex-media/pokemon/icons/428-mega.png
+/pokedex-media/pokemon/icons/373-mega.png
+/pokedex-media/pokemon/icons/15-mega.png
