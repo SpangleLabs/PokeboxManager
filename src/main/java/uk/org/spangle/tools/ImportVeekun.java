@@ -1,7 +1,5 @@
 package uk.org.spangle.tools;
 
-import javafx.util.Pair;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -10,18 +8,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.Pokemon;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Quick and easy tool to import list of pokemon and forms from veekun data
