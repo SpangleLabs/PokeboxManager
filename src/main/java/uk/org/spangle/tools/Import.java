@@ -6,16 +6,13 @@ package uk.org.spangle.tools;
 public class Import {
 
     public static void main(String[] args) {
-        ImportPokemonAndForms imp1 = new ImportPokemonAndForms();
+        ImportIcons imp1 = new ImportIcons();
         imp1.run();
-        ImportGenerations imp2 = new ImportGenerations();
+        //move result.png and result.csv
+        ImportVeekun imp2 = new ImportVeekun();
         imp2.run();
-        ImportPokeBalls imp3 = new ImportPokeBalls();
+        ImportGenerations imp3 = new ImportGenerations();
         imp3.run();
-        ImportStatsAndNatures imp4 = new ImportStatsAndNatures();
-        imp4.run();
-        ImportLanguages imp6 = new ImportLanguages();
-        imp6.run();
         ImportTestUserData imp5 = new ImportTestUserData();
         imp5.run();
     }
