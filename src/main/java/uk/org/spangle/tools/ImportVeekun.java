@@ -7,9 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.Pokemon;
+import uk.org.spangle.data.PokemonForm;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,7 +58,7 @@ public class ImportVeekun {
 
         // Try and create stuff
         try {
-            createAbilities();
+            createPokemon();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -121,6 +124,28 @@ public class ImportVeekun {
         throw new IllegalArgumentException();
     }
 
+    private List<CSVRecord> getPokemonRecordsByPokemonSpeciesId(String speciesId) throws Exception {
+        CSVParser parser = loadCSV("pokemon");
+        List<CSVRecord> results = new ArrayList<>();
+        for(CSVRecord record : parser) {
+            if(record.get("species_id").equals(speciesId)) {
+                results.add(record);
+            }
+        }
+        return results;
+    }
+
+    private List<CSVRecord> getPokemonFormRecordsByPokemonId(String pokemonId) throws Exception {
+        CSVParser parser = loadCSV("pokemon_forms");
+        List<CSVRecord> results = new ArrayList<>();
+        for(CSVRecord record : parser) {
+            if(record.get("pokemon_id").equals(pokemonId)) {
+                results.add(record);
+            }
+        }
+        return results;
+    }
+
     private CSVRecord getPokemonSpeciesNameRecordById(String speciesId, String languageId) throws Exception {
         CSVParser parser = loadCSV("pokemon_species_names");
         for (CSVRecord csvRecord : parser) {
@@ -131,6 +156,18 @@ public class ImportVeekun {
                 continue;
             }
             return csvRecord;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private CSVRecord getFormCoordRecordByFormId(String formId) throws Exception {
+        String filename = "/result.csv";
+        File csvData = new File(getClass().getResource(filename).getFile());
+        CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
+        for(CSVRecord record : parser) {
+            if(record.get("pokemon_form_id").equals(formId)) {
+                return record;
+            }
         }
         throw new IllegalArgumentException();
     }
@@ -148,7 +185,7 @@ public class ImportVeekun {
         return (Pokemon) listPokemon.get(0);
     }
 
-    public void createAbilities() throws Exception {
+    public void createPokemon() throws Exception {
         // Load languages table
         String languageId = getLanguageId("en");
         /*String versionGroupId = getVersionGroupId("omega-ruby-alpha-sapphire");
@@ -165,6 +202,31 @@ public class ImportVeekun {
             Pokemon pokemon = new Pokemon(nationalDex,pokemonName);
             pokemon.setIsGenderless(isGenderless);
             dbSession.save(pokemon);
+
+            List<CSVRecord> listPokemon = getPokemonRecordsByPokemonSpeciesId(Integer.toString(nationalDex));
+            for (CSVRecord pokemonRecord : listPokemon) {
+                List<CSVRecord> listForms = getPokemonFormRecordsByPokemonId(pokemonRecord.get("id"));
+                for (CSVRecord formRecord : listForms) {
+                    String formId = formRecord.get("id");
+                    String formName = formRecord.get("form_identifier");
+                    if(formName.length() == 0) formName = "normal";
+                    System.out.println(formName);
+                    CSVRecord coordsRecord = getFormCoordRecordByFormId(formId);
+                    PokemonForm pokemonForm = new PokemonForm();
+                    pokemonForm.setPokemon(pokemon);
+                    pokemonForm.setName(formName);
+                    pokemonForm.setSpriteMaleX(Integer.parseInt(coordsRecord.get("normal-m-x")));
+                    pokemonForm.setSpriteMaleY(Integer.parseInt(coordsRecord.get("normal-m-y")));
+                    pokemonForm.setSpriteFemaleX(Integer.parseInt(coordsRecord.get("normal-f-x")));
+                    pokemonForm.setSpriteFemaleY(Integer.parseInt(coordsRecord.get("normal-f-y")));
+                    pokemonForm.setSpriteShinyMaleX(Integer.parseInt(coordsRecord.get("shiny-m-x")));
+                    pokemonForm.setSpriteShinyMaleY(Integer.parseInt(coordsRecord.get("shiny-m-y")));
+                    pokemonForm.setSpriteShinyFemaleX(Integer.parseInt(coordsRecord.get("shiny-f-x")));
+                    pokemonForm.setSpriteShinyFemaleY(Integer.parseInt(coordsRecord.get("shiny-f-y")));
+                    dbSession.save(pokemonForm);
+                }
+            }
+
             System.out.println(pokemon);
         }
     }
