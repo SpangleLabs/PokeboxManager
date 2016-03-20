@@ -9,13 +9,16 @@ import uk.org.spangle.data.Ability;
 import uk.org.spangle.data.AbilitySlot;
 import uk.org.spangle.data.Pokemon;
 import uk.org.spangle.data.PokemonForm;
+import uk.org.spangle.data.PokemonFormAbility;
 import uk.org.spangle.model.Configuration;
 
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Quick and easy tool to import list of pokemon and forms from veekun data
@@ -27,6 +30,8 @@ public class ImportVeekun {
     String languageId;
     String versionGroupId;
     String nationalDexId;
+    Map<String,Ability> abilityMap; // Map of veekun IDs to abilities.
+    Map<String,AbilitySlot> abilitySlotMap; // Map of veekun IDs to ability slots.
 
     public static void main(String[] args) {
         ImportVeekun imp = new ImportVeekun();
@@ -170,6 +175,17 @@ public class ImportVeekun {
         }
         return results;
     }
+    
+    private List<CSVRecord> getPokemonAbilityRecordsByPokemonId(String pokemonId) throws Exception {
+    	CSVParser parser = loadCSV("pokemon_abilities");
+    	List<CSVRecord> results = new ArrayList<>();
+    	for(CSVRecord record : parser) {
+    		if(record.get("pokemon_id").equals(pokemonId)) {
+    			results.add(record);
+    		}
+    	}
+    	return results;
+    }
 
     private CSVRecord getPokemonSpeciesNameRecordById(String speciesId, String languageId) throws Exception {
         CSVParser parser = loadCSV("pokemon_species_names");
@@ -199,15 +215,20 @@ public class ImportVeekun {
 
     public void createAbilities() throws Exception {
         // Create and save all AbilitySlot values
+    	abilitySlotMap = new HashMap<>();
         AbilitySlot ability1 = new AbilitySlot(Configuration.ABILITY_SLOT_1);
+        abilitySlotMap.put("1",ability1);
         dbSession.save(ability1);
         AbilitySlot ability2 = new AbilitySlot(Configuration.ABILITY_SLOT_2);
+        abilitySlotMap.put("2",ability2);
         dbSession.save(ability2);
         AbilitySlot abilityH = new AbilitySlot(Configuration.ABILITY_SLOT_HIDDEN);
+        abilitySlotMap.put("3",abilityH);
         dbSession.save(abilityH);
 
         // Load abilities list
         CSVParser parser = loadCSV("abilities");
+        abilityMap = new HashMap<>();
         for (CSVRecord record : parser) {
             String abilityId = record.get("id");
             String isMain = record.get("is_main_series");
@@ -215,6 +236,7 @@ public class ImportVeekun {
             String abilityName = getAbilityNameById(abilityId,languageId);
             String abilityDesc = getAbilityDescById(abilityId,languageId,versionGroupId);
             Ability ability = new Ability(abilityName,abilityDesc);
+            abilityMap.put(abilityId,ability);
             dbSession.save(ability);
         }
     }
@@ -235,6 +257,7 @@ public class ImportVeekun {
             List<CSVRecord> listPokemon = getPokemonRecordsByPokemonSpeciesId(Integer.toString(nationalDex));
             for (CSVRecord pokemonRecord : listPokemon) {
                 List<CSVRecord> listForms = getPokemonFormRecordsByPokemonId(pokemonRecord.get("id"));
+                List<CSVRecord> listAbilities = getPokemonAbilityRecordsByPokemonId(pokemonRecord.get("id"));
                 for (CSVRecord formRecord : listForms) {
                     String formId = formRecord.get("id");
                     String formName = formRecord.get("form_identifier");
@@ -253,6 +276,13 @@ public class ImportVeekun {
                     pokemonForm.setSpriteShinyFemaleX(Integer.parseInt(coordsRecord.get("shiny-f-x")));
                     pokemonForm.setSpriteShinyFemaleY(Integer.parseInt(coordsRecord.get("shiny-f-y")));
                     dbSession.save(pokemonForm);
+                    for(CSVRecord abilityRecord : listAbilities) {
+                    	PokemonFormAbility pokemonAbility = new PokemonFormAbility();
+                    	pokemonAbility.setPokemonForm(pokemonForm);
+                    	pokemonAbility.setAbility(abilityMap.get(abilityRecord.get("ability_id")));
+                    	pokemonAbility.setAbilitySlot(abilitySlotMap.get(abilityRecord.get("slot")));
+                    	dbSession.save(pokemonAbility);
+                    }
                 }
             }
 
