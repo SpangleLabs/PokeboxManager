@@ -14,6 +14,7 @@ import java.util.List;
  * This is a very quick and dirty and ugly script to scrape the coordinates from raw_coords.txt into the database
  * raw_coords.txt is a specific subsection of https://github.com/msikma/pokesprite/blob/master/build/pokesprite.scss
  */
+@Deprecated
 public class ImportPokemonAndForms {
     public final static String[] hyphenSpecies = new String[]{"nidoran-f","nidoran-m","mr-mime","ho-oh","mime-jr","porygon-z"};
     public final static List<Integer> listGenderless = Arrays.asList(81,82,100,101,120,121,137,233,292,337,338,343,344,374,375,376,436,437,462,474,479,489,490,599,600,601,615,622,623,703);
