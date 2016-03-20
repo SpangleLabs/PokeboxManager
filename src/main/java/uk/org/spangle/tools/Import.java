@@ -13,6 +13,8 @@ public class Import {
         imp2.run();
         ImportGenerations imp3 = new ImportGenerations();
         imp3.run();
+        ImportLanguages imp4 = new ImportLanguages();
+        imp4.run();
         ImportTestUserData imp5 = new ImportTestUserData();
         imp5.run();
     }
