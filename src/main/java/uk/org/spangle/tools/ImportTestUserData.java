@@ -12,7 +12,7 @@ import java.util.List;
  * Quick and easy tool to import some test data
  */
 public class ImportTestUserData {
-    Session dbSession;
+    private Session dbSession;
 
     public static void main(String[] args) {
         ImportTestUserData imp = new ImportTestUserData();
@@ -43,7 +43,7 @@ public class ImportTestUserData {
         }
     }
 
-    public void createTestData() {
+    private void createTestData() {
         // Get generations
         Generation genBank = (Generation) dbSession.createCriteria(Generation.class).add(Restrictions.eq("name","Pokebank")).list().get(0);
         Generation genSix = (Generation) dbSession.createCriteria(Generation.class).add(Restrictions.eq("name","Gen VI")).list().get(0);

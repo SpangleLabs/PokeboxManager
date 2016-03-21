@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Tool to load all pokemon forms, find the icons and merge them together into a big image and csv file
  */
 public class ImportIcons {
-    public final static Map<String,String> filenameReplace = new HashMap<>();
+    private final static Map<String,String> filenameReplace = new HashMap<>();
     static {
         filenameReplace.put("furfrou-natural.png","furfrou.png");
         filenameReplace.put("arceus-unknown.png","arceus.png");
@@ -74,7 +74,7 @@ public class ImportIcons {
         throw new IllegalArgumentException();
     }
 
-    public void createPokemonIcons() throws Exception {
+    private void createPokemonIcons() throws Exception {
         // Load abilities id list
         CSVParser parser = loadCSV("pokemon_forms");
         ConcurrentHashMap<String,Pair<Integer,Integer>> fileHashes = new ConcurrentHashMap<>();

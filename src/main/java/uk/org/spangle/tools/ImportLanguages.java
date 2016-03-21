@@ -10,7 +10,7 @@ import java.util.List;
  * Quick and easy tool to import the list of languages.
  */
 public class ImportLanguages {
-    Session dbSession;
+    private Session dbSession;
 
     public static void main(String[] args) {
         ImportLanguages imp = new ImportLanguages();
@@ -41,7 +41,7 @@ public class ImportLanguages {
         }
     }
 
-    public void createGenerations() {
+    private void createGenerations() {
         Language english = new Language("English","ENG");
         dbSession.save(english);
         Language japanese = new Language("Japanese","JPN");

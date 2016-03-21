@@ -11,7 +11,7 @@ import java.util.List;
  * Quick and easy tool to import the list of generations and their box templates.
  */
 public class ImportGenerations {
-    Session dbSession;
+    private Session dbSession;
 
     public static void main(String[] args) {
         ImportGenerations imp = new ImportGenerations();
@@ -42,7 +42,7 @@ public class ImportGenerations {
         }
     }
 
-    public void createGenerations() {
+    private void createGenerations() {
         createPokebank();
         createGenI();
         createGenII();
@@ -52,7 +52,7 @@ public class ImportGenerations {
         createGenVI();
     }
 
-    public void createPokebank() {
+    private void createPokebank() {
         // Pokebank
         Generation pokeBank = new Generation();
         pokeBank.setName("Pokebank");
@@ -70,7 +70,7 @@ public class ImportGenerations {
         }
     }
 
-    public void createGenI() {
+    private void createGenI() {
         Generation gen = new Generation();
         gen.setName("Gen I");
         gen.setDescription("Red, Green, Blue, Yellow");
@@ -95,7 +95,7 @@ public class ImportGenerations {
         }
     }
 
-    public void createGenII() {
+    private void createGenII() {
         Generation gen = new Generation();
         gen.setName("Gen II");
         gen.setDescription("Gold, Silver, Crystal");
@@ -128,7 +128,7 @@ public class ImportGenerations {
         dbSession.saveOrUpdate(daycare);
     }
 
-    public void createGenIII() {
+    private void createGenIII() {
         Generation gen = new Generation();
         gen.setName("Gen III");
         gen.setDescription("Ruby, Sapphire, Emerald, FireRed, LeafGreen");
@@ -161,7 +161,7 @@ public class ImportGenerations {
         dbSession.saveOrUpdate(daycare);
     }
 
-    public void createGenIV() {
+    private void createGenIV() {
         Generation gen = new Generation();
         gen.setName("Gen IV");
         gen.setDescription("Diamond, Pearl, Platinum, HeartGold, SoulSilver");
@@ -202,7 +202,7 @@ public class ImportGenerations {
         dbSession.saveOrUpdate(daycare);
     }
 
-    public void createGenV() {
+    private void createGenV() {
         Generation gen = new Generation();
         gen.setName("Gen V");
         gen.setDescription("Black, White, Black2, White2");
@@ -251,7 +251,7 @@ public class ImportGenerations {
         dbSession.saveOrUpdate(daycare);
     }
 
-    public void createGenVI() {
+    private void createGenVI() {
         Generation gen = new Generation();
         gen.setName("Gen VI");
         gen.setDescription("X, Y, OmegaRuby, AlphaSapphire");

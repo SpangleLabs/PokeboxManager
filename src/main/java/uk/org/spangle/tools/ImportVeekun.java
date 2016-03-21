@@ -23,14 +23,14 @@ import java.util.Map;
  * Quick and easy tool to import list of pokemon and forms from veekun data
  */
 public class ImportVeekun {
-    Session dbSession;
-    public final static List<Integer> listGenderless = Arrays.asList(81,82,100,101,120,121,137,233,292,337,338,343,344,374,375,376,436,437,462,474,479,489,490,599,600,601,615,622,623,703);
-    public final static List<Integer> listUnbreedable = Arrays.asList(132,144,145,146,150,151,201,243,244,245,249,250,251,377,378,379,382,383,384,385,386,480,481,482,483,484,486,487,491,492,493,494,638,639,640,643,644,646,647,648,649,716,717,718,719,720,721);
-    String languageId;
-    String versionGroupId;
-    String nationalDexId;
-    Map<String,Ability> abilityMap; // Map of veekun IDs to abilities.
-    Map<String,AbilitySlot> abilitySlotMap; // Map of veekun IDs to ability slots.
+    private Session dbSession;
+    private final static List<Integer> listGenderless = Arrays.asList(81,82,100,101,120,121,137,233,292,337,338,343,344,374,375,376,436,437,462,474,479,489,490,599,600,601,615,622,623,703);
+    private final static List<Integer> listUnbreedable = Arrays.asList(132,144,145,146,150,151,201,243,244,245,249,250,251,377,378,379,382,383,384,385,386,480,481,482,483,484,486,487,491,492,493,494,638,639,640,643,644,646,647,648,649,716,717,718,719,720,721);
+    private String languageId;
+    private String versionGroupId;
+    private String nationalDexId;
+    private Map<String,Ability> abilityMap; // Map of veekun IDs to abilities.
+    private Map<String,AbilitySlot> abilitySlotMap; // Map of veekun IDs to ability slots.
 
     public static void main(String[] args) {
         ImportVeekun imp = new ImportVeekun();
@@ -282,7 +282,7 @@ public class ImportVeekun {
         return maxVersionRecord;
     }
 
-    public void createAbilities() throws Exception {
+    private void createAbilities() throws Exception {
         // Create and save all AbilitySlot values
     	abilitySlotMap = new HashMap<>();
         AbilitySlot ability1 = new AbilitySlot(Configuration.ABILITY_SLOT_1);
@@ -310,7 +310,7 @@ public class ImportVeekun {
         }
     }
 
-    public void createPokeBalls() throws Exception {
+    private void createPokeBalls() throws Exception {
         // Get pokeball pocket value
         CSVRecord pokeballRecord = getItemPocketRecordByIdentifier("pokeballs");
         // Get item categories in pocket
@@ -339,7 +339,7 @@ public class ImportVeekun {
         ImageIO.write(bigImage,"png",new File("pokeballs.png"));
     }
 
-    public void createPokemon() throws Exception {
+    private void createPokemon() throws Exception {
         // Load pokemon list
         CSVParser parser = loadCSV("pokemon_species");
         //Map<String,Ability> abilityMap = new HashMap<>();
