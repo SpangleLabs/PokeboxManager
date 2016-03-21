@@ -206,8 +206,8 @@ public class ImportIcons {
                     x = 0;
                 }
             } else {
-                int tempX = fileHashes.get(md5f).getKey();
-                int tempY = fileHashes.get(md5f).getValue();
+                int tempX = fileHashes.get(md5sf).getKey();
+                int tempY = fileHashes.get(md5sf).getValue();
                 bigCSV += tempX+","+tempY+"\n";
             }
 
