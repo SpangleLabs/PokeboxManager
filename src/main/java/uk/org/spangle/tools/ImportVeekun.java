@@ -8,9 +8,6 @@ import org.hibernate.SessionFactory;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -85,9 +82,33 @@ public class ImportVeekun {
         }
     }
 
-    private CSVParser loadCSV(String csvName) throws Exception {
+    private CSVRecord getFormCoordRecordByFormId(String formId) throws Exception {
+        String filename = "pokemon-icons.csv";
+        File csvData = new File(filename);
+        CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
+        for(CSVRecord record : parser) {
+            if(record.get("pokemon_form_id").equals(formId)) {
+                return record;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private CSVRecord getBallCoordRecordByItemId(String itemId) throws Exception {
+        String filename = "pokeball-icons.csv";
+        File csvData = new File(filename);
+        CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
+        for(CSVRecord record : parser) {
+            if(record.get("item_id").equals(itemId)) {
+                return record;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    static CSVParser loadCSV(String csvName) throws Exception {
         String filename = "/pokedex/pokedex/data/csv/"+csvName+".csv";
-        File csvData = new File(getClass().getResource(filename).getFile());
+        File csvData = new File((new ImportVeekun()).getClass().getResource(filename).getFile());
         return CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
     }
 
@@ -189,19 +210,7 @@ public class ImportVeekun {
         throw new IllegalArgumentException();
     }
 
-    private CSVRecord getFormCoordRecordByFormId(String formId) throws Exception {
-        String filename = "pokemon-icons.csv";
-        File csvData = new File(filename);
-        CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
-        for(CSVRecord record : parser) {
-            if(record.get("pokemon_form_id").equals(formId)) {
-                return record;
-            }
-        }
-        throw new IllegalArgumentException();
-    }
-
-    private CSVRecord getItemPocketRecordByIdentifier(String pocketIdentifier) throws Exception {
+    static CSVRecord getItemPocketRecordByIdentifier(String pocketIdentifier) throws Exception {
         CSVParser parser = loadCSV("item_pockets");
         for(CSVRecord record : parser) {
             if(record.get("identifier").equals(pocketIdentifier)) {
@@ -211,7 +220,7 @@ public class ImportVeekun {
         throw new IllegalArgumentException();
     }
 
-    private List<CSVRecord> getItemCategoryRecordsByPocketId(String pocketId) throws Exception {
+    static List<CSVRecord> getItemCategoryRecordsByPocketId(String pocketId) throws Exception {
         CSVParser parser = loadCSV("item_categories");
         List<CSVRecord> results = new ArrayList<>();
         for(CSVRecord record : parser) {
@@ -222,7 +231,7 @@ public class ImportVeekun {
         return results;
     }
 
-    private List<CSVRecord> getItemRecordsByItemCategoryId(String categoryId) throws Exception {
+    static List<CSVRecord> getItemRecordsByItemCategoryId(String categoryId) throws Exception {
         CSVParser parser = loadCSV("items");
         List<CSVRecord> results = new ArrayList<>();
         for(CSVRecord record : parser) {
@@ -298,34 +307,24 @@ public class ImportVeekun {
         }
     }
 
-    // TODO: move icon assembly to ImportIcons
     private void createPokeBalls() throws Exception {
         // Get pokeball pocket value
         CSVRecord pokeballRecord = getItemPocketRecordByIdentifier("pokeballs");
         // Get item categories in pocket
         List<CSVRecord> listCategories = getItemCategoryRecordsByPocketId(pokeballRecord.get("id"));
-        int x = 0;
-        int y = 0;
-        BufferedImage bigImage = new BufferedImage(390,60,BufferedImage.TYPE_INT_ARGB);
-        Graphics g = bigImage.getGraphics();
         for(CSVRecord itemCategory : listCategories) {
             // Get items in category
             List<CSVRecord> listItems = getItemRecordsByItemCategoryId(itemCategory.get("id"));
             for(CSVRecord item : listItems) {
-                String pokeballImageUrl = "/pokedex-media/items/"+item.get("identifier")+".png";
                 String pokeballName = getItemNameRecordById(item.get("id"),languageId).get("name");
                 String pokeballDesc = getItemDescRecordById(item.get("id"),languageId,versionGroupId).get("flavor_text");
-                g.drawImage(ImageIO.read(new File(getClass().getResource(pokeballImageUrl).getFile())),x,y,null);
+                CSVRecord coordRecord = getBallCoordRecordByItemId(item.get("id"));
+                int x = Integer.parseInt(coordRecord.get("x"));
+                int y = Integer.parseInt(coordRecord.get("y"));
                 PokeBall pokeball = new PokeBall(pokeballName,pokeballDesc,x,y);
                 dbSession.save(pokeball);
-                x += 30;
-                if(x == 390) {
-                    x = 0;
-                    y += 30;
-                }
             }
         }
-        ImageIO.write(bigImage,"png",new File("pokeballs.png"));
     }
 
     private void createPokemon() throws Exception {
