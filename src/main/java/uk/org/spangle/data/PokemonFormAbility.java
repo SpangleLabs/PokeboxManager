@@ -3,7 +3,10 @@ package uk.org.spangle.data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "pokemon_form_ability")
+@Table(
+        name = "pokemon_form_ability",
+        uniqueConstraints = @UniqueConstraint(columnNames={"pokemon_form_id", "ability_slot_id"})
+)
 public class PokemonFormAbility {
 
     private int id;
