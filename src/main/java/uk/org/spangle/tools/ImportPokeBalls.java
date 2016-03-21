@@ -10,6 +10,7 @@ import java.util.List;
  * Quick and easy tool to import the list of pokeballs.
  * Hardcoded in from information from serebii list
  */
+@Deprecated
 public class ImportPokeBalls {
     Session dbSession;
 

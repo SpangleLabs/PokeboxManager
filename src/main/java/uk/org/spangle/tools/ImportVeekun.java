@@ -5,13 +5,12 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import uk.org.spangle.data.Ability;
-import uk.org.spangle.data.AbilitySlot;
-import uk.org.spangle.data.Pokemon;
-import uk.org.spangle.data.PokemonForm;
-import uk.org.spangle.data.PokemonFormAbility;
+import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -77,6 +76,7 @@ public class ImportVeekun {
         // Try and create stuff
         try {
             createAbilities();
+            createPokeBalls();
             createPokemon();
         } catch (Exception e) {
             e.printStackTrace();
@@ -213,6 +213,75 @@ public class ImportVeekun {
         throw new IllegalArgumentException();
     }
 
+    private CSVRecord getItemPocketRecordByIdentifier(String pocketIdentifier) throws Exception {
+        CSVParser parser = loadCSV("item_pockets");
+        for(CSVRecord record : parser) {
+            if(record.get("identifier").equals(pocketIdentifier)) {
+                return record;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private List<CSVRecord> getItemCategoryRecordsByPocketId(String pocketId) throws Exception {
+        CSVParser parser = loadCSV("item_categories");
+        List<CSVRecord> results = new ArrayList<>();
+        for(CSVRecord record : parser) {
+            if(record.get("pocket_id").equals(pocketId)) {
+                results.add(record);
+            }
+        }
+        return results;
+    }
+
+    private List<CSVRecord> getItemRecordsByItemCategoryId(String categoryId) throws Exception {
+        CSVParser parser = loadCSV("items");
+        List<CSVRecord> results = new ArrayList<>();
+        for(CSVRecord record : parser) {
+            if(record.get("category_id").equals(categoryId)) {
+                results.add(record);
+            }
+        }
+        return results;
+    }
+
+    private CSVRecord getItemNameRecordById(String itemId, String languageId) throws Exception {
+        CSVParser parser = loadCSV("item_names");
+        for(CSVRecord record : parser) {
+            if(!record.get("item_id").equals(itemId)) {
+                continue;
+            }
+            if(!record.get("local_language_id").equals(languageId)) {
+                continue;
+            }
+            return record;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private CSVRecord getItemDescRecordById(String itemId, String languageId, String versionGroupId) throws Exception {
+        CSVParser parser = loadCSV("item_flavor_text");
+        int maxVersionGroup = 0;
+        CSVRecord maxVersionRecord = null;
+        for(CSVRecord record : parser) {
+            if(!record.get("item_id").equals(itemId)) {
+                continue;
+            }
+            if(!record.get("language_id").equals(languageId)) {
+                continue;
+            }
+            if(record.get("version_group_id").equals(versionGroupId)) {
+                return record;
+            }
+            int recordVersion = Integer.parseInt(record.get("version_group_id"));
+            if(recordVersion>maxVersionGroup) {
+                maxVersionGroup = recordVersion;
+                maxVersionRecord = record;
+            }
+        }
+        return maxVersionRecord;
+    }
+
     public void createAbilities() throws Exception {
         // Create and save all AbilitySlot values
     	abilitySlotMap = new HashMap<>();
@@ -241,6 +310,35 @@ public class ImportVeekun {
         }
     }
 
+    public void createPokeBalls() throws Exception {
+        // Get pokeball pocket value
+        CSVRecord pokeballRecord = getItemPocketRecordByIdentifier("pokeballs");
+        // Get item categories in pocket
+        List<CSVRecord> listCategories = getItemCategoryRecordsByPocketId(pokeballRecord.get("id"));
+        int x = 0;
+        int y = 0;
+        BufferedImage bigImage = new BufferedImage(390,60,BufferedImage.TYPE_INT_ARGB);
+        Graphics g = bigImage.getGraphics();
+        for(CSVRecord itemCategory : listCategories) {
+            // Get items in category
+            List<CSVRecord> listItems = getItemRecordsByItemCategoryId(itemCategory.get("id"));
+            for(CSVRecord item : listItems) {
+                String pokeballImageUrl = "/pokedex-media/items/"+item.get("identifier")+".png";
+                String pokeballName = getItemNameRecordById(item.get("id"),languageId).get("name");
+                String pokeballDesc = getItemDescRecordById(item.get("id"),languageId,versionGroupId).get("flavor_text");
+                g.drawImage(ImageIO.read(new File(getClass().getResource(pokeballImageUrl).getFile())),x,y,null);
+                PokeBall pokeball = new PokeBall(pokeballName,pokeballDesc,x,y);
+                dbSession.save(pokeball);
+                x += 30;
+                if(x == 390) {
+                    x = 0;
+                    y += 30;
+                }
+            }
+        }
+        ImageIO.write(bigImage,"png",new File("pokeballs.png"));
+    }
+
     public void createPokemon() throws Exception {
         // Load pokemon list
         CSVParser parser = loadCSV("pokemon_species");
@@ -262,7 +360,6 @@ public class ImportVeekun {
                     String formId = formRecord.get("id");
                     String formName = formRecord.get("form_identifier");
                     if(formName.length() == 0) formName = "normal";
-                    System.out.println(formName);
                     CSVRecord coordsRecord = getFormCoordRecordByFormId(formId);
                     PokemonForm pokemonForm = new PokemonForm();
                     pokemonForm.setPokemon(pokemon);
@@ -285,8 +382,6 @@ public class ImportVeekun {
                     }
                 }
             }
-
-            System.out.println(pokemon);
         }
     }
 }
