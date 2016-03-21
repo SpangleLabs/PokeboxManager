@@ -23,6 +23,15 @@ public class ImportVeekun {
     private Session dbSession;
     private final static List<Integer> listGenderless = Arrays.asList(81,82,100,101,120,121,137,233,292,337,338,343,344,374,375,376,436,437,462,474,479,489,490,599,600,601,615,622,623,703);
     private final static List<Integer> listUnbreedable = Arrays.asList(132,144,145,146,150,151,201,243,244,245,249,250,251,377,378,379,382,383,384,385,386,480,481,482,483,484,486,487,491,492,493,494,638,639,640,643,644,646,647,648,649,716,717,718,719,720,721);
+    private final static Map<String,String> mapStatAbbr = new HashMap<>();
+    static {
+        mapStatAbbr.put("hp","HP");
+        mapStatAbbr.put("attack","Atk");
+        mapStatAbbr.put("defense","Def");
+        mapStatAbbr.put("special-attack","SpA");
+        mapStatAbbr.put("special-defense","SpD");
+        mapStatAbbr.put("speed","Spe");
+    }
     private String languageId;
     private String versionGroupId;
     private Map<String,Ability> abilityMap; // Map of veekun IDs to abilities.
@@ -72,6 +81,7 @@ public class ImportVeekun {
         try {
             createAbilities();
             createPokeBalls();
+            createStatsAndNatures();
             createPokemon();
         } catch (Exception e) {
             e.printStackTrace();
@@ -279,6 +289,26 @@ public class ImportVeekun {
         return maxVersionRecord;
     }
 
+    private static CSVRecord getStatNameById(String statId, String languageId) throws Exception {
+        CSVParser parser = loadCSV("stat_names");
+        for(CSVRecord record : parser) {
+            if(!record.get("stat_id").equals(statId)) continue;
+            if(!record.get("local_language_id").equals(languageId)) continue;
+            return record;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private static CSVRecord getNatureNameById(String natureId, String languageId) throws Exception {
+        CSVParser parser = loadCSV("nature_names");
+        for(CSVRecord record : parser) {
+            if(!record.get("nature_id").equals(natureId)) continue;
+            if(!record.get("local_language_id").equals(languageId)) continue;
+            return record;
+        }
+        throw new IllegalArgumentException();
+    }
+
     private void createAbilities() throws Exception {
         // Create and save all AbilitySlot values
     	abilitySlotMap = new HashMap<>();
@@ -370,6 +400,30 @@ public class ImportVeekun {
                     }
                 }
             }
+        }
+    }
+
+    private void createStatsAndNatures() throws Exception {
+        // Load stats
+        Map<String,Stat> statMap = new HashMap<>();
+        CSVParser parser = loadCSV("stats");
+        for(CSVRecord record : parser) {
+            if(record.get("is_battle_only").equals("1")) continue;
+            String statAbbr = mapStatAbbr.get(record.get("identifier"));
+            String statName = getStatNameById(record.get("id"),languageId).get("name");
+            Stat newStat = new Stat(statName,statAbbr);
+            statMap.put(record.get("id"),newStat);
+            dbSession.save(newStat);
+        }
+
+        // Load natures
+        CSVParser natureParser = loadCSV("natures");
+        for(CSVRecord natureRecord : natureParser) {
+            String natureName = getNatureNameById(natureRecord.get("id"),languageId).get("name");
+            Stat statDown = statMap.get(natureRecord.get("decreased_stat_id"));
+            Stat statUp = statMap.get(natureRecord.get("increased_stat_id"));
+            Nature nature = new Nature(natureName,statUp,statDown);
+            dbSession.save(nature);
         }
     }
 }

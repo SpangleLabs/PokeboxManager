@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Quick and easy tool to import the list of natures and stats.
  */
-// TODO: deprecate
+@Deprecated
 public class ImportStatsAndNatures {
     Session dbSession;
 
