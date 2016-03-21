@@ -52,8 +52,8 @@ public class ImportVeekun {
         }
 
         // Check that required resources exist
-        File resultsCSV = new File(getClass().getResource("/result.csv").getFile());
-        File resultsPng = new File(getClass().getResource("/result.png").getFile());
+        File resultsCSV = new File(getClass().getResource("/pokemon-icons.csv").getFile());
+        File resultsPng = new File(getClass().getResource("/pokemon-icons.png").getFile());
         if(!resultsCSV.exists() || !resultsPng.exists()) {
             System.out.println("Results files not found. Please run ImportIcons first.");
             return;
@@ -202,7 +202,7 @@ public class ImportVeekun {
     }
 
     private CSVRecord getFormCoordRecordByFormId(String formId) throws Exception {
-        String filename = "/result.csv";
+        String filename = "/pokemon-icons.csv";
         File csvData = new File(getClass().getResource(filename).getFile());
         CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
         for(CSVRecord record : parser) {

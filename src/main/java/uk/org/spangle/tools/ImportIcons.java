@@ -42,7 +42,7 @@ public class ImportIcons {
 
         // Try and create stuff
         try {
-            createAbilities();
+            createPokemonIcons();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class ImportIcons {
         throw new IllegalArgumentException();
     }
 
-    public void createAbilities() throws Exception {
+    public void createPokemonIcons() throws Exception {
         // Load abilities id list
         CSVParser parser = loadCSV("pokemon_forms");
         ConcurrentHashMap<String,Pair<Integer,Integer>> fileHashes = new ConcurrentHashMap<>();
@@ -217,8 +217,8 @@ public class ImportIcons {
 
         }
         System.out.println(fileHashes.size());
-        ImageIO.write(bigImage,"png",new File("result.png"));
-        PrintWriter out = new PrintWriter("result.csv");
+        ImageIO.write(bigImage,"png",new File("pokemon-icons.png"));
+        PrintWriter out = new PrintWriter("pokemon-icons.csv");
         out.print(bigCSV);
         out.close();
 
