@@ -28,7 +28,6 @@ public class ImportVeekun {
     private final static List<Integer> listUnbreedable = Arrays.asList(132,144,145,146,150,151,201,243,244,245,249,250,251,377,378,379,382,383,384,385,386,480,481,482,483,484,486,487,491,492,493,494,638,639,640,643,644,646,647,648,649,716,717,718,719,720,721);
     private String languageId;
     private String versionGroupId;
-    private String nationalDexId;
     private Map<String,Ability> abilityMap; // Map of veekun IDs to abilities.
     private Map<String,AbilitySlot> abilitySlotMap; // Map of veekun IDs to ability slots.
 
@@ -68,7 +67,6 @@ public class ImportVeekun {
         try {
             languageId = getLanguageId("en");
             versionGroupId = getVersionGroupId("omega-ruby-alpha-sapphire");
-            nationalDexId = getPokedexId("national");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,16 +105,6 @@ public class ImportVeekun {
         CSVParser parser = loadCSV("version_groups");
         for (CSVRecord csvRecord : parser) {
             if(csvRecord.get("identifier").equals(versionGroup)) {
-                return csvRecord.get("id");
-            }
-        }
-        throw new IllegalArgumentException();
-    }
-
-    private String getPokedexId(String pokedex) throws Exception {
-        CSVParser parser = loadCSV("pokedexes");
-        for (CSVRecord csvRecord : parser) {
-            if(csvRecord.get("identifier").equals(pokedex)) {
                 return csvRecord.get("id");
             }
         }
