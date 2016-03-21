@@ -221,7 +221,5 @@ public class ImportIcons {
         PrintWriter out = new PrintWriter("pokemon-icons.csv");
         out.print(bigCSV);
         out.close();
-
-        System.out.println("Now please move result.png and result.csv into resources directory before running ImportVeekun.");
     }
 }
