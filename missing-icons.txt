@@ -113,6 +113,9 @@ todo:
 -fix meowstic
 -pikachu mapping
 
+Another note for pokedex.git repo:
+-Missing item descriptions for ORAS net-ball
+
 ------if normal ends up in duplicates/ that means that for shiny sprite, strip the form off.
 
 /pokesprite/icons/pokemon/regular/duplicates/furfrou-natural.png
