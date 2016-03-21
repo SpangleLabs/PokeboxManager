@@ -298,6 +298,7 @@ public class ImportVeekun {
         }
     }
 
+    // TODO: move icon assembly to ImportIcons
     private void createPokeBalls() throws Exception {
         // Get pokeball pocket value
         CSVRecord pokeballRecord = getItemPocketRecordByIdentifier("pokeballs");
