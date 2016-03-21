@@ -1,3 +1,8 @@
+
+
+ImportIcons:
 https://github.com/msikma/pokesprite.git
-git://git.veekun.com/pokedex.git
 git://git.veekun.com/pokedex-media.git
+
+ImportVeekun:
+git://git.veekun.com/pokedex.git
