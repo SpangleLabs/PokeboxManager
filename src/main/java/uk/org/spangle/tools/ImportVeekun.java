@@ -37,6 +37,7 @@ public class ImportVeekun {
     private Map<String,Ability> abilityMap; // Map of veekun IDs to abilities.
     private Map<String,AbilitySlot> abilitySlotMap; // Map of veekun IDs to ability slots.
     private Map<String,Move> moveMap; // Map of veekun IDs to moves.
+    private Map<String,MoveMethod> moveMethodMap; // Map of veekun IDs to move methods.
 
     public static void main(String[] args) {
         ImportVeekun imp = new ImportVeekun();
@@ -332,6 +333,16 @@ public class ImportVeekun {
         throw new IllegalArgumentException();
     }
 
+    private static CSVRecord getMoveMethodProseById(String moveMethodId, String languageId) throws Exception {
+        CSVParser parser = loadCSV("pokemon_move_method_prose");
+        for(CSVRecord record : parser) {
+            if(!record.get("pokemon_move_method_id").equals(moveMethodId)) continue;
+            if(!record.get("local_language_id").equals(languageId)) continue;
+            return record;
+        }
+        throw new IllegalArgumentException();
+    }
+
     private void createAbilities() throws Exception {
         // Create and save all AbilitySlot values
     	abilitySlotMap = new HashMap<>();
@@ -464,6 +475,19 @@ public class ImportVeekun {
             Move move = new Move(moveName,moveDesc);
             moveMap.put(moveId,move);
             dbSession.save(move);
+        }
+
+        // Load move methods
+        CSVParser methodParser = loadCSV("pokemon_move_methods");
+        moveMethodMap = new HashMap<>();
+        for(CSVRecord record : methodParser) {
+            String methodId = record.get("id");
+            CSVRecord proseRecord = getMoveMethodProseById(methodId,languageId);
+            String methodName = proseRecord.get("name");
+            String methodDesc = proseRecord.get("description");
+            MoveMethod method = new MoveMethod(methodName,methodDesc);
+            moveMethodMap.put(methodId,method);
+            dbSession.save(method);
         }
     }
 }
