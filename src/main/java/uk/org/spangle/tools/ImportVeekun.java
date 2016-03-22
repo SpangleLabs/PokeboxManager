@@ -343,6 +343,17 @@ public class ImportVeekun {
         throw new IllegalArgumentException();
     }
 
+    private static List<CSVRecord> getPokemonMoveRecordsByPokemonId(String pokemonId) throws Exception {
+        CSVParser parser = loadCSV("pokemon_moves");
+        List<CSVRecord> results = new ArrayList<>();
+        for(CSVRecord record : parser) {
+            if(record.get("pokemon_id").equals(pokemonId)) {
+                results.add(record);
+            }
+        }
+        return results;
+    }
+
     private void createAbilities() throws Exception {
         // Create and save all AbilitySlot values
     	abilitySlotMap = new HashMap<>();
@@ -408,6 +419,7 @@ public class ImportVeekun {
             for (CSVRecord pokemonRecord : listPokemon) {
                 List<CSVRecord> listForms = getPokemonFormRecordsByPokemonId(pokemonRecord.get("id"));
                 List<CSVRecord> listAbilities = getPokemonAbilityRecordsByPokemonId(pokemonRecord.get("id"));
+                List<CSVRecord> listMoves = getPokemonMoveRecordsByPokemonId(pokemonRecord.get("id"));
                 for (CSVRecord formRecord : listForms) {
                     String formId = formRecord.get("id");
                     String formName = formRecord.get("form_identifier");
@@ -431,6 +443,15 @@ public class ImportVeekun {
                     	pokemonAbility.setAbility(abilityMap.get(abilityRecord.get("ability_id")));
                     	pokemonAbility.setAbilitySlot(abilitySlotMap.get(abilityRecord.get("slot")));
                     	dbSession.save(pokemonAbility);
+                    }
+                    for(CSVRecord moveRecord : listMoves) {
+                        Move move = moveMap.get(moveRecord.get("move_id"));
+                        MoveMethod moveMethod = moveMethodMap.get(moveRecord.get("move_method_id"));
+                        PokemonFormMove pokemonMove = new PokemonFormMove(pokemonForm,move,moveMethod);
+                        if(moveRecord.get("move_method_id").equals("1")) {
+                            pokemonMove.setLevel(Integer.parseInt(moveRecord.get("level")));
+                            pokemonMove.setOrdinal(Integer.parseInt(moveRecord.get("order")));
+                        }
                     }
                 }
             }
