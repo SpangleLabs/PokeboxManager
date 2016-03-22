@@ -50,7 +50,9 @@
         <mapping class="uk.org.spangle.data.UserPokemonBall"/>
         <mapping class="uk.org.spangle.data.UserPokemonEgg"/>
         <mapping class="uk.org.spangle.data.UserPokemonESV"/>
+        <mapping class="uk.org.spangle.data.UserPokemonEV"/>
         <mapping class="uk.org.spangle.data.UserPokemonForm"/>
+        <mapping class="uk.org.spangle.data.UserPokemonIV"/>
         <mapping class="uk.org.spangle.data.UserPokemonLanguage"/>
         <mapping class="uk.org.spangle.data.UserPokemonNature"/>
         <mapping class="uk.org.spangle.data.UserPokemonNickname"/>
