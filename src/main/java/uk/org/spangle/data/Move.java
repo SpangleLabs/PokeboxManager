@@ -20,7 +20,7 @@ public class Move {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="ability_id")
+    @Column(name="move_id")
     public int getId() {
         return id;
     }
