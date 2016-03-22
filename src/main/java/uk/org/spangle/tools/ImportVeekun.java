@@ -36,6 +36,7 @@ public class ImportVeekun {
     private String versionGroupId;
     private Map<String,Ability> abilityMap; // Map of veekun IDs to abilities.
     private Map<String,AbilitySlot> abilitySlotMap; // Map of veekun IDs to ability slots.
+    private Map<String,Move> moveMap; // Map of veekun IDs to moves.
 
     public static void main(String[] args) {
         ImportVeekun imp = new ImportVeekun();
@@ -82,6 +83,7 @@ public class ImportVeekun {
             createAbilities();
             createPokeBalls();
             createStatsAndNatures();
+            createMoves();
             createPokemon();
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,6 +311,27 @@ public class ImportVeekun {
         throw new IllegalArgumentException();
     }
 
+    private static CSVRecord getMoveNameById(String moveId, String languageId) throws Exception {
+        CSVParser parser = loadCSV("move_names");
+        for(CSVRecord record : parser) {
+            if(!record.get("move_id").equals(moveId)) continue;
+            if(!record.get("local_language_id").equals(languageId)) continue;
+            return record;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private static CSVRecord getMoveDescById(String moveId, String languageId, String versionGroupId) throws Exception {
+        CSVParser parser = loadCSV("move_flavor_text");
+        for(CSVRecord record : parser) {
+            if(!record.get("move_id").equals(moveId)) continue;
+            if(!record.get("language_id").equals(languageId)) continue;
+            if(!record.get("version_group_id").equals(versionGroupId)) continue;
+            return record;
+        }
+        throw new IllegalArgumentException();
+    }
+
     private void createAbilities() throws Exception {
         // Create and save all AbilitySlot values
     	abilitySlotMap = new HashMap<>();
@@ -424,6 +447,23 @@ public class ImportVeekun {
             Stat statUp = statMap.get(natureRecord.get("increased_stat_id"));
             Nature nature = new Nature(natureName,statUp,statDown);
             dbSession.save(nature);
+        }
+    }
+
+    private void createMoves() throws Exception {
+        // Load moves
+        CSVParser parser = loadCSV("moves");
+        moveMap = new HashMap<>();
+        for(CSVRecord record : parser) {
+            String moveId = record.get("id");
+            String moveName = getMoveNameById(moveId,languageId).get("name");
+            String moveDesc;
+            try {
+                moveDesc = getMoveDescById(moveId, languageId, versionGroupId).get("flavor_text");
+            } catch (IllegalArgumentException e) { continue; }
+            Move move = new Move(moveName,moveDesc);
+            moveMap.put(moveId,move);
+            dbSession.save(move);
         }
     }
 }
