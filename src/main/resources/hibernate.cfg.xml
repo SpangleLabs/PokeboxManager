@@ -37,6 +37,7 @@
         <mapping class="uk.org.spangle.data.GenerationBox"/>
         <mapping class="uk.org.spangle.data.Language"/>
         <mapping class="uk.org.spangle.data.Nature"/>
+        <mapping class="uk.org.spangle.data.Move"/>
         <mapping class="uk.org.spangle.data.PokeBall"/>
         <mapping class="uk.org.spangle.data.Pokemon"/>
         <mapping class="uk.org.spangle.data.PokemonForm"/>
