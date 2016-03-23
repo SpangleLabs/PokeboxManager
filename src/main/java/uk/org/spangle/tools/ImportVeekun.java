@@ -446,12 +446,16 @@ public class ImportVeekun {
                     }
                     for(CSVRecord moveRecord : listMoves) {
                         Move move = moveMap.get(moveRecord.get("move_id"));
-                        MoveMethod moveMethod = moveMethodMap.get(moveRecord.get("move_method_id"));
+                        MoveMethod moveMethod = moveMethodMap.get(moveRecord.get("pokemon_move_method_id"));
                         PokemonFormMove pokemonMove = new PokemonFormMove(pokemonForm,move,moveMethod);
-                        if(moveRecord.get("move_method_id").equals("1")) {
+                        if(moveRecord.get("pokemon_move_method_id").equals("1")) {
                             pokemonMove.setLevel(Integer.parseInt(moveRecord.get("level")));
-                            pokemonMove.setOrdinal(Integer.parseInt(moveRecord.get("order")));
+                            String orderStr = moveRecord.get("order");
+                            Integer order = 0;
+                            if(!orderStr.equals("")) order = Integer.parseInt(orderStr);
+                            pokemonMove.setOrdinal(order);
                         }
+                        dbSession.save(pokemonMove);
                     }
                 }
             }
