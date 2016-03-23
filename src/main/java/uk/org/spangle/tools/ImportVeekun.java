@@ -3,6 +3,7 @@ package uk.org.spangle.tools;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uk.org.spangle.data.*;
@@ -90,8 +91,12 @@ public class ImportVeekun {
             e.printStackTrace();
         } finally {
             // Shut down cleanly
-            dbSession.close();
-            sessionFactory.close();
+            try {
+                dbSession.close();
+            } catch (HibernateException e) { e.printStackTrace(); }
+            try {
+                sessionFactory.close();
+            } catch (HibernateException e) { e.printStackTrace(); }
         }
     }
 

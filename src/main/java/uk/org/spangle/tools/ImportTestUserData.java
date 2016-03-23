@@ -1,5 +1,6 @@
 package uk.org.spangle.tools;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -38,8 +39,12 @@ public class ImportTestUserData {
             createTestData();
         } finally {
             // Shut down cleanly
-            dbSession.close();
-            sessionFactory.close();
+            try {
+                dbSession.close();
+            } catch (HibernateException e) { e.printStackTrace(); }
+            try {
+                sessionFactory.close();
+            } catch (HibernateException e) { e.printStackTrace(); }
         }
     }
 
