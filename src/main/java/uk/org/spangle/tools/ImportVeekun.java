@@ -519,5 +519,23 @@ public class ImportVeekun {
             moveMethodMap.put(methodId,method);
             dbSession.save(method);
         }
+
+        // Load move slots
+        MoveSlot move1 = new MoveSlot(Configuration.MOVE_1);
+        dbSession.save(move1);
+        MoveSlot move2 = new MoveSlot(Configuration.MOVE_2);
+        dbSession.save(move2);
+        MoveSlot move3 = new MoveSlot(Configuration.MOVE_3);
+        dbSession.save(move3);
+        MoveSlot move4 = new MoveSlot(Configuration.MOVE_4);
+        dbSession.save(move4);
+        MoveSlot relearn1 = new MoveSlot(Configuration.RELEARN_1);
+        dbSession.save(relearn1);
+        MoveSlot relearn2 = new MoveSlot(Configuration.RELEARN_2);
+        dbSession.save(relearn2);
+        MoveSlot relearn3 = new MoveSlot(Configuration.RELEARN_3);
+        dbSession.save(relearn3);
+        MoveSlot relearn4 = new MoveSlot(Configuration.RELEARN_4);
+        dbSession.save(relearn4);
     }
 }
