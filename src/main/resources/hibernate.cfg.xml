@@ -59,6 +59,7 @@
         <mapping class="uk.org.spangle.data.UserPokemonIV"/>
         <mapping class="uk.org.spangle.data.UserPokemonLanguage"/>
         <mapping class="uk.org.spangle.data.UserPokemonLevel"/>
+        <mapping class="uk.org.spangle.data.UserPokemonMove"/>
         <mapping class="uk.org.spangle.data.UserPokemonNature"/>
         <mapping class="uk.org.spangle.data.UserPokemonNickname"/>
         <mapping class="uk.org.spangle.data.UserPokemonPokerus"/>
