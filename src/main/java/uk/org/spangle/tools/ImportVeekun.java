@@ -26,12 +26,12 @@ public class ImportVeekun {
     private final static List<Integer> listUnbreedable = Arrays.asList(132,144,145,146,150,151,201,243,244,245,249,250,251,377,378,379,382,383,384,385,386,480,481,482,483,484,486,487,491,492,493,494,638,639,640,643,644,646,647,648,649,716,717,718,719,720,721);
     private final static Map<String,String> mapStatAbbr = new HashMap<>();
     static {
-        mapStatAbbr.put("hp","HP");
-        mapStatAbbr.put("attack","Atk");
-        mapStatAbbr.put("defense","Def");
-        mapStatAbbr.put("special-attack","SpA");
-        mapStatAbbr.put("special-defense","SpD");
-        mapStatAbbr.put("speed","Spe");
+        mapStatAbbr.put("hp",Configuration.STAT_HP);
+        mapStatAbbr.put("attack",Configuration.STAT_ATK);
+        mapStatAbbr.put("defense",Configuration.STAT_DEF);
+        mapStatAbbr.put("special-attack",Configuration.STAT_SPA);
+        mapStatAbbr.put("special-defense",Configuration.STAT_SPD);
+        mapStatAbbr.put("speed",Configuration.STAT_SPE);
     }
     private String languageId;
     private String versionGroupId;
