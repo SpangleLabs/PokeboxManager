@@ -60,7 +60,8 @@ public class UserPokemonMove {
         this.moveSlot = moveSlot;
     }
 
-    @Column(name="move_id")
+    @ManyToOne
+    @JoinColumn(name="move_id")
     public Move getMove() {
         return move;
     }
