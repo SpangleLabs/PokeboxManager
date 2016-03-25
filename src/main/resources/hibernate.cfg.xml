@@ -65,6 +65,7 @@
         <mapping class="uk.org.spangle.data.UserPokemonPokerus"/>
         <mapping class="uk.org.spangle.data.UserPokemonSex"/>
         <mapping class="uk.org.spangle.data.UserPokemonShiny"/>
+        <mapping class="uk.org.spangle.data.UserTag"/>
 
     </session-factory>
 
