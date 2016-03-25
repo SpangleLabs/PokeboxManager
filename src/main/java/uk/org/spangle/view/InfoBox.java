@@ -142,7 +142,7 @@ public class InfoBox {
         Text labelSex = new Text("Sex:");
         Text pokemonSex = new Text("Unknown");
         if(userPokemon.getUserPokemonSex() != null) {
-            pokemonNick.setText(userPokemon.getUserPokemonSex().getIsMale() ? "Male" : "Female");
+            pokemonSex.setText(userPokemon.getUserPokemonSex().getIsMale() ? "Male" : "Female");
         }
         grid.add(labelSex,0,8);
         grid.add(pokemonSex,1,8);
