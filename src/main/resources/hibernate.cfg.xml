@@ -62,6 +62,7 @@
         <mapping class="uk.org.spangle.data.UserPokemonMove"/>
         <mapping class="uk.org.spangle.data.UserPokemonNature"/>
         <mapping class="uk.org.spangle.data.UserPokemonNickname"/>
+        <mapping class="uk.org.spangle.data.UserPokemonNote"/>
         <mapping class="uk.org.spangle.data.UserPokemonPokerus"/>
         <mapping class="uk.org.spangle.data.UserPokemonSex"/>
         <mapping class="uk.org.spangle.data.UserPokemonShiny"/>
