@@ -22,20 +22,21 @@ import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SideBar {
-    Pane sideBarPane;
-    ChoiceBox<UserGame> gameDropdown;
-    ChoiceBox<UserBox> boxDropdown;
-    Canvas boxCanvas;
-    UserGame currentGame = null;
-    Session session;
-    Configuration conf;
-    Controller controller;
+    private Pane sideBarPane;
+    private ChoiceBox<UserGame> gameDropdown;
+    private ChoiceBox<UserBox> boxDropdown;
+    private Canvas boxCanvas;
+    private UserGame currentGame = null;
+    private Session session;
+    private Configuration conf;
+    private Controller controller;
 
-    public SideBar(Pane sideBarPane, Session session, Configuration conf, final Controller controller) {
+    SideBar(Pane sideBarPane, Session session, Configuration conf, final Controller controller) {
         this.sideBarPane = sideBarPane;
         this.session = session;
         this.conf = conf;
@@ -78,7 +79,7 @@ public class SideBar {
         sideBarPane.getChildren().add(sideBarVBox);
     }
 
-    public ChoiceBox<UserGame> createGameDropdown() {
+    private ChoiceBox<UserGame> createGameDropdown() {
 
         // Now lets pull games list from the database
         @SuppressWarnings("unchecked")
@@ -96,7 +97,7 @@ public class SideBar {
         return gameDropdown;
     }
 
-    public ChoiceBox<UserBox> createBoxDropdown() {
+    private ChoiceBox<UserBox> createBoxDropdown() {
         boxDropdown = new ChoiceBox<>();
         updateBoxDropdown();
         boxDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<UserBox>() {
@@ -118,7 +119,7 @@ public class SideBar {
         }
     }
 
-    public Canvas createBoxCanvas() {
+    private Canvas createBoxCanvas() {
         boxCanvas = new Canvas();
         boxCanvas.setWidth(30*6);
         boxCanvas.setHeight(30*5);
@@ -138,7 +139,9 @@ public class SideBar {
 
         graphicsContext.clearRect(0,0,boxCanvas.getWidth(),boxCanvas.getHeight());
         // Box sprite sheet
-        Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
+        //Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
+        File imageFile = new File("pokemon-icons.png");
+        Image image = new Image(imageFile.toURI().toString());
 
         // Get list of user pokemon:
         List<UserPokemon> pokemonList = new ArrayList<>();

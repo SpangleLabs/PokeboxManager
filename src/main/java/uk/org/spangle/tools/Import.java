@@ -8,7 +8,6 @@ public class Import {
     public static void main(String[] args) {
         ImportIcons imp1 = new ImportIcons();
         imp1.run();
-        //move result.png and result.csv
         ImportVeekun imp2 = new ImportVeekun();
         imp2.run();
         ImportGenerations imp3 = new ImportGenerations();

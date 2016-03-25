@@ -1,6 +1,7 @@
 package uk.org.spangle.data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "pokemon_form")
@@ -16,6 +17,8 @@ public class PokemonForm {
     private int spriteShinyMaleY;
     private int spriteShinyFemaleX;
     private int spriteShinyFemaleY;
+    private List<PokemonFormAbility> pokemonFormAbilities;
+    private List<PokemonFormMove> pokemonFormMoves;
 
     public PokemonForm() {
         // this form used by Hibernate
@@ -121,5 +124,25 @@ public class PokemonForm {
 
     public void setSpriteShinyFemaleY(int spriteShinyFemaleY) {
         this.spriteShinyFemaleY = spriteShinyFemaleY;
+    }
+
+    @OneToMany(mappedBy="pokemonForm")
+    @OrderBy("ordinal")
+    public List<PokemonFormAbility> getPokemonFormAbilities() {
+        return pokemonFormAbilities;
+    }
+
+    public void setPokemonFormAbilities(List<PokemonFormAbility> pokemonFormAbilities) {
+        this.pokemonFormAbilities = pokemonFormAbilities;
+    }
+
+    @OneToMany(mappedBy="pokemonForm")
+    @OrderBy("ordinal")
+    public List<PokemonFormMove> getPokemonFormMoves() {
+        return pokemonFormMoves;
+    }
+
+    public void setPokemonFormMoves(List<PokemonFormMove> pokemonFormMoves) {
+        this.pokemonFormMoves = pokemonFormMoves;
     }
 }

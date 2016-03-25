@@ -10,7 +10,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.h2.Driver</property>
-        <property name="connection.url">jdbc:h2:~/test</property>
+        <property name="connection.url">jdbc:h2:./pokebox</property>
         <property name="connection.username">sa</property>
         <property name="connection.password"/>
 
@@ -37,9 +37,14 @@
         <mapping class="uk.org.spangle.data.GenerationBox"/>
         <mapping class="uk.org.spangle.data.Language"/>
         <mapping class="uk.org.spangle.data.Nature"/>
+        <mapping class="uk.org.spangle.data.Move"/>
+        <mapping class="uk.org.spangle.data.MoveMethod"/>
+        <mapping class="uk.org.spangle.data.MoveSlot"/>
         <mapping class="uk.org.spangle.data.PokeBall"/>
         <mapping class="uk.org.spangle.data.Pokemon"/>
         <mapping class="uk.org.spangle.data.PokemonForm"/>
+        <mapping class="uk.org.spangle.data.PokemonFormAbility"/>
+        <mapping class="uk.org.spangle.data.PokemonFormMove"/>
         <mapping class="uk.org.spangle.data.Stat"/>
         <mapping class="uk.org.spangle.data.UserBox"/>
         <mapping class="uk.org.spangle.data.UserConfig"/>
@@ -49,8 +54,12 @@
         <mapping class="uk.org.spangle.data.UserPokemonBall"/>
         <mapping class="uk.org.spangle.data.UserPokemonEgg"/>
         <mapping class="uk.org.spangle.data.UserPokemonESV"/>
+        <mapping class="uk.org.spangle.data.UserPokemonEV"/>
         <mapping class="uk.org.spangle.data.UserPokemonForm"/>
+        <mapping class="uk.org.spangle.data.UserPokemonIV"/>
         <mapping class="uk.org.spangle.data.UserPokemonLanguage"/>
+        <mapping class="uk.org.spangle.data.UserPokemonLevel"/>
+        <mapping class="uk.org.spangle.data.UserPokemonMove"/>
         <mapping class="uk.org.spangle.data.UserPokemonNature"/>
         <mapping class="uk.org.spangle.data.UserPokemonNickname"/>
         <mapping class="uk.org.spangle.data.UserPokemonPokerus"/>

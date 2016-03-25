@@ -1,5 +1,6 @@
 package uk.org.spangle.tools;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import uk.org.spangle.data.Language;
@@ -10,7 +11,7 @@ import java.util.List;
  * Quick and easy tool to import the list of languages.
  */
 public class ImportLanguages {
-    Session dbSession;
+    private Session dbSession;
 
     public static void main(String[] args) {
         ImportLanguages imp = new ImportLanguages();
@@ -36,12 +37,16 @@ public class ImportLanguages {
             createGenerations();
         } finally {
             // Shut down cleanly
-            dbSession.close();
-            sessionFactory.close();
+            try {
+                dbSession.close();
+            } catch (HibernateException e) { e.printStackTrace(); }
+            try {
+                sessionFactory.close();
+            } catch (HibernateException e) { e.printStackTrace(); }
         }
     }
 
-    public void createGenerations() {
+    private void createGenerations() {
         Language english = new Language("English","ENG");
         dbSession.save(english);
         Language japanese = new Language("Japanese","JPN");

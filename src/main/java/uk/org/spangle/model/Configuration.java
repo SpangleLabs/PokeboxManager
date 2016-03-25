@@ -23,6 +23,15 @@ public class Configuration {
     public final static String STAT_SPD = "SpD";
     public final static String STAT_SPE = "Spe";
 
+    public final static String MOVE_1 = "move_1";
+    public final static String MOVE_2 = "move_2";
+    public final static String MOVE_3 = "move_3";
+    public final static String MOVE_4 = "move_4";
+    public final static String RELEARN_1 = "relearn_1";
+    public final static String RELEARN_2 = "relearn_2";
+    public final static String RELEARN_3 = "relearn_3";
+    public final static String RELEARN_4 = "relearn_4";
+
     Session session;
 
     public Configuration(Session session) {

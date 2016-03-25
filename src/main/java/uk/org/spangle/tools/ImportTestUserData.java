@@ -1,5 +1,6 @@
 package uk.org.spangle.tools;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -12,7 +13,7 @@ import java.util.List;
  * Quick and easy tool to import some test data
  */
 public class ImportTestUserData {
-    Session dbSession;
+    private Session dbSession;
 
     public static void main(String[] args) {
         ImportTestUserData imp = new ImportTestUserData();
@@ -38,12 +39,16 @@ public class ImportTestUserData {
             createTestData();
         } finally {
             // Shut down cleanly
-            dbSession.close();
-            sessionFactory.close();
+            try {
+                dbSession.close();
+            } catch (HibernateException e) { e.printStackTrace(); }
+            try {
+                sessionFactory.close();
+            } catch (HibernateException e) { e.printStackTrace(); }
         }
     }
 
-    public void createTestData() {
+    private void createTestData() {
         // Get generations
         Generation genBank = (Generation) dbSession.createCriteria(Generation.class).add(Restrictions.eq("name","Pokebank")).list().get(0);
         Generation genSix = (Generation) dbSession.createCriteria(Generation.class).add(Restrictions.eq("name","Gen VI")).list().get(0);
