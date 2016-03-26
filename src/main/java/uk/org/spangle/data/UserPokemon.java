@@ -1,6 +1,7 @@
 package uk.org.spangle.data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user_pokemon")
@@ -10,16 +11,23 @@ public class UserPokemon {
     private UserBox userBox;
     private int position;
     private Pokemon pokemon;
+    private UserPokemonAbilitySlot userPokemonAbilitySlot;
     private UserPokemonBall userPokemonBall;
     private UserPokemonEgg userPokemonEgg;
     private UserPokemonESV userPokemonESV;
+    private List<UserPokemonEV> userPokemonEVs;
     private UserPokemonForm userPokemonForm;
+    private List<UserPokemonIV> userPokemonIVs;
     private UserPokemonLanguage userPokemonLanguage;
+    private UserPokemonLevel userPokemonLevel;
+    private List<UserPokemonMove> userPokemonMoves;
     private UserPokemonNature userPokemonNature;
     private UserPokemonNickname userPokemonNickname;
+    private UserPokemonNote userPokemonNote;
     private UserPokemonPokerus userPokemonPokerus;
     private UserPokemonSex userPokemonSex;
     private UserPokemonShiny userPokemonShiny;
+    private List<UserPokemonTag> userPokemonTags;
 
     public UserPokemon() {
         // this form used by Hibernate
@@ -72,6 +80,15 @@ public class UserPokemon {
     }
 
     @OneToOne(mappedBy="userPokemon")
+    public UserPokemonAbilitySlot getUserPokemonAbilitySlot() {
+        return userPokemonAbilitySlot;
+    }
+
+    public void setUserPokemonAbilitySlot(UserPokemonAbilitySlot userPokemonAbilitySlot) {
+        this.userPokemonAbilitySlot = userPokemonAbilitySlot;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
     public UserPokemonBall getUserPokemonBall() {
         return userPokemonBall;
     }
@@ -98,6 +115,15 @@ public class UserPokemon {
         this.userPokemonESV = userPokemonESV;
     }
 
+    @OneToMany(mappedBy="userPokemon")
+    public List<UserPokemonEV> getUserPokemonEVs() {
+        return userPokemonEVs;
+    }
+
+    public void setUserPokemonEVs(List<UserPokemonEV> userPokemonEVs) {
+        this.userPokemonEVs = userPokemonEVs;
+    }
+
     @OneToOne(mappedBy="userPokemon")
     public UserPokemonForm getUserPokemonForm() {
         return userPokemonForm;
@@ -107,6 +133,15 @@ public class UserPokemon {
         this.userPokemonForm = userPokemonForm;
     }
 
+    @OneToMany(mappedBy="userPokemon")
+    public List<UserPokemonIV> getUserPokemonIVs() {
+        return userPokemonIVs;
+    }
+
+    public void setUserPokemonIVs(List<UserPokemonIV> userPokemonIVs) {
+        this.userPokemonIVs = userPokemonIVs;
+    }
+
     @OneToOne(mappedBy="userPokemon")
     public UserPokemonLanguage getUserPokemonLanguage() {
         return userPokemonLanguage;
@@ -114,6 +149,24 @@ public class UserPokemon {
 
     public void setUserPokemonLanguage(UserPokemonLanguage userPokemonLanguage) {
         this.userPokemonLanguage = userPokemonLanguage;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonLevel getUserPokemonLevel() {
+        return userPokemonLevel;
+    }
+
+    public void setUserPokemonLevel(UserPokemonLevel userPokemonLevel) {
+        this.userPokemonLevel = userPokemonLevel;
+    }
+
+    @OneToMany(mappedBy="userPokemon")
+    public List<UserPokemonMove> getUserPokemonMoves() {
+        return userPokemonMoves;
+    }
+
+    public void setUserPokemonMoves(List<UserPokemonMove> userPokemonMoves) {
+        this.userPokemonMoves = userPokemonMoves;
     }
 
     @OneToOne(mappedBy="userPokemon")
@@ -132,6 +185,15 @@ public class UserPokemon {
 
     public void setUserPokemonNickname(UserPokemonNickname userPokemonNickname) {
         this.userPokemonNickname = userPokemonNickname;
+    }
+
+    @OneToOne(mappedBy="userPokemon")
+    public UserPokemonNote getUserPokemonNote() {
+        return userPokemonNote;
+    }
+
+    public void setUserPokemonNote(UserPokemonNote userPokemonNote) {
+        this.userPokemonNote = userPokemonNote;
     }
 
     @OneToOne(mappedBy="userPokemon")
@@ -160,6 +222,17 @@ public class UserPokemon {
     public void setUserPokemonShiny(UserPokemonShiny userPokemonShiny) {
         this.userPokemonShiny = userPokemonShiny;
     }
+
+    @OneToMany(mappedBy="userPokemon")
+    public List<UserPokemonTag> getUserPokemonTags() {
+        return userPokemonTags;
+    }
+
+    public void setUserPokemonTags(List<UserPokemonTag> userPokemonTags) {
+        this.userPokemonTags = userPokemonTags;
+    }
+
+
 
     // NON-HIBERNATE METHODS BELOW
     @Transient
@@ -206,5 +279,38 @@ public class UserPokemon {
                 return form.getSpriteFemaleY();
             }
         }
+    }
+
+    @Transient
+    public UserPokemonEV getUserPokemonEV(Stat stat) {
+        List<UserPokemonEV> userPokemonEVs = getUserPokemonEVs();
+        for(UserPokemonEV userPokemonEV : userPokemonEVs) {
+            if(userPokemonEV.getStat() == stat) {
+                return userPokemonEV;
+            }
+        }
+        return null;
+    }
+
+    @Transient
+    public UserPokemonIV getUserPokemonIV(Stat stat) {
+        List<UserPokemonIV> userPokemonIVs = getUserPokemonIVs();
+        for(UserPokemonIV userPokemonIV : userPokemonIVs) {
+            if(userPokemonIV.getStat() == stat) {
+                return userPokemonIV;
+            }
+        }
+        return null;
+    }
+
+    @Transient
+    public UserPokemonMove getUserPokemonMove(MoveSlot moveSlot) {
+        List<UserPokemonMove> userPokemonMoves = getUserPokemonMoves();
+        for(UserPokemonMove userPokemonMove : userPokemonMoves) {
+            if(userPokemonMove.getMoveSlot() == moveSlot) {
+                return userPokemonMove;
+            }
+        }
+        return null;
     }
 }
