@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import uk.org.spangle.controller.Controller;
+import uk.org.spangle.data.AbilitySlot;
 import uk.org.spangle.data.Pokemon;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserPokemon;
@@ -149,6 +150,14 @@ public class InfoBox {
         }
         grid.add(labelSex,0,8);
         grid.add(pokemonSex,1,8);
+
+        Text labelShiny = new Text("Shiny:");
+        Text pokemonShiny = new Text("Unknown");
+        if (userPokemon.getUserPokemonShiny() != null) {
+            pokemonShiny.setText(userPokemon.getUserPokemonShiny().getIsShiny() ? "Is shiny" : "Not shiny");
+        }
+        grid.add(labelShiny,0,9);
+        grid.add(pokemonShiny,1,9);
 
 
         VBox rows = new VBox();
