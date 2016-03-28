@@ -282,6 +282,22 @@ public class UserPokemon {
     }
 
     @Transient
+    public Ability getAbility() {
+        UserPokemonAbilitySlot upas = getUserPokemonAbilitySlot();
+        if(upas == null) return null;
+        AbilitySlot abilitySlot = upas.getAbilitySlot();
+        UserPokemonForm upf = getUserPokemonForm();
+        if(upf == null) return null;
+        List<PokemonFormAbility> listAbilities = upf.getPokemonForm().getPokemonFormAbilities();
+        for(PokemonFormAbility pokemonFormAbility : listAbilities) {
+            if(pokemonFormAbility.getAbilitySlot() == abilitySlot) {
+                return pokemonFormAbility.getAbility();
+            }
+        }
+        return null;
+    }
+
+    @Transient
     public UserPokemonEV getUserPokemonEV(Stat stat) {
         List<UserPokemonEV> userPokemonEVs = getUserPokemonEVs();
         for(UserPokemonEV userPokemonEV : userPokemonEVs) {
