@@ -166,6 +166,14 @@ public class InfoBox {
         grid.add(labelAbility,0,10);
         grid.add(pokemonAbility,1,10);
 
+        Text labelLevel = new Text("Level:");
+        Text pokemonLevel = new Text("Unknown");
+        if(userPokemon.getUserPokemonLevel() != null) {
+            pokemonLevel.setText(Integer.toString(userPokemon.getUserPokemonLevel().getLevel()));
+        }
+        grid.add(labelLevel,0,11);
+        grid.add(pokemonLevel,0,11);
+
 
         VBox rows = new VBox();
         rows.getChildren().addAll(pokemonTitle,pokemonImage,grid);
