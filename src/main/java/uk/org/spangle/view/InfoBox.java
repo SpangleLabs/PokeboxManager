@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import uk.org.spangle.controller.Controller;
-import uk.org.spangle.data.AbilitySlot;
 import uk.org.spangle.data.Pokemon;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserPokemon;
@@ -158,6 +157,14 @@ public class InfoBox {
         }
         grid.add(labelShiny,0,9);
         grid.add(pokemonShiny,1,9);
+
+        Text labelAbility = new Text("Ability:");
+        Text pokemonAbility = new Text("Unknown");
+        if(userPokemon.getAbility() != null) {
+            pokemonAbility.setText(userPokemon.getAbility().getName());
+        }
+        grid.add(labelAbility,0,10);
+        grid.add(pokemonAbility,1,10);
 
 
         VBox rows = new VBox();
