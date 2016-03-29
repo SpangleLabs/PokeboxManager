@@ -39,6 +39,7 @@ public class ImportVeekun {
     private Map<String,AbilitySlot> abilitySlotMap; // Map of veekun IDs to ability slots.
     private Map<String,Move> moveMap; // Map of veekun IDs to moves.
     private Map<String,MoveMethod> moveMethodMap; // Map of veekun IDs to move methods.
+    private Map<String,Stat> statMap; // Map of veekun IDs to stats.
 
     public static void main(String[] args) {
         ImportVeekun imp = new ImportVeekun();
@@ -359,6 +360,17 @@ public class ImportVeekun {
         return results;
     }
 
+    private static List<CSVRecord> getPokemonStatRecordsByPokemonId(String pokemonId) throws Exception {
+        CSVParser parser = loadCSV("pokemon_stats");
+        List<CSVRecord> results = new ArrayList<>();
+        for(CSVRecord record : parser) {
+            if(record.get("pokemon_id").equals(pokemonId)) {
+                results.add(record);
+            }
+        }
+        return results;
+    }
+
     private void createAbilities() throws Exception {
         // Create and save all AbilitySlot values
     	abilitySlotMap = new HashMap<>();
@@ -425,6 +437,7 @@ public class ImportVeekun {
                 List<CSVRecord> listForms = getPokemonFormRecordsByPokemonId(pokemonRecord.get("id"));
                 List<CSVRecord> listAbilities = getPokemonAbilityRecordsByPokemonId(pokemonRecord.get("id"));
                 List<CSVRecord> listMoves = getPokemonMoveRecordsByPokemonId(pokemonRecord.get("id"));
+                List<CSVRecord> listStats = getPokemonStatRecordsByPokemonId(pokemonRecord.get("id"));
                 for (CSVRecord formRecord : listForms) {
                     String formId = formRecord.get("id");
                     String formName = formRecord.get("form_identifier");
@@ -462,6 +475,13 @@ public class ImportVeekun {
                         }
                         dbSession.save(pokemonMove);
                     }
+                    for(CSVRecord statRecord : listStats) {
+                        PokemonFormBaseStat pokemonStat = new PokemonFormBaseStat();
+                        pokemonStat.setPokemonForm(pokemonForm);
+                        pokemonStat.setStat(statMap.get(statRecord.get("stat_id")));
+                        pokemonStat.setValue(Integer.parseInt(statRecord.get("base_stat")));
+                        dbSession.save(pokemonStat);
+                    }
                 }
             }
         }
@@ -469,7 +489,7 @@ public class ImportVeekun {
 
     private void createStatsAndNatures() throws Exception {
         // Load stats
-        Map<String,Stat> statMap = new HashMap<>();
+        statMap = new HashMap<>();
         CSVParser parser = loadCSV("stats");
         for(CSVRecord record : parser) {
             if(record.get("is_battle_only").equals("1")) continue;
