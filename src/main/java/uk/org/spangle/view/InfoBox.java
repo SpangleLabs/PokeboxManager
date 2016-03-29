@@ -21,6 +21,7 @@ import uk.org.spangle.data.Stat;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserPokemon;
 import uk.org.spangle.model.Configuration;
+import uk.org.spangle.model.UserPokemonStat;
 
 import java.util.*;
 
@@ -184,14 +185,18 @@ public class InfoBox {
         TableView table = new TableView();
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         TableColumn attrCol = new TableColumn("Stat");
-        attrCol.setCellValueFactory(new PropertyValueFactory<Stat,String>("name"));
+        attrCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("name"));
         TableColumn ivCol = new TableColumn("IV");
+        ivCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("IV"));
         TableColumn evCol = new TableColumn("EV");
+        evCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("EV"));
         TableColumn baseCol = new TableColumn("Base");
+        baseCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("BaseStat"));
         TableColumn statCol = new TableColumn("Stat value");
+        statCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("Value"));
 
         List<Stat> listStats = session.createCriteria(Stat.class).list();
-        ObservableList<Stat> data = FXCollections.observableArrayList(listStats);
+        ObservableList<UserPokemonStat> data = FXCollections.observableArrayList(userPokemon.getUserPokemonStats(listStats));
         table.setItems(data);
         table.setPrefHeight(data.size()*24 + 26);
 
