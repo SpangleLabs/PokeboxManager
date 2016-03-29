@@ -1,6 +1,9 @@
 package uk.org.spangle.data;
 
+import uk.org.spangle.model.UserPokemonStat;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -328,5 +331,19 @@ public class UserPokemon {
             }
         }
         return null;
+    }
+
+    @Transient
+    public UserPokemonStat getUserPokemonStat(Stat stat) {
+        return new UserPokemonStat(this,stat);
+    }
+
+    @Transient
+    public List<UserPokemonStat> getUserPokemonStats(List<Stat> listStats) {
+        List<UserPokemonStat> output = new ArrayList<>();
+        for(Stat stat: listStats) {
+            output.add(getUserPokemonStat(stat));
+        }
+        return output;
     }
 }
