@@ -1,8 +1,13 @@
 package uk.org.spangle.view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -12,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.Pokemon;
+import uk.org.spangle.data.Stat;
 import uk.org.spangle.data.UserBox;
 import uk.org.spangle.data.UserPokemon;
 import uk.org.spangle.model.Configuration;
@@ -174,9 +180,26 @@ public class InfoBox {
         grid.add(labelLevel,0,11);
         grid.add(pokemonLevel,0,11);
 
+        // Create IVs and EVs table
+        TableView table = new TableView();
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        TableColumn attrCol = new TableColumn("Stat");
+        attrCol.setCellValueFactory(new PropertyValueFactory<Stat,String>("name"));
+        TableColumn ivCol = new TableColumn("IV");
+        TableColumn evCol = new TableColumn("EV");
+        TableColumn baseCol = new TableColumn("Base");
+        TableColumn statCol = new TableColumn("Stat value");
+
+        List<Stat> listStats = session.createCriteria(Stat.class).list();
+        ObservableList<Stat> data = FXCollections.observableArrayList(listStats);
+        table.setItems(data);
+        table.setPrefHeight(data.size()*24 + 26);
+
+        table.getColumns().setAll(attrCol, ivCol, evCol, baseCol, statCol);
+
 
         VBox rows = new VBox();
-        rows.getChildren().addAll(pokemonTitle,pokemonImage,grid);
+        rows.getChildren().addAll(pokemonTitle,pokemonImage,grid,table);
 
         infoBoxPane.getChildren().setAll(rows);
     }
