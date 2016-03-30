@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(
-        name = "pokemon_form_ability",
+        name = "pokemon_form_base_stat",
         uniqueConstraints = @UniqueConstraint(columnNames={"pokemon_form_id", "stat_id"})
 )
 public class PokemonFormBaseStat {
