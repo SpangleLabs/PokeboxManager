@@ -6,6 +6,8 @@ public class UserPokemonStat {
     UserPokemon userPokemon;
     Stat stat;
 
+    private final int ERROR_UNKNOWN = -1;
+
     public UserPokemonStat(UserPokemon userPokemon, Stat stat) {
         this.userPokemon = userPokemon;
         this.stat = stat;
@@ -35,13 +37,13 @@ public class UserPokemonStat {
     }
 
     public String getValue() {
-        int value = -1;
+        int value;
         if(stat.getAbbr().equals(Configuration.STAT_HP)) {
             value = getHPValue();
         } else {
             value = getStatValue();
         }
-        if(value == -1) return "Unknown";
+        if(value == ERROR_UNKNOWN) return "Unknown";
         return Integer.toString(value);
     }
 
@@ -51,7 +53,7 @@ public class UserPokemonStat {
         UserPokemonLevel upl = userPokemon.getUserPokemonLevel();
         UserPokemonForm upf = userPokemon.getUserPokemonForm();
         if(upi == null || upe == null || upl == null || upf == null) {
-            return -1;
+            return ERROR_UNKNOWN;
         }
         PokemonFormBaseStat pfbs = upf.getPokemonForm().getPokemonFormBaseStat(stat);
         int base = pfbs.getValue();
@@ -68,7 +70,7 @@ public class UserPokemonStat {
         UserPokemonForm upf = userPokemon.getUserPokemonForm();
         UserPokemonNature upn = userPokemon.getUserPokemonNature();
         if(upi == null || upe == null || upl == null || upf == null || upn == null) {
-            return -1;
+            return ERROR_UNKNOWN;
         }
         PokemonFormBaseStat pfbs = upf.getPokemonForm().getPokemonFormBaseStat(stat);
         int base = pfbs.getValue();
