@@ -128,7 +128,6 @@ public class PokemonForm {
     }
 
     @OneToMany(mappedBy="pokemonForm")
-    @OrderBy("ordinal")
     public List<PokemonFormAbility> getPokemonFormAbilities() {
         return pokemonFormAbilities;
     }
@@ -138,7 +137,6 @@ public class PokemonForm {
     }
 
     @OneToMany(mappedBy="pokemonForm")
-    @OrderBy("ordinal")
     public List<PokemonFormBaseStat> getPokemonFormBaseStats() {
         return pokemonFormBaseStats;
     }
