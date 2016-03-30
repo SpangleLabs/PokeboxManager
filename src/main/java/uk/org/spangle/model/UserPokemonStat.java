@@ -28,8 +28,10 @@ public class UserPokemonStat {
     }
 
     public String getBaseStat() {
-        // TODO
-        return null;
+        UserPokemonForm upf = userPokemon.getUserPokemonForm();
+        if(upf == null) return "Unknown";
+        PokemonFormBaseStat pfbs = upf.getPokemonForm().getPokemonFormBaseStat(stat);
+        return Integer.toString(pfbs.getValue());
     }
 
     public String getValue() {
