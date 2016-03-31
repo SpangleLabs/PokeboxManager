@@ -18,6 +18,7 @@ public class PokemonForm {
     private int spriteShinyFemaleX;
     private int spriteShinyFemaleY;
     private List<PokemonFormAbility> pokemonFormAbilities;
+    private List<PokemonFormBaseStat> pokemonFormBaseStats;
     private List<PokemonFormMove> pokemonFormMoves;
 
     public PokemonForm() {
@@ -127,13 +128,21 @@ public class PokemonForm {
     }
 
     @OneToMany(mappedBy="pokemonForm")
-    @OrderBy("ordinal")
     public List<PokemonFormAbility> getPokemonFormAbilities() {
         return pokemonFormAbilities;
     }
 
     public void setPokemonFormAbilities(List<PokemonFormAbility> pokemonFormAbilities) {
         this.pokemonFormAbilities = pokemonFormAbilities;
+    }
+
+    @OneToMany(mappedBy="pokemonForm")
+    public List<PokemonFormBaseStat> getPokemonFormBaseStats() {
+        return pokemonFormBaseStats;
+    }
+
+    public void setPokemonFormBaseStats(List<PokemonFormBaseStat> pokemonFormBaseStats) {
+        this.pokemonFormBaseStats = pokemonFormBaseStats;
     }
 
     @OneToMany(mappedBy="pokemonForm")
@@ -144,5 +153,16 @@ public class PokemonForm {
 
     public void setPokemonFormMoves(List<PokemonFormMove> pokemonFormMoves) {
         this.pokemonFormMoves = pokemonFormMoves;
+    }
+
+    @Transient
+    public PokemonFormBaseStat getPokemonFormBaseStat(Stat stat) {
+        List<PokemonFormBaseStat> pokemonFormBaseStats = getPokemonFormBaseStats();
+        for(PokemonFormBaseStat baseStat : pokemonFormBaseStats) {
+            if(baseStat.getStat() == stat) {
+                return baseStat;
+            }
+        }
+        return null;
     }
 }

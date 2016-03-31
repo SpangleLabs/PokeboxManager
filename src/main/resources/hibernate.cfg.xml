@@ -44,6 +44,7 @@
         <mapping class="uk.org.spangle.data.Pokemon"/>
         <mapping class="uk.org.spangle.data.PokemonForm"/>
         <mapping class="uk.org.spangle.data.PokemonFormAbility"/>
+        <mapping class="uk.org.spangle.data.PokemonFormBaseStat"/>
         <mapping class="uk.org.spangle.data.PokemonFormMove"/>
         <mapping class="uk.org.spangle.data.Stat"/>
         <mapping class="uk.org.spangle.data.UserBox"/>
