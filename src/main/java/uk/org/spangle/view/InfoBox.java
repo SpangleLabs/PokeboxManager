@@ -198,7 +198,7 @@ public class InfoBox {
         List<Stat> listStats = session.createCriteria(Stat.class).list();
         ObservableList<UserPokemonStat> data = FXCollections.observableArrayList(userPokemon.getUserPokemonStats(listStats));
         table.setItems(data);
-        table.setPrefHeight(data.size()*24 + 26);
+        table.setPrefHeight(data.size()*24 + 27);
 
         table.getColumns().setAll(attrCol, ivCol, evCol, baseCol, statCol);
 
