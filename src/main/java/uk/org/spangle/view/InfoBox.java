@@ -179,7 +179,7 @@ public class InfoBox {
             pokemonLevel.setText(Integer.toString(userPokemon.getUserPokemonLevel().getLevel()));
         }
         grid.add(labelLevel,0,11);
-        grid.add(pokemonLevel,0,11);
+        grid.add(pokemonLevel,1,11);
 
         // Create IVs and EVs table
         TableView table = new TableView();
