@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -184,10 +185,19 @@ public class InfoBox {
         // Create IVs and EVs table
         TableView table = new TableView();
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setEditable(true);
         TableColumn attrCol = new TableColumn("Stat");
         attrCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("name"));
         TableColumn ivCol = new TableColumn("IV");
         ivCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("IV"));
+        ivCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        ivCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserPokemonStat,String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<UserPokemonStat,String> cellEditEvent) {
+                System.out.println("ARGH");
+                System.out.println(cellEditEvent.getNewValue());
+            }
+        });
         TableColumn evCol = new TableColumn("EV");
         evCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("EV"));
         TableColumn baseCol = new TableColumn("Base");
