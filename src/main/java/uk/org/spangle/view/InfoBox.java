@@ -17,10 +17,7 @@ import javafx.scene.text.Text;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import uk.org.spangle.controller.Controller;
-import uk.org.spangle.data.Pokemon;
-import uk.org.spangle.data.Stat;
-import uk.org.spangle.data.UserBox;
-import uk.org.spangle.data.UserPokemon;
+import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 import uk.org.spangle.model.UserPokemonStat;
 
@@ -77,7 +74,7 @@ public class InfoBox {
         infoBoxPane.getChildren().setAll(formRows);
     }
 
-    public void displayPokemon(UserPokemon userPokemon) {
+    public void displayPokemon(final UserPokemon userPokemon) {
         Text pokemonTitle = new Text(userPokemon.getPokemon().getName());
 
         Text pokemonImage = new Text("Image would be here");
@@ -194,8 +191,9 @@ public class InfoBox {
         ivCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserPokemonStat,String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<UserPokemonStat,String> cellEditEvent) {
-                System.out.println("ARGH");
-                System.out.println(cellEditEvent.getNewValue());
+                UserPokemonStat ups = cellEditEvent.getRowValue();
+                UserPokemonIV upi = ups.setIV(cellEditEvent.getNewValue());
+                session.saveOrUpdate(upi);
             }
         });
         TableColumn evCol = new TableColumn("EV");

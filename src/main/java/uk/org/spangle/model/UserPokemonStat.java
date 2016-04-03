@@ -13,6 +13,14 @@ public class UserPokemonStat {
         this.stat = stat;
     }
 
+    public UserPokemon getUserPokemon() {
+        return this.userPokemon;
+    }
+
+    public Stat getStat() {
+        return this.stat;
+    }
+
     public String getName() {
         return stat.getName();
     }
@@ -21,6 +29,14 @@ public class UserPokemonStat {
         UserPokemonIV upi = userPokemon.getUserPokemonIV(stat);
         if(upi == null) return "Unknown";
         return Integer.toString(upi.getValue());
+    }
+
+    public UserPokemonIV setIV(String newIV) {
+        int iv = Integer.parseInt(newIV);
+        UserPokemonIV upi = userPokemon.getUserPokemonIV(stat);
+        if(upi == null) upi = new UserPokemonIV(userPokemon,stat,0);
+        upi.setValue(iv);
+        return upi;
     }
 
     public String getEV() {
