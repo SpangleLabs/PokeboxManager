@@ -192,12 +192,23 @@ public class InfoBox {
             @Override
             public void handle(TableColumn.CellEditEvent<UserPokemonStat,String> cellEditEvent) {
                 UserPokemonStat ups = cellEditEvent.getRowValue();
+                session.refresh(ups.getUserPokemon());
                 UserPokemonIV upi = ups.setIV(cellEditEvent.getNewValue());
                 session.saveOrUpdate(upi);
             }
         });
         TableColumn evCol = new TableColumn("EV");
         evCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("EV"));
+        evCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        evCol.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserPokemonStat,String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<UserPokemonStat,String> cellEditEvent) {
+                UserPokemonStat ups = cellEditEvent.getRowValue();
+                session.refresh(ups.getUserPokemon());
+                UserPokemonEV upe = ups.setEV(cellEditEvent.getNewValue());
+                session.saveOrUpdate(upe);
+            }
+        });
         TableColumn baseCol = new TableColumn("Base");
         baseCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("BaseStat"));
         TableColumn statCol = new TableColumn("Stat value");

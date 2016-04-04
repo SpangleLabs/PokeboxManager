@@ -45,6 +45,14 @@ public class UserPokemonStat {
         return Integer.toString(upe.getValue());
     }
 
+    public UserPokemonEV setEV(String newEV) {
+        int ev = Integer.parseInt(newEV);
+        UserPokemonEV upe = userPokemon.getUserPokemonEV(stat);
+        if(upe == null) upe = new UserPokemonEV(userPokemon,stat,0);
+        upe.setValue(ev);
+        return upe;
+    }
+
     public String getBaseStat() {
         UserPokemonForm upf = userPokemon.getUserPokemonForm();
         if(upf == null) return "Unknown";
