@@ -195,6 +195,8 @@ public class InfoBox {
                 session.refresh(ups.getUserPokemon());
                 UserPokemonIV upi = ups.setIV(cellEditEvent.getNewValue());
                 session.saveOrUpdate(upi);
+                cellEditEvent.getTableView().getColumns().get(0).setVisible(false);
+                cellEditEvent.getTableView().getColumns().get(0).setVisible(true);
             }
         });
         TableColumn evCol = new TableColumn("EV");
@@ -207,6 +209,8 @@ public class InfoBox {
                 session.refresh(ups.getUserPokemon());
                 UserPokemonEV upe = ups.setEV(cellEditEvent.getNewValue());
                 session.saveOrUpdate(upe);
+                cellEditEvent.getTableView().getColumns().get(0).setVisible(false);
+                cellEditEvent.getTableView().getColumns().get(0).setVisible(true);
             }
         });
         TableColumn baseCol = new TableColumn("Base");
