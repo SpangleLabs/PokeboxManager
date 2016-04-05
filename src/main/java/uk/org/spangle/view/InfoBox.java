@@ -185,6 +185,7 @@ public class InfoBox {
         table.setEditable(true);
         TableColumn attrCol = new TableColumn("Stat");
         attrCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("name"));
+        // Set up IV column
         TableColumn ivCol = new TableColumn("IV");
         ivCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("IV"));
         ivCol.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -199,6 +200,7 @@ public class InfoBox {
                 cellEditEvent.getTableView().getColumns().get(0).setVisible(true);
             }
         });
+        // Set up EV column
         TableColumn evCol = new TableColumn("EV");
         evCol.setCellValueFactory(new PropertyValueFactory<UserPokemonStat,String>("EV"));
         evCol.setCellFactory(TextFieldTableCell.forTableColumn());
