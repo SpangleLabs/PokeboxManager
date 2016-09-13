@@ -180,10 +180,10 @@ public class InfoBox {
         grid.add(pokemonLevel,1,11);
 
         // Create IVs and EVs table
-        TableView table = createTable(userPokemon);
+        //TableView table = createTable(userPokemon);
 
         VBox rows = new VBox();
-        rows.getChildren().addAll(pokemonTitle,pokemonImage,grid,table);
+        rows.getChildren().addAll(pokemonTitle,pokemonImage,grid);//,table);
 
         infoBoxPane.getChildren().setAll(rows);
     }
