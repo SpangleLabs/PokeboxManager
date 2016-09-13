@@ -180,6 +180,15 @@ public class InfoBox {
         grid.add(pokemonLevel,1,11);
 
         // Create IVs and EVs table
+        TableView table = createTable();
+
+        VBox rows = new VBox();
+        rows.getChildren().addAll(pokemonTitle,pokemonImage,grid,table);
+
+        infoBoxPane.getChildren().setAll(rows);
+    }
+
+    private TableView createTable() {
         TableView table = new TableView();
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setEditable(true);
@@ -226,11 +235,6 @@ public class InfoBox {
         table.setPrefHeight(data.size()*24 + 27);
 
         table.getColumns().setAll(attrCol, ivCol, evCol, baseCol, statCol);
-
-
-        VBox rows = new VBox();
-        rows.getChildren().addAll(pokemonTitle,pokemonImage,grid,table);
-
-        infoBoxPane.getChildren().setAll(rows);
+        return table;
     }
 }
