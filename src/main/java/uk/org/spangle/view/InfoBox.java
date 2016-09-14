@@ -25,12 +25,12 @@ import uk.org.spangle.model.UserPokemonStat;
 import java.util.*;
 
 public class InfoBox {
-    Pane infoBoxPane;
-    Session session;
-    Configuration conf;
-    Controller controller;
+    private Pane infoBoxPane;
+    private Session session;
+    private Configuration conf;
+    private Controller controller;
 
-    public InfoBox(Pane infoBoxPane, Session session, Configuration conf, Controller controller) {
+    InfoBox(Pane infoBoxPane, Session session, Configuration conf, Controller controller) {
         this.infoBoxPane = infoBoxPane;
         this.session = session;
         this.conf = conf;
