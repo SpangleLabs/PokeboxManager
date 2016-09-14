@@ -1,5 +1,7 @@
 package uk.org.spangle.view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -183,7 +185,7 @@ public class InfoBox {
         infoBoxPane.getChildren().setAll(rows);
     }
 
-    private void addEggRow(GridPane grid, int row, UserPokemon userPokemon) {
+    private void addEggRow(GridPane grid, int row, final UserPokemon userPokemon) {
         final String unknown = "Unknown";
         final String isEgg = "Is an egg";
         final String notEgg = "Not an egg";
@@ -195,6 +197,14 @@ public class InfoBox {
         if(userPokemon.getUserPokemonEgg() != null) {
             eggDropdown.setValue(userPokemon.getUserPokemonEgg().getIsEgg() ? isEgg : notEgg);
         }
+        eggDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String old_val, String new_val) {
+                if(new_val.equals(unknown)) userPokemon.setUserPokemonEgg(null);
+                UserPokemonEgg upe = new UserPokemonEgg(userPokemon, new_val.equals(isEgg));
+                userPokemon.setUserPokemonEgg(upe);
+            }
+        });
         grid.add(labelEgg,0,row);
         grid.add(eggDropdown,1,row);
     }
