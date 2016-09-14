@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -89,12 +90,14 @@ public class InfoBox {
         grid.add(pokemonBall,1,0);
 
         Text labelEgg = new Text("Egg:");
-        Text pokemonEgg = new Text("Unknown");
+        ChoiceBox<String> eggDropdown = new ChoiceBox<>();
+        eggDropdown.setItems(FXCollections.observableArrayList("Unknown", "Is an egg", "Not an egg"));
+        eggDropdown.setValue("Unknown");
         if(userPokemon.getUserPokemonEgg() != null) {
-            pokemonEgg.setText(userPokemon.getUserPokemonEgg().getIsEgg() ? "Is an egg" : "Not an egg");
+            eggDropdown.setValue(userPokemon.getUserPokemonEgg().getIsEgg() ? "Is an egg" : "Not an egg");
         }
         grid.add(labelEgg,0,1);
-        grid.add(pokemonEgg,1,1);
+        grid.add(eggDropdown,1,1);
 
         Text labelESV = new Text("ESV:");
         Text pokemonESV = new Text("Unknown");
