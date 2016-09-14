@@ -89,15 +89,7 @@ public class InfoBox {
         grid.add(labelBall,0,0);
         grid.add(pokemonBall,1,0);
 
-        Text labelEgg = new Text("Egg:");
-        ChoiceBox<String> eggDropdown = new ChoiceBox<>();
-        eggDropdown.setItems(FXCollections.observableArrayList("Unknown", "Is an egg", "Not an egg"));
-        eggDropdown.setValue("Unknown");
-        if(userPokemon.getUserPokemonEgg() != null) {
-            eggDropdown.setValue(userPokemon.getUserPokemonEgg().getIsEgg() ? "Is an egg" : "Not an egg");
-        }
-        grid.add(labelEgg,0,1);
-        grid.add(eggDropdown,1,1);
+        addEggRow(grid, 1, userPokemon);
 
         Text labelESV = new Text("ESV:");
         Text pokemonESV = new Text("Unknown");
@@ -189,6 +181,22 @@ public class InfoBox {
         rows.getChildren().addAll(pokemonTitle,pokemonImage,grid);//,table);
 
         infoBoxPane.getChildren().setAll(rows);
+    }
+
+    private void addEggRow(GridPane grid, int row, UserPokemon userPokemon) {
+        final String unknown = "Unknown";
+        final String isEgg = "Is an egg";
+        final String notEgg = "Not an egg";
+
+        Text labelEgg = new Text("Egg:");
+        ChoiceBox<String> eggDropdown = new ChoiceBox<>();
+        eggDropdown.setItems(FXCollections.observableArrayList(unknown, isEgg, notEgg));
+        eggDropdown.setValue(unknown);
+        if(userPokemon.getUserPokemonEgg() != null) {
+            eggDropdown.setValue(userPokemon.getUserPokemonEgg().getIsEgg() ? isEgg : notEgg);
+        }
+        grid.add(labelEgg,0,row);
+        grid.add(eggDropdown,1,row);
     }
 
     private TableView createTable(UserPokemon userPokemon) {
