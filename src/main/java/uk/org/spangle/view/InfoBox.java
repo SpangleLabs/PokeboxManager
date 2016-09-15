@@ -239,10 +239,12 @@ public class InfoBox {
         grid.add(labelForm,0,row);
         // Check if only 1 form exists.
         List<PokemonForm> listForms = userPokemon.getPokemon().getPokemonForms();
+        UserPokemonForm upf = userPokemon.getUserPokemonForm();
         if(listForms.size() == 1) {
             Text pokemonForm = new Text(listForms.get(0).getName());
             grid.add(pokemonForm,1,row);
-            //TODO: make sure that's set to the truth
+            //Make sure that's set to the truth
+            controller.updatePokemonForm(userPokemon, upf.getPokemonForm(), listForms.get(0));
             return;
         }
         // Otherwise dropdown
@@ -272,7 +274,6 @@ public class InfoBox {
                 };
             }
         });
-        UserPokemonForm upf = userPokemon.getUserPokemonForm();
         if(upf == null) {
             formDropdown.setValue(null);
         } else {
