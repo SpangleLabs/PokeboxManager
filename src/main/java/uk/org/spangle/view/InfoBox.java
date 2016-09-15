@@ -3,13 +3,10 @@ package uk.org.spangle.view;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -23,7 +20,6 @@ import org.hibernate.criterion.Order;
 import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
-import uk.org.spangle.model.UserPokemonStat;
 
 import java.io.File;
 import java.util.*;
@@ -244,6 +240,8 @@ public class InfoBox {
         grid.add(eggDropdown,1,row);
     }
 
+    /*
+
     private TableView createTable(UserPokemon userPokemon) {
         TableView table = new TableView();
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -293,4 +291,5 @@ public class InfoBox {
         table.getColumns().setAll(attrCol, ivCol, evCol, baseCol, statCol);
         return table;
     }
+    */
 }
