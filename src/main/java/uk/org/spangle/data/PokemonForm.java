@@ -165,4 +165,8 @@ public class PokemonForm {
         }
         return null;
     }
+
+    public String toString() {
+        return getName();
+    }
 }
