@@ -142,6 +142,8 @@ public class SideBar {
         //Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
         File imageFile = new File("pokemon-icons.png");
         Image image = new Image(imageFile.toURI().toString());
+        File eggFile = new File("egg.png");
+        Image eggImage = new Image(eggFile.toURI().toString());
 
         // Get list of user pokemon:
         List<UserPokemon> pokemonList = new ArrayList<>();
@@ -154,14 +156,14 @@ public class SideBar {
         for(UserPokemon userPokemon : pokemonList) {
             int x_coord = userPokemon.getSpriteX();
             int y_coord = userPokemon.getSpriteY();
+            int box_x = (((userPokemon.getPosition()-1) % currentGame.getCurrentBox().getColumns()) *30) -5;
+            int box_y = ((userPokemon.getPosition()-1) / currentGame.getCurrentBox().getColumns()) *30;
             UserPokemonEgg upe = userPokemon.getUserPokemonEgg();
             if(upe != null && upe.getIsEgg() && !conf.getHideEggs()) {
-                x_coord = 0;
-                y_coord = 1830;
+                graphicsContext.drawImage(eggImage,0,0,40,30,box_x,box_y,40,30);
+                continue;
             }
-            int box_x = ((userPokemon.getPosition()-1) % currentGame.getCurrentBox().getColumns()) *30;
-            int box_y = ((userPokemon.getPosition()-1) / currentGame.getCurrentBox().getColumns()) *30;
-            graphicsContext.drawImage(image,x_coord,y_coord,40,30,box_x-5,box_y,40,30);
+            graphicsContext.drawImage(image,x_coord,y_coord,40,30,box_x,box_y,40,30);
         }
     }
 
