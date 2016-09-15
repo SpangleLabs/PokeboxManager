@@ -291,4 +291,26 @@ public class Controller {
         }
         app.getSideBar().updateBoxCanvas();
     }
+
+    public void updatePokemonShiny(UserPokemon userPokemon, String old_val, String new_val) {
+        if(old_val.equals(new_val)) return;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonShiny() != null) session.delete(userPokemon.getUserPokemonShiny());
+            if (new_val.equals(UserPokemonShiny.UNKNOWN)) {
+                userPokemon.setUserPokemonShiny(null);
+            } else {
+                UserPokemonShiny ups = new UserPokemonShiny(userPokemon, new_val.equals(UserPokemonShiny.IS_SHINY));
+                session.save(ups);
+                userPokemon.setUserPokemonShiny(ups);
+            }
+            session.update(userPokemon);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+        app.getSideBar().updateBoxCanvas();
+    }
 }

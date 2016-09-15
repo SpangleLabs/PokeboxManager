@@ -111,13 +111,7 @@ public class InfoBox {
 
         addSexRow(grid, 8, userPokemon);
 
-        Text labelShiny = new Text("Shiny:");
-        Text pokemonShiny = new Text("Unknown");
-        if (userPokemon.getUserPokemonShiny() != null) {
-            pokemonShiny.setText(userPokemon.getUserPokemonShiny().getIsShiny() ? "Is shiny" : "Not shiny");
-        }
-        grid.add(labelShiny,0,9);
-        grid.add(pokemonShiny,1,9);
+        addShinyRow(grid, 9, userPokemon);
 
         Text labelAbility = new Text("Ability:");
         Text pokemonAbility = new Text("Unknown");
@@ -358,6 +352,25 @@ public class InfoBox {
             }
         });
         grid.add(sexDropdown,1,row);
+    }
+
+    private void addShinyRow(GridPane grid, int row, final UserPokemon userPokemon) {
+
+        Text labelShiny = new Text("Shiny:");
+        ChoiceBox<String> shinyDropdown = new ChoiceBox<>();
+        shinyDropdown.setItems(FXCollections.observableArrayList(UserPokemonShiny.UNKNOWN, UserPokemonShiny.IS_SHINY, UserPokemonShiny.NOT_SHINY));
+        shinyDropdown.setValue(UserPokemonShiny.UNKNOWN);
+        if(userPokemon.getUserPokemonShiny() != null) {
+            shinyDropdown.setValue(userPokemon.getUserPokemonShiny().getIsShiny() ? UserPokemonShiny.IS_SHINY : UserPokemonShiny.NOT_SHINY);
+        }
+        shinyDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String old_val, String new_val) {
+                controller.updatePokemonShiny(userPokemon, old_val, new_val);
+            }
+        });
+        grid.add(labelShiny,0,row);
+        grid.add(shinyDropdown,1,row);
     }
 
     /*
