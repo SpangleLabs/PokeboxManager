@@ -46,4 +46,8 @@ public class Language {
     public void setAbbr(String abbr) {
         this.abbr = abbr;
     }
+
+    public String toString() {
+        return getName();
+    }
 }
