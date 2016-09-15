@@ -107,4 +107,14 @@ public class Controller {
         app.getSideBar().updateBoxCanvas();
         app.getInfoBox().displayPokemon(userPokemon);
     }
+
+    public void updatePokemonEgg(UserPokemon userPokemon, String old_val, String new_val) {
+        if(new_val.equals(UserPokemonEgg.UNKNOWN)) {
+            userPokemon.setUserPokemonEgg(null);
+        } else {
+            UserPokemonEgg upe = new UserPokemonEgg(userPokemon, new_val.equals(UserPokemonEgg.IS_EGG));
+            userPokemon.setUserPokemonEgg(upe);
+        }
+        if(new_val.equals(UserPokemonEgg.IS_EGG) != old_val.equals(UserPokemonEgg.IS_EGG)) app.getSideBar().updateBoxCanvas();
+    }
 }

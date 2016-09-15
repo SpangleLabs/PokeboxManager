@@ -186,26 +186,17 @@ public class InfoBox {
     }
 
     private void addEggRow(GridPane grid, int row, final UserPokemon userPokemon) {
-        final String unknown = "Unknown";
-        final String isEgg = "Is an egg";
-        final String notEgg = "Not an egg";
-
         Text labelEgg = new Text("Egg:");
         ChoiceBox<String> eggDropdown = new ChoiceBox<>();
-        eggDropdown.setItems(FXCollections.observableArrayList(unknown, isEgg, notEgg));
-        eggDropdown.setValue(unknown);
+        eggDropdown.setItems(FXCollections.observableArrayList(UserPokemonEgg.UNKNOWN, UserPokemonEgg.IS_EGG, UserPokemonEgg.NOT_EGG));
+        eggDropdown.setValue(UserPokemonEgg.UNKNOWN);
         if(userPokemon.getUserPokemonEgg() != null) {
-            eggDropdown.setValue(userPokemon.getUserPokemonEgg().getIsEgg() ? isEgg : notEgg);
+            eggDropdown.setValue(userPokemon.getUserPokemonEgg().getIsEgg() ? UserPokemonEgg.IS_EGG : UserPokemonEgg.NOT_EGG);
         }
         eggDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String old_val, String new_val) {
-                if(new_val.equals(unknown)) {
-                    userPokemon.setUserPokemonEgg(null);
-                    return;
-                }
-                UserPokemonEgg upe = new UserPokemonEgg(userPokemon, new_val.equals(isEgg));
-                userPokemon.setUserPokemonEgg(upe);
+                controller.updatePokemonEgg(userPokemon, old_val, new_val);
             }
         });
         grid.add(labelEgg,0,row);
