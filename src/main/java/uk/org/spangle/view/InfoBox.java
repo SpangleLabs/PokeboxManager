@@ -238,7 +238,7 @@ public class InfoBox {
             Text pokemonForm = new Text(listForms.get(0).getName());
             grid.add(pokemonForm,1,row);
             //Make sure that's set to the truth
-            controller.updatePokemonForm(userPokemon, upf.getPokemonForm(), listForms.get(0));
+            controller.updatePokemonForm(userPokemon, upf==null ? null : upf.getPokemonForm(), listForms.get(0));
             return;
         }
         // Otherwise dropdown
