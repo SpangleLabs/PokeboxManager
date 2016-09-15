@@ -141,6 +141,7 @@ public class Controller {
     }
 
     public void updatePokemonBall(UserPokemon userPokemon, PokeBall old_val, PokeBall new_val) {
+        if(old_val == new_val) return;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -161,6 +162,7 @@ public class Controller {
     }
 
     public void updatePokemonEgg(UserPokemon userPokemon, String old_val, String new_val) {
+        if(old_val.equals(new_val)) return;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
