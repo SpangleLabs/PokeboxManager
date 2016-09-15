@@ -93,13 +93,7 @@ public class InfoBox {
         grid.add(labelESV,0,2);
         grid.add(pokemonESV,1,2);
 
-        Text labelForm = new Text("Form:");
-        Text pokemonForm = new Text("Unknown");
-        if(userPokemon.getUserPokemonForm() != null) {
-            pokemonForm.setText(userPokemon.getUserPokemonForm().getPokemonForm().getName());
-        }
-        grid.add(labelForm,0,3);
-        grid.add(pokemonForm,1,3);
+        addFormRow(grid, 3, userPokemon);
 
         Text labelLang = new Text("Language:");
         Text pokemonLang = new Text("Unknown");
@@ -238,6 +232,59 @@ public class InfoBox {
         });
         grid.add(labelEgg,0,row);
         grid.add(eggDropdown,1,row);
+    }
+
+    private void addFormRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelForm = new Text("Form:");
+        grid.add(labelForm,0,row);
+        // Check if only 1 form exists.
+        List<PokemonForm> listForms = userPokemon.getPokemon().getPokemonForms();
+        if(listForms.size() == 1) {
+            Text pokemonForm = new Text(listForms.get(0).getName());
+            grid.add(pokemonForm,1,row);
+            //TODO: make sure that's set to the truth
+            return;
+        }
+        // Otherwise dropdown
+        ComboBox<PokemonForm> formDropdown = new ComboBox<>();
+        formDropdown.setItems(FXCollections.observableArrayList((PokemonForm) null));
+        formDropdown.getItems().addAll(listForms);
+        File formFile = new File("pokemon-icons.png");
+        final Image formImage = new Image(formFile.toURI().toString()); // TODO: this should be a constant somewhere.
+        formDropdown.setCellFactory(new Callback<ListView<PokemonForm>, ListCell<PokemonForm>>() {
+            @Override
+            public ListCell<PokemonForm> call(ListView<PokemonForm> param) {
+                return new ListCell<PokemonForm>() {
+                    @Override public void updateItem(PokemonForm form, boolean empty) {
+                        super.updateItem(form, empty);
+                        if(form == null) {
+                            setGraphic(null);
+                            setText("Unknown");
+                        } else {
+                            ImageView view = new ImageView();
+                            view.setImage(formImage);
+                            // TODO: shiny sex
+                            view.setViewport(new Rectangle2D(form.getSpriteFemaleX(),form.getSpriteFemaleY(),40,30));
+                            setGraphic(view);
+                            setText(form.getName());
+                        }
+                    }
+                };
+            }
+        });
+        UserPokemonForm upf = userPokemon.getUserPokemonForm();
+        if(upf == null) {
+            formDropdown.setValue(null);
+        } else {
+            formDropdown.setValue(upf.getPokemonForm());
+        }
+        formDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PokemonForm>() {
+            @Override
+            public void changed(ObservableValue<? extends PokemonForm> observableValue, PokemonForm old_val, PokemonForm new_val) {
+                controller.updatePokemonForm(userPokemon, old_val, new_val);
+            }
+        });
+        grid.add(formDropdown,1,row);
     }
 
     /*

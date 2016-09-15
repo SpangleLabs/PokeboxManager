@@ -184,4 +184,26 @@ public class Controller {
             throw e;
         }
     }
+
+    public void updatePokemonForm(UserPokemon userPokemon, PokemonForm old_val, PokemonForm new_val) {
+        if(old_val == new_val) return;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonForm() != null) session.delete(userPokemon.getUserPokemonForm());
+            if (new_val == null) {
+                userPokemon.setUserPokemonForm(null);
+            } else {
+                UserPokemonForm upf = new UserPokemonForm(userPokemon, new_val);
+                session.save(upf);
+                userPokemon.setUserPokemonForm(upf);
+            }
+            session.update(userPokemon);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+        app.getSideBar().updateBoxCanvas();
+    }
 }
