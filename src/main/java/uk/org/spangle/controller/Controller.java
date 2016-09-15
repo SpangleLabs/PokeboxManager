@@ -2,6 +2,7 @@ package uk.org.spangle.controller;
 
 import javafx.scene.input.MouseEvent;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
@@ -11,9 +12,9 @@ import uk.org.spangle.view.AutoCompleteTextField;
 import java.util.List;
 
 public class Controller {
-    Session session;
-    Configuration conf;
-    App app;
+    private Session session;
+    private Configuration conf;
+    private App app;
 
     public Controller(Session session, Configuration conf, App app) {
         this.session = session;
@@ -109,22 +110,45 @@ public class Controller {
     }
 
     public void updatePokemonBall(UserPokemon userPokemon, PokeBall old_val, PokeBall new_val) {
-        if(new_val == null) {
-            userPokemon.setUserPokemonBall(null);
-        } else {
-            UserPokemonBall upb = new UserPokemonBall(userPokemon, new_val);
-            userPokemon.setUserPokemonBall(upb);
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonBall() != null) session.delete(userPokemon.getUserPokemonBall());
+            if (new_val == null) {
+                userPokemon.setUserPokemonBall(null);
+            } else {
+                UserPokemonBall upb = new UserPokemonBall(userPokemon, new_val);
+                session.save(upb);
+                userPokemon.setUserPokemonBall(upb);
+            }
+            session.update(userPokemon);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
         }
     }
 
     public void updatePokemonEgg(UserPokemon userPokemon, String old_val, String new_val) {
-        if(new_val.equals(UserPokemonEgg.UNKNOWN)) {
-            userPokemon.setUserPokemonEgg(null);
-        } else {
-            UserPokemonEgg upe = new UserPokemonEgg(userPokemon, new_val.equals(UserPokemonEgg.IS_EGG));
-            userPokemon.setUserPokemonEgg(upe);
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonEgg() != null) session.delete(userPokemon.getUserPokemonEgg());
+            if (new_val.equals(UserPokemonEgg.UNKNOWN)) {
+                userPokemon.setUserPokemonEgg(null);
+            } else {
+                UserPokemonEgg upe = new UserPokemonEgg(userPokemon, new_val.equals(UserPokemonEgg.IS_EGG));
+                session.save(upe);
+                userPokemon.setUserPokemonEgg(upe);
+            }
+            session.update(userPokemon);
+            tx.commit();
+            if (conf.getHideEggs()) return;
+            if (new_val.equals(UserPokemonEgg.IS_EGG) != old_val.equals(UserPokemonEgg.IS_EGG))
+                app.getSideBar().updateBoxCanvas();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
         }
-        if(conf.getHideEggs()) return;
-        if(new_val.equals(UserPokemonEgg.IS_EGG) != old_val.equals(UserPokemonEgg.IS_EGG)) app.getSideBar().updateBoxCanvas();
     }
 }
