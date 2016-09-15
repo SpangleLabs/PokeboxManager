@@ -265,8 +265,22 @@ public class InfoBox {
                         } else {
                             ImageView view = new ImageView();
                             view.setImage(formImage);
-                            // TODO: shiny sex
-                            view.setViewport(new Rectangle2D(form.getSpriteFemaleX(),form.getSpriteFemaleY(),40,30));
+                            //Shiny sex
+                            UserPokemonShiny ups = userPokemon.getUserPokemonShiny();
+                            UserPokemonSex upse = userPokemon.getUserPokemonSex();
+                            if(ups != null && ups.getIsShiny()) {
+                                if(upse != null && upse.getIsMale()) {
+                                    view.setViewport(new Rectangle2D(form.getSpriteShinyMaleX(), form.getSpriteShinyMaleY(), 40, 30));
+                                } else {
+                                    view.setViewport(new Rectangle2D(form.getSpriteShinyFemaleX(), form.getSpriteShinyFemaleY(), 40, 30));
+                                }
+                            } else {
+                                if(upse != null && upse.getIsMale()) {
+                                    view.setViewport(new Rectangle2D(form.getSpriteMaleX(), form.getSpriteMaleY(), 40, 30));
+                                } else {
+                                    view.setViewport(new Rectangle2D(form.getSpriteFemaleX(), form.getSpriteFemaleY(), 40, 30));
+                                }
+                            }
                             setGraphic(view);
                             setText(form.getName());
                         }
