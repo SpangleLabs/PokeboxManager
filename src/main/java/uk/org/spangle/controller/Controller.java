@@ -108,6 +108,15 @@ public class Controller {
         app.getInfoBox().displayPokemon(userPokemon);
     }
 
+    public void updatePokemonBall(UserPokemon userPokemon, PokeBall old_val, PokeBall new_val) {
+        if(new_val == null) {
+            userPokemon.setUserPokemonBall(null);
+        } else {
+            UserPokemonBall upb = new UserPokemonBall(userPokemon, new_val);
+            userPokemon.setUserPokemonBall(upb);
+        }
+    }
+
     public void updatePokemonEgg(UserPokemon userPokemon, String old_val, String new_val) {
         if(new_val.equals(UserPokemonEgg.UNKNOWN)) {
             userPokemon.setUserPokemonEgg(null);
@@ -115,6 +124,7 @@ public class Controller {
             UserPokemonEgg upe = new UserPokemonEgg(userPokemon, new_val.equals(UserPokemonEgg.IS_EGG));
             userPokemon.setUserPokemonEgg(upe);
         }
+        if(conf.getHideEggs()) return;
         if(new_val.equals(UserPokemonEgg.IS_EGG) != old_val.equals(UserPokemonEgg.IS_EGG)) app.getSideBar().updateBoxCanvas();
     }
 }

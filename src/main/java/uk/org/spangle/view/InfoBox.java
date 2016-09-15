@@ -216,6 +216,12 @@ public class InfoBox {
         } else {
             ballDropdown.setValue(upp.getPokeBall());
         }
+        ballDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PokeBall>() {
+            @Override
+            public void changed(ObservableValue<? extends PokeBall> observableValue, PokeBall old_val, PokeBall new_val) {
+                controller.updatePokemonBall(userPokemon, old_val, new_val);
+            }
+        });
         grid.add(labelBall,0,row);
         grid.add(ballDropdown,1,row);
     }
