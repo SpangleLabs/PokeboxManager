@@ -200,7 +200,10 @@ public class InfoBox {
         eggDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String old_val, String new_val) {
-                if(new_val.equals(unknown)) userPokemon.setUserPokemonEgg(null);
+                if(new_val.equals(unknown)) {
+                    userPokemon.setUserPokemonEgg(null);
+                    return;
+                }
                 UserPokemonEgg upe = new UserPokemonEgg(userPokemon, new_val.equals(isEgg));
                 userPokemon.setUserPokemonEgg(upe);
             }
