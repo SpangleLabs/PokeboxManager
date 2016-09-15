@@ -227,4 +227,25 @@ public class Controller {
             throw e;
         }
     }
+
+    public void updatePokemonNature(UserPokemon userPokemon, Nature old_val, Nature new_val) {
+        if(old_val == new_val) return;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonNature() != null) session.delete(userPokemon.getUserPokemonNature());
+            if(new_val == null) {
+                userPokemon.setUserPokemonNature(null);
+            } else {
+                UserPokemonNature userPokemonNature = new UserPokemonNature(userPokemon, new_val);
+                session.save(userPokemonNature);
+                userPokemon.setUserPokemonNature(userPokemonNature);
+            }
+            session.update(userPokemon);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+    }
 }

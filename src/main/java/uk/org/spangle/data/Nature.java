@@ -59,4 +59,8 @@ public class Nature {
     public void setStatDown(Stat statDown) {
         this.statDown = statDown;
     }
+
+    public String toString() {
+        return getName();
+    }
 }

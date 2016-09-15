@@ -97,13 +97,7 @@ public class InfoBox {
 
         addLanguageRow(grid, 4, userPokemon);
 
-        Text labelNature = new Text("Nature:");
-        Text pokemonNature = new Text("Unknown");
-        if(userPokemon.getUserPokemonNature() != null) {
-            pokemonNature.setText(userPokemon.getUserPokemonNature().getNature().getName());
-        }
-        grid.add(labelNature,0,5);
-        grid.add(pokemonNature,1,5);
+        addNatureRow(grid, 5, userPokemon);
 
         Text labelNick = new Text("Nickname:");
         Text pokemonNick = new Text("Unknown");
@@ -315,6 +309,27 @@ public class InfoBox {
         });
         grid.add(labelLang,0,row);
         grid.add(langDropdown,1,row);
+    }
+
+    private void addNatureRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelNature = new Text("Nature:");
+        List natureList = session.createCriteria(Nature.class).list();
+        ChoiceBox<Nature> natureDropdown = new ChoiceBox<>(FXCollections.observableArrayList((Nature)null));
+        for(Object nature : natureList) {
+            natureDropdown.getItems().add((Nature) nature);
+        }
+        natureDropdown.setValue(null);
+        if(userPokemon.getUserPokemonNature() != null) {
+            natureDropdown.setValue(userPokemon.getUserPokemonNature().getNature());
+        }
+        natureDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Nature>() {
+            @Override
+            public void changed(ObservableValue<? extends Nature> observableValue, Nature old_val, Nature new_val) {
+                controller.updatePokemonNature(userPokemon, old_val, new_val);
+            }
+        });
+        grid.add(labelNature,0,row);
+        grid.add(natureDropdown,1,row);
     }
 
     /*
