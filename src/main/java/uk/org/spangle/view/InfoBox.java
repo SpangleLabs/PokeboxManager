@@ -109,16 +109,7 @@ public class InfoBox {
 
         addPokerusRow(grid, 7, userPokemon);
 
-        Text labelSex = new Text("Sex:");
-        Text pokemonSex = new Text("Unknown");
-        if(userPokemon.getPokemon().getIsGenderless()) {
-            pokemonSex.setText("Genderless");
-        }
-        if (userPokemon.getUserPokemonSex() != null) {
-            pokemonSex.setText(userPokemon.getUserPokemonSex().getIsMale() ? "Male" : "Female");
-        }
-        grid.add(labelSex,0,8);
-        grid.add(pokemonSex,1,8);
+        addSexRow(grid, 8, userPokemon);
 
         Text labelShiny = new Text("Shiny:");
         Text pokemonShiny = new Text("Unknown");
@@ -343,6 +334,30 @@ public class InfoBox {
         });
         grid.add(labelRus,0,row);
         grid.add(rusDropdown,1,row);
+    }
+
+    private void addSexRow(GridPane grid, int row, final UserPokemon userPokemon) {
+
+        Text labelSex = new Text("Sex:");
+        grid.add(labelSex,0,row);
+        if(userPokemon.getPokemon().getIsGenderless()) {
+            Text pokemonSex = new Text(UserPokemonSex.GENDERLESS);
+            grid.add(pokemonSex,1,row);
+            return;
+        }
+        ChoiceBox<String> sexDropdown = new ChoiceBox<>();
+        sexDropdown.setItems(FXCollections.observableArrayList(UserPokemonSex.UNKNOWN, UserPokemonSex.MALE, UserPokemonSex.FEMALE));
+        sexDropdown.setValue(UserPokemonSex.UNKNOWN);
+        if(userPokemon.getUserPokemonSex() != null) {
+            sexDropdown.setValue(userPokemon.getUserPokemonSex().getIsMale() ? UserPokemonSex.MALE : UserPokemonSex.FEMALE);
+        }
+        sexDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String old_val, String new_val) {
+                controller.updatePokemonSex(userPokemon, old_val, new_val);
+            }
+        });
+        grid.add(sexDropdown,1,row);
     }
 
     /*

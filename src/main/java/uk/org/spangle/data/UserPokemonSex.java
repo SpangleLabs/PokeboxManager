@@ -8,6 +8,11 @@ import java.util.Date;
 @Table(name = "user_pokemon_sex")
 public class UserPokemonSex {
 
+    public static final String UNKNOWN = "Unknown";
+    public static final String GENDERLESS = "Genderless";
+    public static final String MALE = "Male";
+    public static final String FEMALE = "Female";
+
     private int id;
     private UserPokemon userPokemon;
     private boolean isMale;

@@ -269,4 +269,26 @@ public class Controller {
             throw e;
         }
     }
+
+    public void updatePokemonSex(UserPokemon userPokemon, String old_val, String new_val) {
+        if(old_val.equals(new_val)) return;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonSex() != null) session.delete(userPokemon.getUserPokemonSex());
+            if (new_val.equals(UserPokemonSex.UNKNOWN)) {
+                userPokemon.setUserPokemonSex(null);
+            } else {
+                UserPokemonSex ups = new UserPokemonSex(userPokemon, new_val.equals(UserPokemonSex.MALE));
+                session.save(ups);
+                userPokemon.setUserPokemonSex(ups);
+            }
+            session.update(userPokemon);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+        app.getSideBar().updateBoxCanvas();
+    }
 }
