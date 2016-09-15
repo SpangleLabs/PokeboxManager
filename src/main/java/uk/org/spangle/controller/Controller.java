@@ -248,4 +248,25 @@ public class Controller {
             throw e;
         }
     }
+
+    public void updatePokemonPokerus(UserPokemon userPokemon, String old_val, String new_val) {
+        if(old_val.equals(new_val)) return;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonPokerus() != null) session.delete(userPokemon.getUserPokemonPokerus());
+            if (new_val.equals(UserPokemonPokerus.UNKNOWN)) {
+                userPokemon.setUserPokemonPokerus(null);
+            } else {
+                UserPokemonPokerus upp = new UserPokemonPokerus(userPokemon, new_val.equals(UserPokemonPokerus.HAS_POKERUS));
+                session.save(upp);
+                userPokemon.setUserPokemonPokerus(upp);
+            }
+            session.update(userPokemon);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+    }
 }

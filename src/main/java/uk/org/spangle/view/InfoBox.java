@@ -107,13 +107,7 @@ public class InfoBox {
         grid.add(labelNick,0,6);
         grid.add(pokemonNick,1,6);
 
-        Text labelRus = new Text("Pokerus:");
-        Text pokemonRus = new Text("Unknown");
-        if(userPokemon.getUserPokemonPokerus() != null) {
-            pokemonRus.setText(userPokemon.getUserPokemonPokerus().getHasPokerus() ? "Has pokerus" : "Doesn't have pokerus");
-        }
-        grid.add(labelRus,0,7);
-        grid.add(pokemonRus,1,7);
+        addPokerusRow(grid, 7, userPokemon);
 
         Text labelSex = new Text("Sex:");
         Text pokemonSex = new Text("Unknown");
@@ -330,6 +324,25 @@ public class InfoBox {
         });
         grid.add(labelNature,0,row);
         grid.add(natureDropdown,1,row);
+    }
+
+    private void addPokerusRow(GridPane grid, int row, final UserPokemon userPokemon) {
+
+        Text labelRus = new Text("Pokerus:");
+        ChoiceBox<String> rusDropdown = new ChoiceBox<>();
+        rusDropdown.setItems(FXCollections.observableArrayList(UserPokemonPokerus.UNKNOWN, UserPokemonPokerus.HAS_POKERUS, UserPokemonPokerus.NOT_POKERUS));
+        rusDropdown.setValue(UserPokemonPokerus.UNKNOWN);
+        if(userPokemon.getUserPokemonPokerus() != null) {
+            rusDropdown.setValue(userPokemon.getUserPokemonPokerus().getHasPokerus() ? UserPokemonPokerus.HAS_POKERUS : UserPokemonPokerus.NOT_POKERUS);
+        }
+        rusDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String old_val, String new_val) {
+                controller.updatePokemonPokerus(userPokemon, old_val, new_val);
+            }
+        });
+        grid.add(labelRus,0,row);
+        grid.add(rusDropdown,1,row);
     }
 
     /*
