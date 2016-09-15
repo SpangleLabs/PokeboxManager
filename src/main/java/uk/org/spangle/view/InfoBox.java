@@ -185,7 +185,6 @@ public class InfoBox {
         Text labelBall = new Text("Pokeball:");
         ComboBox<PokeBall> ballDropdown = new ComboBox<>();
         ballDropdown.setItems(FXCollections.observableArrayList((PokeBall)null));
-        ballDropdown.setValue(null);
         for (Object pokeball : session.createCriteria(PokeBall.class).addOrder(Order.asc("name")).list()){
             ballDropdown.getItems().add(((PokeBall)pokeball));
         }
@@ -211,6 +210,12 @@ public class InfoBox {
                 };
             }
         });
+        UserPokemonBall upp = userPokemon.getUserPokemonBall();
+        if(upp == null) {
+            ballDropdown.setValue(null);
+        } else {
+            ballDropdown.setValue(upp.getPokeBall());
+        }
         grid.add(labelBall,0,row);
         grid.add(ballDropdown,1,row);
     }
