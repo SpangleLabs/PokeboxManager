@@ -206,4 +206,25 @@ public class Controller {
         }
         app.getSideBar().updateBoxCanvas();
     }
+
+    public void updatePokemonLanguage(UserPokemon userPokemon, Language old_val, Language new_val) {
+        if(old_val == new_val) return;
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonLanguage() != null) session.delete(userPokemon.getUserPokemonLanguage());
+            if(new_val == null) {
+                userPokemon.setUserPokemonLanguage(null);
+            } else {
+                UserPokemonLanguage userPokemonLanguage = new UserPokemonLanguage(userPokemon, new_val);
+                session.save(userPokemonLanguage);
+                userPokemon.setUserPokemonLanguage(userPokemonLanguage);
+            }
+            session.update(userPokemon);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+    }
 }

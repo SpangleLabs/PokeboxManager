@@ -95,13 +95,7 @@ public class InfoBox {
 
         addFormRow(grid, 3, userPokemon);
 
-        Text labelLang = new Text("Language:");
-        Text pokemonLang = new Text("Unknown");
-        if(userPokemon.getUserPokemonLanguage() != null) {
-            pokemonLang.setText(userPokemon.getUserPokemonLanguage().getLanguage().getName());
-        }
-        grid.add(labelLang,0,4);
-        grid.add(pokemonLang,1,4);
+        addLanguageRow(grid, 4, userPokemon);
 
         Text labelNature = new Text("Nature:");
         Text pokemonNature = new Text("Unknown");
@@ -300,6 +294,27 @@ public class InfoBox {
             }
         });
         grid.add(formDropdown,1,row);
+    }
+
+    private void addLanguageRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelLang = new Text("Language:");
+        List languageList = session.createCriteria(Language.class).list();
+        ChoiceBox<Language> langDropdown = new ChoiceBox<>(FXCollections.observableArrayList((Language)null));
+        for(Object language : languageList) {
+            langDropdown.getItems().add((Language) language);
+        }
+        langDropdown.setValue(null);
+        if(userPokemon.getUserPokemonLanguage() != null) {
+            langDropdown.setValue(userPokemon.getUserPokemonLanguage().getLanguage());
+        }
+        langDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Language>() {
+            @Override
+            public void changed(ObservableValue<? extends Language> observableValue, Language old_val, Language new_val) {
+                controller.updatePokemonLanguage(userPokemon, old_val, new_val);
+            }
+        });
+        grid.add(labelLang,0,row);
+        grid.add(langDropdown,1,row);
     }
 
     /*
