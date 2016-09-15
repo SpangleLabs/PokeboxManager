@@ -6,17 +6,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import uk.org.spangle.controller.Controller;
@@ -24,6 +25,7 @@ import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 import uk.org.spangle.model.UserPokemonStat;
 
+import java.io.File;
 import java.util.*;
 
 public class InfoBox {
@@ -83,13 +85,7 @@ public class InfoBox {
         Text pokemonImage = new Text("Image would be here");
         GridPane grid = new GridPane();
 
-        Text labelBall = new Text("Pokeball:");
-        Text pokemonBall = new Text("Unknown");
-        if(userPokemon.getUserPokemonBall() != null) {
-            pokemonBall.setText(userPokemon.getUserPokemonBall().getPokeBall().getName());
-        }
-        grid.add(labelBall,0,0);
-        grid.add(pokemonBall,1,0);
+        addPokeBallRow(grid, 0, userPokemon);
 
         addEggRow(grid, 1, userPokemon);
 
@@ -185,24 +181,57 @@ public class InfoBox {
         infoBoxPane.getChildren().setAll(rows);
     }
 
-    private void addEggRow(GridPane grid, int row, final UserPokemon userPokemon) {
-        final String unknown = "Unknown";
-        final String isEgg = "Is an egg";
-        final String notEgg = "Not an egg";
+    private void addPokeBallRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelBall = new Text("Pokeball:");
+        ComboBox<PokeBall> ballDropdown = new ComboBox<>();
+        ballDropdown.setItems(FXCollections.observableArrayList((PokeBall)null));
+        for (Object pokeball : session.createCriteria(PokeBall.class).addOrder(Order.asc("name")).list()){
+            ballDropdown.getItems().add(((PokeBall)pokeball));
+        }
+        ballDropdown.setCellFactory(new Callback<ListView<PokeBall>, ListCell<PokeBall>>() {
+            @Override
+            public ListCell<PokeBall> call(ListView<PokeBall> param) {
+                return new ListCell<PokeBall>() {
+                    @Override public void updateItem(PokeBall item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(item == null) {
+                            setGraphic(null);
+                            setText("Unknown");
+                        } else {
+                            File ballFile = new File("pokeball-icons.png");
+                            Image ballImage = new Image(ballFile.toURI().toString());
+                            ImageView view = new ImageView();
+                            view.setImage(ballImage);
+                            view.setViewport(new Rectangle2D(item.getSpriteX(),item.getSpriteY(),30,30));
+                            setGraphic(view);
+                            setText(item.getName());
+                        }
+                    }
+                };
+            }
+        });
+        UserPokemonBall upp = userPokemon.getUserPokemonBall();
+        if(upp == null) {
+            ballDropdown.setValue(null);
+        } else {
+            ballDropdown.setValue(upp.getPokeBall());
+        }
+        grid.add(labelBall,0,row);
+        grid.add(ballDropdown,1,row);
+    }
 
+    private void addEggRow(GridPane grid, int row, final UserPokemon userPokemon) {
         Text labelEgg = new Text("Egg:");
         ChoiceBox<String> eggDropdown = new ChoiceBox<>();
-        eggDropdown.setItems(FXCollections.observableArrayList(unknown, isEgg, notEgg));
-        eggDropdown.setValue(unknown);
+        eggDropdown.setItems(FXCollections.observableArrayList(UserPokemonEgg.UNKNOWN, UserPokemonEgg.IS_EGG, UserPokemonEgg.NOT_EGG));
+        eggDropdown.setValue(UserPokemonEgg.UNKNOWN);
         if(userPokemon.getUserPokemonEgg() != null) {
-            eggDropdown.setValue(userPokemon.getUserPokemonEgg().getIsEgg() ? isEgg : notEgg);
+            eggDropdown.setValue(userPokemon.getUserPokemonEgg().getIsEgg() ? UserPokemonEgg.IS_EGG : UserPokemonEgg.NOT_EGG);
         }
         eggDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String old_val, String new_val) {
-                if(new_val.equals(unknown)) userPokemon.setUserPokemonEgg(null);
-                UserPokemonEgg upe = new UserPokemonEgg(userPokemon, new_val.equals(isEgg));
-                userPokemon.setUserPokemonEgg(upe);
+                controller.updatePokemonEgg(userPokemon, old_val, new_val);
             }
         });
         grid.add(labelEgg,0,row);

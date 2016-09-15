@@ -45,6 +45,7 @@ public class ImportIcons {
         try {
             createPokemonIcons();
             createPokeBalls();
+            createEggIcon();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -248,5 +249,12 @@ public class ImportIcons {
         PrintWriter out = new PrintWriter("pokeball-icons.csv");
         out.print(bigCSV);
         out.close();
+    }
+
+    private void createEggIcon() throws Exception {
+        BufferedImage eggImage = new BufferedImage(40,30,BufferedImage.TYPE_INT_ARGB);
+        Graphics g = eggImage.getGraphics();
+        g.drawImage(ImageIO.read(new File(getClass().getResource("/pokesprite/icons/etc/egg.png").getFile())),0,0,null);
+        ImageIO.write(eggImage,"png",new File("egg.png"));
     }
 }

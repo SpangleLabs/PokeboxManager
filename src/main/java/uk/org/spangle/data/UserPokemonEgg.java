@@ -8,6 +8,10 @@ import java.util.Date;
 @Table(name = "user_pokemon_egg")
 public class UserPokemonEgg {
 
+    public static final String UNKNOWN = "Unknown";
+    public static final String IS_EGG = "Is an egg";
+    public static final String NOT_EGG = "Not an egg";
+
     private int id;
     private UserPokemon userPokemon;
     private boolean isEgg;
