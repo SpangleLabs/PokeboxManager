@@ -28,9 +28,16 @@ public class Controller {
     }
 
     public void updateBox(UserGame currentGame, UserBox currentBox) {
-        currentGame.setCurrentBox(currentBox);
-        session.update(currentGame);
-        session.flush();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            currentGame.setCurrentBox(currentBox);
+            session.update(currentGame);
+            tx.commit();
+        } catch (Exception ex) {
+            if(tx != null) tx.rollback();
+            throw ex;
+        }
         app.getSideBar().updateBoxCanvas();
     }
 
@@ -41,8 +48,16 @@ public class Controller {
         // Remove 1 from index and wrap it around
         int newIndex = ((index-1) % listBoxes.size() + listBoxes.size()) % listBoxes.size();
         UserBox newBox = listBoxes.get(newIndex);
-        currentGame.setCurrentBox(newBox);
-        session.update(currentGame);
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            currentGame.setCurrentBox(newBox);
+            session.update(currentGame);
+            tx.commit();
+        } catch (Exception ex) {
+            if(tx != null) tx.rollback();
+            throw ex;
+        }
         app.getSideBar().updateBoxDropdown();
         app.getSideBar().updateBoxCanvas();
     }
@@ -53,8 +68,16 @@ public class Controller {
         int index = listBoxes.indexOf(currentBox);
         int newIndex = (index+1) % listBoxes.size();
         UserBox newBox = listBoxes.get(newIndex);
-        currentGame.setCurrentBox(newBox);
-        session.update(currentGame);
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            currentGame.setCurrentBox(newBox);
+            session.update(currentGame);
+            tx.commit();
+        } catch (Exception ex) {
+            if(tx != null) tx.rollback();
+            throw ex;
+        }
         app.getSideBar().updateBoxDropdown();
         app.getSideBar().updateBoxCanvas();
     }
@@ -83,12 +106,12 @@ public class Controller {
 
     }
 
-    public void clickCanvasEmpty(int position) {
+    private void clickCanvasEmpty(int position) {
         UserBox userBox = conf.getCurrentGame().getCurrentBox();
         app.getInfoBox().addNewPokemon(userBox,position);
     }
 
-    public void clickCanvasPokemon(UserPokemon userPokemon) {
+    private void clickCanvasPokemon(UserPokemon userPokemon) {
         app.getInfoBox().displayPokemon(userPokemon);
     }
 
@@ -102,11 +125,19 @@ public class Controller {
                 return;
             }
         }
-        UserPokemon userPokemon = new UserPokemon(userBox,position,pokemon);
-        session.save(userPokemon);
-        session.refresh(userBox);
-        app.getSideBar().updateBoxCanvas();
-        app.getInfoBox().displayPokemon(userPokemon);
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            UserPokemon userPokemon = new UserPokemon(userBox, position, pokemon);
+            session.save(userPokemon);
+            session.refresh(userBox);
+            app.getSideBar().updateBoxCanvas();
+            app.getInfoBox().displayPokemon(userPokemon);
+            tx.commit();
+        } catch (Exception ex) {
+            if(tx != null) tx.rollback();
+            throw ex;
+        }
     }
 
     public void updatePokemonBall(UserPokemon userPokemon, PokeBall old_val, PokeBall new_val) {
