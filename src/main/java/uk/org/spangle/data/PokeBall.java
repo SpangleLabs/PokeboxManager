@@ -68,4 +68,8 @@ public class PokeBall {
     public void setSpriteY(int spriteY) {
         this.spriteY = spriteY;
     }
+
+    public String toString() {
+        return getName();
+    }
 }
