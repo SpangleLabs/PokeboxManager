@@ -64,4 +64,8 @@ public class PokemonFormAbility {
     public void setAbility(Ability ability) {
         this.ability = ability;
     }
+
+    public String toString() {
+        return getAbility().toString();
+    }
 }

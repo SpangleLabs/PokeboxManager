@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -21,8 +22,10 @@ import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
+import java.awt.*;
 import java.io.File;
 import java.util.*;
+import java.util.List;
 
 public class InfoBox {
     private Pane infoBoxPane;
@@ -371,12 +374,44 @@ public class InfoBox {
         Text labelAbility = new Text("Ability:");
         grid.add(labelAbility,0,row);
 
-        //userPokemon.getUserPokemonForm().getPokemonForm().getPokemonFormAbilities();
-        Text pokemonAbility = new Text("Unknown");
-        if(userPokemon.getAbility() != null) {
-            pokemonAbility.setText(userPokemon.getAbility().getName());
+        // If form unknown, output unknown
+        UserPokemonForm upf = userPokemon.getUserPokemonForm();
+        if(upf == null) {
+            Text pokemonAbility = new Text("Unknown");
+            grid.add(pokemonAbility,1,row);
+            return;
         }
-        grid.add(pokemonAbility,1,row);
+
+        // If only one ability for this form, display that.
+        List<PokemonFormAbility> listAbilities = upf.getPokemonForm().getPokemonFormAbilities();
+        if(listAbilities.size() == 1) {
+            //Ensure that current ability is this.
+            controller.updatePokemonAbility(userPokemon, null, listAbilities.get(0));
+            Text pokemonAbility = new Text(listAbilities.get(0).getAbility().getName());
+            grid.add(pokemonAbility,1,row);
+            return;
+        }
+
+        // Dropdown for ability
+        ChoiceBox<PokemonFormAbility> abilityDropdown = new ChoiceBox<>();
+        abilityDropdown.setItems(FXCollections.observableArrayList((PokemonFormAbility)null));
+        abilityDropdown.getItems().addAll(listAbilities);
+        if(userPokemon.getUserPokemonAbilitySlot() == null) {
+            abilityDropdown.setValue(null);
+        } else {
+            for(PokemonFormAbility pfAbility : listAbilities) {
+                if(pfAbility.getAbilitySlot() == userPokemon.getUserPokemonAbilitySlot().getAbilitySlot()) {
+                    abilityDropdown.setValue(pfAbility);
+                }
+            }
+        }
+        abilityDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PokemonFormAbility>() {
+            @Override
+            public void changed(ObservableValue<? extends PokemonFormAbility> observable, PokemonFormAbility oldVal, PokemonFormAbility newval) {
+                controller.updatePokemonAbility(userPokemon, oldVal, newval);
+            }
+        });
+        grid.add(abilityDropdown,1,row);
     }
 
     /*

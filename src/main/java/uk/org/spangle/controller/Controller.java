@@ -313,4 +313,28 @@ public class Controller {
         }
         app.getSideBar().updateBoxCanvas();
     }
+
+    public void updatePokemonAbility(UserPokemon userPokemon, PokemonFormAbility oldVal, PokemonFormAbility newVal) {
+        if(oldVal == newVal) return;
+        if(oldVal != null && newVal != null) {
+            if(oldVal.getAbilitySlot() == newVal.getAbilitySlot()) return;
+        }
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            if(userPokemon.getUserPokemonAbilitySlot() != null) session.delete(userPokemon.getUserPokemonAbilitySlot());
+            if(newVal == null) {
+                userPokemon.setUserPokemonAbilitySlot(null);
+            } else {
+                UserPokemonAbilitySlot upas = new UserPokemonAbilitySlot(userPokemon, newVal.getAbilitySlot());
+                session.save(upas);
+                userPokemon.setUserPokemonAbilitySlot(upas);
+            }
+            session.update(userPokemon);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+    }
 }
