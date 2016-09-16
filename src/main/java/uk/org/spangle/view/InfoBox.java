@@ -113,13 +113,7 @@ public class InfoBox {
 
         addShinyRow(grid, 9, userPokemon);
 
-        Text labelAbility = new Text("Ability:");
-        Text pokemonAbility = new Text("Unknown");
-        if(userPokemon.getAbility() != null) {
-            pokemonAbility.setText(userPokemon.getAbility().getName());
-        }
-        grid.add(labelAbility,0,10);
-        grid.add(pokemonAbility,1,10);
+        addAbilityRow(grid, 10, userPokemon);
 
         Text labelLevel = new Text("Level:");
         Text pokemonLevel = new Text("Unknown");
@@ -371,6 +365,18 @@ public class InfoBox {
         });
         grid.add(labelShiny,0,row);
         grid.add(shinyDropdown,1,row);
+    }
+
+    private void addAbilityRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelAbility = new Text("Ability:");
+        grid.add(labelAbility,0,row);
+
+        //userPokemon.getUserPokemonForm().getPokemonForm().getPokemonFormAbilities();
+        Text pokemonAbility = new Text("Unknown");
+        if(userPokemon.getAbility() != null) {
+            pokemonAbility.setText(userPokemon.getAbility().getName());
+        }
+        grid.add(pokemonAbility,1,row);
     }
 
     /*
