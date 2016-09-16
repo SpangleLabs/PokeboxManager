@@ -14,11 +14,11 @@ import uk.org.spangle.model.Configuration;
 
 public class App extends Application {
 
-    HBox root;
-    SideBar sideBar;
-    InfoBox infoBox;
-    Session dbSession;
-    Configuration conf;
+    private HBox root;
+    private SideBar sideBar;
+    private InfoBox infoBox;
+    private Session dbSession;
+    private Configuration conf;
 
 
     @Override
