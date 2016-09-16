@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -21,8 +22,7 @@ import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
-import java.io.File;
-import java.util.*;
+import java.util.List;
 
 public class InfoBox {
     private Pane infoBoxPane;
@@ -53,7 +53,7 @@ public class InfoBox {
 
         Text speciesText = new Text("Choose species:");
         //ChoiceBox<String> speciesBox = new ChoiceBox<>();
-        final AutoCompleteTextField speciesBox = new AutoCompleteTextField();
+        final AutoCompleteTextField speciesBox = new AutoCompleteTextField(conf);
         List listSpecies = session.createCriteria(Pokemon.class).addOrder(Order.asc("nationalDex")).list();
         for(Object species : listSpecies) {
             speciesBox.getEntries().add((Pokemon)species);
@@ -80,23 +80,13 @@ public class InfoBox {
 
         Text pokemonImage = new Text("Image would be here");
         GridPane grid = new GridPane();
+        Pane abilityPane = new HBox();
 
         addPokeBallRow(grid, 0, userPokemon);
-
         addEggRow(grid, 1, userPokemon);
-
-        Text labelESV = new Text("ESV:");
-        Text pokemonESV = new Text("Unknown");
-        if(userPokemon.getUserPokemonESV() != null) {
-            pokemonESV.setText(Integer.toString(userPokemon.getUserPokemonESV().getESV()));
-        }
-        grid.add(labelESV,0,2);
-        grid.add(pokemonESV,1,2);
-
-        addFormRow(grid, 3, userPokemon);
-
+        addESVRow(grid, 2, userPokemon);
+        addFormRow(grid, 3, userPokemon, abilityPane);
         addLanguageRow(grid, 4, userPokemon);
-
         addNatureRow(grid, 5, userPokemon);
 
         Text labelNick = new Text("Nickname:");
@@ -108,20 +98,10 @@ public class InfoBox {
         grid.add(pokemonNick,1,6);
 
         addPokerusRow(grid, 7, userPokemon);
-
         addSexRow(grid, 8, userPokemon);
-
         addShinyRow(grid, 9, userPokemon);
-
-        addAbilityRow(grid, 10, userPokemon);
-
-        Text labelLevel = new Text("Level:");
-        Text pokemonLevel = new Text("Unknown");
-        if(userPokemon.getUserPokemonLevel() != null) {
-            pokemonLevel.setText(Integer.toString(userPokemon.getUserPokemonLevel().getLevel()));
-        }
-        grid.add(labelLevel,0,11);
-        grid.add(pokemonLevel,1,11);
+        addAbilityRow(grid, 10, userPokemon, abilityPane);
+        addLevelRow(grid, 11, userPokemon);
 
         // Create IVs and EVs table
         //TableView table = createTable(userPokemon);
@@ -149,8 +129,7 @@ public class InfoBox {
                             setGraphic(null);
                             setText("Unknown");
                         } else {
-                            File ballFile = new File("pokeball-icons.png");
-                            Image ballImage = new Image(ballFile.toURI().toString());
+                            Image ballImage = conf.getImagePokeballIcons();
                             ImageView view = new ImageView();
                             view.setImage(ballImage);
                             view.setViewport(new Rectangle2D(item.getSpriteX(),item.getSpriteY(),30,30));
@@ -195,7 +174,41 @@ public class InfoBox {
         grid.add(eggDropdown,1,row);
     }
 
-    private void addFormRow(GridPane grid, int row, final UserPokemon userPokemon) {
+    private void addESVRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelESV = new Text("ESV:");
+        final TextField esvField = new TextField();
+        esvField.setPromptText("Unknown");
+        if(userPokemon.getUserPokemonESV() != null) {
+            esvField.setText(String.format("%04d", userPokemon.getUserPokemonESV().getESV()));
+        }
+        esvField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("\\d*")) {
+                    newValue = newValue.replaceAll("[^\\d]","");
+                    esvField.setText(newValue);
+                }
+                if(newValue.length() > 0 && Integer.parseInt(newValue) > 4906) {
+                    esvField.setText("4096");
+                }
+            }
+        });
+        esvField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean wasFocus, Boolean isFocus) {
+                if(wasFocus && !isFocus) {
+                    if(esvField.getText().length() != 0) {
+                        esvField.setText(String.format("%04d", Integer.parseInt(esvField.getText())));
+                    }
+                    controller.updatePokemonESV(userPokemon, esvField.getText());
+                }
+            }
+        });
+        grid.add(labelESV,0,row);
+        grid.add(esvField,1,row);
+    }
+
+    private void addFormRow(GridPane grid, int row, final UserPokemon userPokemon, final Pane abilityPane) {
         Text labelForm = new Text("Form:");
         grid.add(labelForm,0,row);
         // Check if only 1 form exists.
@@ -212,8 +225,7 @@ public class InfoBox {
         ComboBox<PokemonForm> formDropdown = new ComboBox<>();
         formDropdown.setItems(FXCollections.observableArrayList((PokemonForm) null));
         formDropdown.getItems().addAll(listForms);
-        File formFile = new File("pokemon-icons.png");
-        final Image formImage = new Image(formFile.toURI().toString()); // TODO: this should be a constant somewhere.
+        final Image formImage = conf.getImagePokemonIcons();
         formDropdown.setCellFactory(new Callback<ListView<PokemonForm>, ListCell<PokemonForm>>() {
             @Override
             public ListCell<PokemonForm> call(ListView<PokemonForm> param) {
@@ -257,6 +269,8 @@ public class InfoBox {
         formDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PokemonForm>() {
             @Override
             public void changed(ObservableValue<? extends PokemonForm> observableValue, PokemonForm old_val, PokemonForm new_val) {
+                //Update ability dropdown
+                updateAbilityDropdown(userPokemon,abilityPane);
                 controller.updatePokemonForm(userPokemon, old_val, new_val);
             }
         });
@@ -367,16 +381,85 @@ public class InfoBox {
         grid.add(shinyDropdown,1,row);
     }
 
-    private void addAbilityRow(GridPane grid, int row, final UserPokemon userPokemon) {
+    private void addAbilityRow(GridPane grid, int row, final UserPokemon userPokemon, Pane abilityPane) {
         Text labelAbility = new Text("Ability:");
         grid.add(labelAbility,0,row);
+        grid.add(abilityPane,1,row);
+        updateAbilityDropdown(userPokemon, abilityPane);
+    }
 
-        //userPokemon.getUserPokemonForm().getPokemonForm().getPokemonFormAbilities();
-        Text pokemonAbility = new Text("Unknown");
-        if(userPokemon.getAbility() != null) {
-            pokemonAbility.setText(userPokemon.getAbility().getName());
+    private void updateAbilityDropdown(final UserPokemon userPokemon, final Pane abilityPane) {
+
+        // If form unknown, output unknown
+        UserPokemonForm upf = userPokemon.getUserPokemonForm();
+        if(upf == null) {
+            Text pokemonAbility = new Text("Unknown");
+            abilityPane.getChildren().setAll(pokemonAbility);
+            return;
         }
-        grid.add(pokemonAbility,1,row);
+
+        // If only one ability for this form, display that.
+        List<PokemonFormAbility> listAbilities = upf.getPokemonForm().getPokemonFormAbilities();
+        if(listAbilities.size() == 1) {
+            //Ensure that current ability is this.
+            controller.updatePokemonAbility(userPokemon, null, listAbilities.get(0));
+            Text pokemonAbility = new Text(listAbilities.get(0).getAbility().getName());
+            abilityPane.getChildren().setAll(pokemonAbility);
+            return;
+        }
+
+        // Dropdown for ability
+        ChoiceBox<PokemonFormAbility> abilityDropdown = new ChoiceBox<>();
+        abilityDropdown.setItems(FXCollections.observableArrayList((PokemonFormAbility)null));
+        abilityDropdown.getItems().addAll(listAbilities);
+        if(userPokemon.getUserPokemonAbilitySlot() == null) {
+            abilityDropdown.setValue(null);
+        } else {
+            for(PokemonFormAbility pfAbility : listAbilities) {
+                if(pfAbility.getAbilitySlot() == userPokemon.getUserPokemonAbilitySlot().getAbilitySlot()) {
+                    abilityDropdown.setValue(pfAbility);
+                }
+            }
+        }
+        abilityDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PokemonFormAbility>() {
+            @Override
+            public void changed(ObservableValue<? extends PokemonFormAbility> observable, PokemonFormAbility oldVal, PokemonFormAbility newval) {
+                controller.updatePokemonAbility(userPokemon, oldVal, newval);
+            }
+        });
+        abilityPane.getChildren().setAll(abilityDropdown);
+    }
+
+    private void addLevelRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelLevel = new Text("Level:");
+
+        final TextField levelField = new TextField();
+        levelField.setPromptText("Unknown");
+        if(userPokemon.getUserPokemonLevel() != null) {
+            levelField.setText(Integer.toString(userPokemon.getUserPokemonLevel().getLevel()));
+        }
+        levelField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("\\d*")) {
+                    newValue = newValue.replaceAll("[^\\d]","");
+                    levelField.setText(newValue);
+                }
+                if(newValue.length() > 0 && Integer.parseInt(newValue) > 100) {
+                    levelField.setText("100");
+                }
+            }
+        });
+        levelField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean wasFocus, Boolean isFocus) {
+                if(wasFocus && !isFocus) {
+                    controller.updatePokemonLevel(userPokemon, levelField.getText());
+                }
+            }
+        });
+        grid.add(labelLevel,0,row);
+        grid.add(levelField,1,row);
     }
 
     /*

@@ -15,8 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import uk.org.spangle.data.Pokemon;
 import uk.org.spangle.data.PokemonForm;
+import uk.org.spangle.model.Configuration;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
@@ -36,6 +36,8 @@ import java.util.regex.Pattern;
  * @author Fabian Ochmann
  */
 public class AutoCompleteTextField extends TextField {
+
+    private Configuration conf;
 
     /**
      * The existing autocomplete entries.
@@ -58,8 +60,9 @@ public class AutoCompleteTextField extends TextField {
     /**
      * Construct a new AutoCompleteTextField.
      */
-    public AutoCompleteTextField() {
+    AutoCompleteTextField(Configuration conf) {
         super();
+        this.conf = conf;
         this.entries = new TreeSet<>();
         entriesPopup = new ContextMenu();
         textProperty().addListener(new ChangeListener<String>() {
@@ -107,7 +110,7 @@ public class AutoCompleteTextField extends TextField {
      *
      * @return The existing autocomplete entries.
      */
-    public SortedSet<Pokemon> getEntries() {
+    SortedSet<Pokemon> getEntries() {
         return entries;
     }
 
@@ -120,8 +123,7 @@ public class AutoCompleteTextField extends TextField {
     private void populatePopup(List<Pokemon> searchResult) {
         List<CustomMenuItem> menuItems = new LinkedList<>();
         int count = Math.min(searchResult.size(), MAX_ENTRIES);
-        File imageFile = new File("pokemon-icons.png");
-        Image image = new Image(imageFile.toURI().toString());
+        Image image = conf.getImagePokemonIcons();
         for (int i = 0; i < count; i++) {
             final Pokemon pokemon = searchResult.get(i);
             PokemonForm form = pokemon.getPokemonForms().get(0);

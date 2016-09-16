@@ -22,7 +22,6 @@ import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,11 +138,8 @@ public class SideBar {
 
         graphicsContext.clearRect(0,0,boxCanvas.getWidth(),boxCanvas.getHeight());
         // Box sprite sheet
-        //Image image = new Image(getClass().getResourceAsStream("/box_sprites.png"));
-        File imageFile = new File("pokemon-icons.png");
-        Image image = new Image(imageFile.toURI().toString());
-        File eggFile = new File("egg.png");
-        Image eggImage = new Image(eggFile.toURI().toString());
+        Image image = conf.getImagePokemonIcons();
+        Image eggImage = conf.getImageEgg();
 
         // Get list of user pokemon:
         List<UserPokemon> pokemonList = new ArrayList<>();

@@ -1,10 +1,12 @@
 package uk.org.spangle.model;
 
+import javafx.scene.image.Image;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import uk.org.spangle.data.UserConfig;
 import uk.org.spangle.data.UserGame;
 
+import java.io.File;
 import java.util.List;
 
 public class Configuration {
@@ -32,7 +34,10 @@ public class Configuration {
     public final static String RELEARN_3 = "relearn_3";
     public final static String RELEARN_4 = "relearn_4";
 
-    Session session;
+    private Session session;
+    private Image imgPokemonIcons = null;
+    private Image imgEgg = null;
+    private Image imgPokeballIcons = null;
 
     public Configuration(Session session) {
         this.session = session;
@@ -94,5 +99,29 @@ public class Configuration {
 
         currentGameConfig.setValue(Boolean.toString(hideEggs));
         session.update(currentGameConfig);
+    }
+
+    public Image getImagePokemonIcons() {
+        if(imgPokemonIcons == null) {
+            File pokemonFile = new File("pokemon-icons.png");
+            imgPokemonIcons = new Image(pokemonFile.toURI().toString());
+        }
+        return imgPokemonIcons;
+    }
+
+    public Image getImageEgg() {
+        if(imgEgg == null) {
+            File eggFile = new File("egg.png");
+            imgEgg = new Image(eggFile.toURI().toString());
+        }
+        return imgEgg;
+    }
+
+    public Image getImagePokeballIcons() {
+        if(imgPokeballIcons == null) {
+            File pokeballFile = new File("pokeball-icons.png");
+            imgPokeballIcons = new Image(pokeballFile.toURI().toString());
+        }
+        return imgPokeballIcons;
     }
 }
