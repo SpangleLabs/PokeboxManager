@@ -273,6 +273,42 @@ public class Controller {
         }
     }
 
+    public void updatePokemonNickname(UserPokemon userPokemon, boolean noNick, String nickname) {
+        Transaction tx = null;
+        try {
+            session.refresh(userPokemon);
+            tx = session.beginTransaction();
+            UserPokemonNickname userPokemonNickname = userPokemon.getUserPokemonNickname();
+            if(userPokemonNickname != null) {
+                if (!noNick && nickname.length() == 0) {
+                    session.delete(userPokemonNickname);
+                } else if(noNick) {
+                    userPokemonNickname.setNickname(null);
+                    session.update(userPokemonNickname);
+                } else {
+                    userPokemonNickname.setNickname(nickname);
+                    session.update(userPokemonNickname);
+                }
+            } else {
+                if(noNick) {
+                    UserPokemonNickname upn = new UserPokemonNickname(userPokemon, null);
+                    session.save(upn);
+                    userPokemon.setUserPokemonNickname(upn);
+                    session.update(userPokemon);
+                } else if(nickname.length() > 0) {
+                    UserPokemonNickname upn = new UserPokemonNickname(userPokemon, nickname);
+                    session.save(upn);
+                    userPokemon.setUserPokemonNickname(upn);
+                    session.update(userPokemon);
+                }
+            }
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+    }
+
     public void updatePokemonPokerus(UserPokemon userPokemon, String old_val, String new_val) {
         if(old_val.equals(new_val)) return;
         Transaction tx = null;

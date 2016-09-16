@@ -114,12 +114,9 @@ public class InfoBox {
         grid.add(natureField,1,5);
 
         Text labelNick = new Text("Nickname:");
-        Text pokemonNick = new Text("Unknown");
-        if(userPokemon.getUserPokemonNickname() != null) {
-            pokemonNick.setText(userPokemon.getUserPokemonNickname().getNickname());
-        }
+        Node nickField = getNickField(userPokemon);
         grid.add(labelNick,0,6);
-        grid.add(pokemonNick,1,6);
+        grid.add(nickField,1,6);
 
         Text labelRus = new Text("Pokerus:");
         Node pokerusField  = getPokerusField(userPokemon);
@@ -347,6 +344,49 @@ public class InfoBox {
             }
         });
         return natureDropdown;
+    }
+
+    private Node getNickField(final UserPokemon userPokemon) {
+        // Create and position nodes
+        HBox box = new HBox(3);
+        final TextField nicknameField = new TextField();
+        final CheckBox noNick = new CheckBox();
+        Text noNickLabel = new Text("None");
+        box.getChildren().addAll(nicknameField, noNick, noNickLabel);
+
+        // Add listeners
+        nicknameField.setPromptText("Unknown");
+        nicknameField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean wasFocus, Boolean isFocus) {
+                if(wasFocus && !isFocus) {
+                    controller.updatePokemonNickname(userPokemon, noNick.isSelected(), nicknameField.getText());
+                }
+            }
+        });
+        noNick.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
+                if(newVal) {
+                    nicknameField.setDisable(true);
+                } else {
+                    nicknameField.setDisable(false);
+                }
+                controller.updatePokemonNickname(userPokemon, newVal, nicknameField.getText());
+            }
+        });
+
+        // Input current values
+        UserPokemonNickname upn = userPokemon.getUserPokemonNickname();
+        if(upn != null) {
+            if(upn.getNickname() == null) {
+                noNick.setSelected(true);
+                //nicknameField.setDisable(true);
+            } else {
+                nicknameField.setText(upn.getNickname());
+            }
+        }
+        return box;
     }
 
     private Node getPokerusField(final UserPokemon userPokemon) {

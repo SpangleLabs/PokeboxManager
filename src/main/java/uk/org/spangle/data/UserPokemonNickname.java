@@ -10,7 +10,7 @@ public class UserPokemonNickname {
 
     private int id;
     private UserPokemon userPokemon;
-    private String nickname;
+    private String nickname; // Nullable. Null means no nickname
     private Timestamp timestamp;
 
     public UserPokemonNickname() {
