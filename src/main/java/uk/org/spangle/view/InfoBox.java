@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -82,12 +83,35 @@ public class InfoBox {
         GridPane grid = new GridPane();
         Pane abilityPane = new HBox();
 
-        addPokeBallRow(grid, 0, userPokemon);
-        addEggRow(grid, 1, userPokemon);
-        addESVRow(grid, 2, userPokemon);
-        addFormRow(grid, 3, userPokemon, abilityPane);
-        addLanguageRow(grid, 4, userPokemon);
-        addNatureRow(grid, 5, userPokemon);
+        Text labelBall = new Text("Pokeball:");
+        Node ballField = getPokeBallField(userPokemon);
+        grid.add(labelBall,0,0);
+        grid.add(ballField,1,0);
+
+        Text labelEgg = new Text("Egg:");
+        Node eggField = getEggField(userPokemon);
+        grid.add(labelEgg,0,1);
+        grid.add(eggField,1,1);
+
+        Text labelESV = new Text("ESV:");
+        Node esvField = getESVField(userPokemon);
+        grid.add(labelESV,0,2);
+        grid.add(esvField,1,2);
+
+        Text labelForm = new Text("Form:");
+        Node formField = getFormField(userPokemon, abilityPane);
+        grid.add(labelForm,0,3);
+        grid.add(formField,1,3);
+
+        Text labelLang = new Text("Language:");
+        Node languageField = getLanguageField(userPokemon);
+        grid.add(labelLang,0,4);
+        grid.add(languageField,1,4);
+
+        Text labelNature = new Text("Nature:");
+        Node natureField = getNatureField(userPokemon);
+        grid.add(labelNature,0,5);
+        grid.add(natureField,1,5);
 
         Text labelNick = new Text("Nickname:");
         Text pokemonNick = new Text("Unknown");
@@ -97,11 +121,30 @@ public class InfoBox {
         grid.add(labelNick,0,6);
         grid.add(pokemonNick,1,6);
 
-        addPokerusRow(grid, 7, userPokemon);
-        addSexRow(grid, 8, userPokemon);
-        addShinyRow(grid, 9, userPokemon);
-        addAbilityRow(grid, 10, userPokemon, abilityPane);
-        addLevelRow(grid, 11, userPokemon);
+        Text labelRus = new Text("Pokerus:");
+        Node pokerusField  = getPokerusField(userPokemon);
+        grid.add(labelRus,0,7);
+        grid.add(pokerusField,1,7);
+
+        Text labelSex = new Text("Sex:");
+        Node sexField = getSexField(userPokemon);
+        grid.add(labelSex,0,8);
+        grid.add(sexField,1,8);
+
+        Text labelShiny = new Text("Shiny:");
+        Node shinyField = getShinyField(userPokemon);
+        grid.add(labelShiny,0,9);
+        grid.add(shinyField,1,9);
+
+        Text labelAbility = new Text("Ability:");
+        updateAbilityField(userPokemon, abilityPane);
+        grid.add(labelAbility,0,10);
+        grid.add(abilityPane,1,10);
+
+        Text labelLevel = new Text("Level:");
+        Node levelField = getLevelField(userPokemon);
+        grid.add(labelLevel,0,11);
+        grid.add(levelField,1,11);
 
         // Create IVs and EVs table
         //TableView table = createTable(userPokemon);
@@ -112,8 +155,7 @@ public class InfoBox {
         infoBoxPane.getChildren().setAll(rows);
     }
 
-    private void addPokeBallRow(GridPane grid, int row, final UserPokemon userPokemon) {
-        Text labelBall = new Text("Pokeball:");
+    private Node getPokeBallField(final UserPokemon userPokemon) {
         ComboBox<PokeBall> ballDropdown = new ComboBox<>();
         ballDropdown.setItems(FXCollections.observableArrayList((PokeBall)null));
         for (Object pokeball : session.createCriteria(PokeBall.class).addOrder(Order.asc("name")).list()){
@@ -152,12 +194,10 @@ public class InfoBox {
                 controller.updatePokemonBall(userPokemon, old_val, new_val);
             }
         });
-        grid.add(labelBall,0,row);
-        grid.add(ballDropdown,1,row);
+        return ballDropdown;
     }
 
-    private void addEggRow(GridPane grid, int row, final UserPokemon userPokemon) {
-        Text labelEgg = new Text("Egg:");
+    private Node getEggField(final UserPokemon userPokemon) {
         ChoiceBox<String> eggDropdown = new ChoiceBox<>();
         eggDropdown.setItems(FXCollections.observableArrayList(UserPokemonEgg.UNKNOWN, UserPokemonEgg.IS_EGG, UserPokemonEgg.NOT_EGG));
         eggDropdown.setValue(UserPokemonEgg.UNKNOWN);
@@ -170,12 +210,10 @@ public class InfoBox {
                 controller.updatePokemonEgg(userPokemon, old_val, new_val);
             }
         });
-        grid.add(labelEgg,0,row);
-        grid.add(eggDropdown,1,row);
+        return eggDropdown;
     }
 
-    private void addESVRow(GridPane grid, int row, final UserPokemon userPokemon) {
-        Text labelESV = new Text("ESV:");
+    private Node getESVField(final UserPokemon userPokemon) {
         final TextField esvField = new TextField();
         esvField.setPromptText("Unknown");
         if(userPokemon.getUserPokemonESV() != null) {
@@ -204,22 +242,18 @@ public class InfoBox {
                 }
             }
         });
-        grid.add(labelESV,0,row);
-        grid.add(esvField,1,row);
+        return esvField;
     }
 
-    private void addFormRow(GridPane grid, int row, final UserPokemon userPokemon, final Pane abilityPane) {
-        Text labelForm = new Text("Form:");
-        grid.add(labelForm,0,row);
+    private Node getFormField(final UserPokemon userPokemon, final Pane abilityPane) {
         // Check if only 1 form exists.
         List<PokemonForm> listForms = userPokemon.getPokemon().getPokemonForms();
         UserPokemonForm upf = userPokemon.getUserPokemonForm();
         if(listForms.size() == 1) {
             Text pokemonForm = new Text(listForms.get(0).getName());
-            grid.add(pokemonForm,1,row);
             //Make sure that's set to the truth
             controller.updatePokemonForm(userPokemon, upf==null ? null : upf.getPokemonForm(), listForms.get(0));
-            return;
+            return pokemonForm;
         }
         // Otherwise dropdown
         ComboBox<PokemonForm> formDropdown = new ComboBox<>();
@@ -270,15 +304,14 @@ public class InfoBox {
             @Override
             public void changed(ObservableValue<? extends PokemonForm> observableValue, PokemonForm old_val, PokemonForm new_val) {
                 //Update ability dropdown
-                updateAbilityDropdown(userPokemon,abilityPane);
+                updateAbilityField(userPokemon,abilityPane);
                 controller.updatePokemonForm(userPokemon, old_val, new_val);
             }
         });
-        grid.add(formDropdown,1,row);
+        return formDropdown;
     }
 
-    private void addLanguageRow(GridPane grid, int row, final UserPokemon userPokemon) {
-        Text labelLang = new Text("Language:");
+    private Node getLanguageField(final UserPokemon userPokemon) {
         List languageList = session.createCriteria(Language.class).list();
         ChoiceBox<Language> langDropdown = new ChoiceBox<>(FXCollections.observableArrayList((Language)null));
         for(Object language : languageList) {
@@ -294,12 +327,10 @@ public class InfoBox {
                 controller.updatePokemonLanguage(userPokemon, old_val, new_val);
             }
         });
-        grid.add(labelLang,0,row);
-        grid.add(langDropdown,1,row);
+        return langDropdown;
     }
 
-    private void addNatureRow(GridPane grid, int row, final UserPokemon userPokemon) {
-        Text labelNature = new Text("Nature:");
+    private Node getNatureField(final UserPokemon userPokemon) {
         List natureList = session.createCriteria(Nature.class).list();
         ChoiceBox<Nature> natureDropdown = new ChoiceBox<>(FXCollections.observableArrayList((Nature)null));
         for(Object nature : natureList) {
@@ -315,13 +346,10 @@ public class InfoBox {
                 controller.updatePokemonNature(userPokemon, old_val, new_val);
             }
         });
-        grid.add(labelNature,0,row);
-        grid.add(natureDropdown,1,row);
+        return natureDropdown;
     }
 
-    private void addPokerusRow(GridPane grid, int row, final UserPokemon userPokemon) {
-
-        Text labelRus = new Text("Pokerus:");
+    private Node getPokerusField(final UserPokemon userPokemon) {
         ChoiceBox<String> rusDropdown = new ChoiceBox<>();
         rusDropdown.setItems(FXCollections.observableArrayList(UserPokemonPokerus.UNKNOWN, UserPokemonPokerus.HAS_POKERUS, UserPokemonPokerus.NOT_POKERUS));
         rusDropdown.setValue(UserPokemonPokerus.UNKNOWN);
@@ -334,19 +362,13 @@ public class InfoBox {
                 controller.updatePokemonPokerus(userPokemon, old_val, new_val);
             }
         });
-        grid.add(labelRus,0,row);
-        grid.add(rusDropdown,1,row);
+        return rusDropdown;
     }
 
-    private void addSexRow(GridPane grid, int row, final UserPokemon userPokemon) {
+    private Node getSexField(final UserPokemon userPokemon) {
+        // Handle genderless pokemon
+        if(userPokemon.getPokemon().getIsGenderless()) return new Text(UserPokemonSex.GENDERLESS);
 
-        Text labelSex = new Text("Sex:");
-        grid.add(labelSex,0,row);
-        if(userPokemon.getPokemon().getIsGenderless()) {
-            Text pokemonSex = new Text(UserPokemonSex.GENDERLESS);
-            grid.add(pokemonSex,1,row);
-            return;
-        }
         ChoiceBox<String> sexDropdown = new ChoiceBox<>();
         sexDropdown.setItems(FXCollections.observableArrayList(UserPokemonSex.UNKNOWN, UserPokemonSex.MALE, UserPokemonSex.FEMALE));
         sexDropdown.setValue(UserPokemonSex.UNKNOWN);
@@ -359,12 +381,10 @@ public class InfoBox {
                 controller.updatePokemonSex(userPokemon, old_val, new_val);
             }
         });
-        grid.add(sexDropdown,1,row);
+        return sexDropdown;
     }
 
-    private void addShinyRow(GridPane grid, int row, final UserPokemon userPokemon) {
-
-        Text labelShiny = new Text("Shiny:");
+    private Node getShinyField(final UserPokemon userPokemon) {
         ChoiceBox<String> shinyDropdown = new ChoiceBox<>();
         shinyDropdown.setItems(FXCollections.observableArrayList(UserPokemonShiny.UNKNOWN, UserPokemonShiny.IS_SHINY, UserPokemonShiny.NOT_SHINY));
         shinyDropdown.setValue(UserPokemonShiny.UNKNOWN);
@@ -377,18 +397,10 @@ public class InfoBox {
                 controller.updatePokemonShiny(userPokemon, old_val, new_val);
             }
         });
-        grid.add(labelShiny,0,row);
-        grid.add(shinyDropdown,1,row);
+        return shinyDropdown;
     }
 
-    private void addAbilityRow(GridPane grid, int row, final UserPokemon userPokemon, Pane abilityPane) {
-        Text labelAbility = new Text("Ability:");
-        grid.add(labelAbility,0,row);
-        grid.add(abilityPane,1,row);
-        updateAbilityDropdown(userPokemon, abilityPane);
-    }
-
-    private void updateAbilityDropdown(final UserPokemon userPokemon, final Pane abilityPane) {
+    private void updateAbilityField(final UserPokemon userPokemon, final Pane abilityPane) {
 
         // If form unknown, output unknown
         UserPokemonForm upf = userPokemon.getUserPokemonForm();
@@ -430,9 +442,7 @@ public class InfoBox {
         abilityPane.getChildren().setAll(abilityDropdown);
     }
 
-    private void addLevelRow(GridPane grid, int row, final UserPokemon userPokemon) {
-        Text labelLevel = new Text("Level:");
-
+    private Node getLevelField(final UserPokemon userPokemon) {
         final TextField levelField = new TextField();
         levelField.setPromptText("Unknown");
         if(userPokemon.getUserPokemonLevel() != null) {
@@ -458,8 +468,7 @@ public class InfoBox {
                 }
             }
         });
-        grid.add(labelLevel,0,row);
-        grid.add(levelField,1,row);
+        return levelField;
     }
 
     /*
