@@ -84,15 +84,7 @@ public class InfoBox {
 
         addPokeBallRow(grid, 0, userPokemon);
         addEggRow(grid, 1, userPokemon);
-
-        Text labelESV = new Text("ESV:");
-        Text pokemonESV = new Text("Unknown");
-        if(userPokemon.getUserPokemonESV() != null) {
-            pokemonESV.setText(Integer.toString(userPokemon.getUserPokemonESV().getESV()));
-        }
-        grid.add(labelESV,0,2);
-        grid.add(pokemonESV,1,2);
-
+        addESVRow(grid, 2, userPokemon);
         addFormRow(grid, 3, userPokemon, abilityPane);
         addLanguageRow(grid, 4, userPokemon);
         addNatureRow(grid, 5, userPokemon);
@@ -187,6 +179,40 @@ public class InfoBox {
         });
         grid.add(labelEgg,0,row);
         grid.add(eggDropdown,1,row);
+    }
+
+    private void addESVRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelESV = new Text("ESV:");
+        final TextField esvField = new TextField();
+        esvField.setPromptText("Unknown");
+        if(userPokemon.getUserPokemonESV() != null) {
+            esvField.setText(String.format("%04d", userPokemon.getUserPokemonESV().getESV()));
+        }
+        esvField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("\\d*")) {
+                    newValue = newValue.replaceAll("[^\\d]","");
+                    esvField.setText(newValue);
+                }
+                if(newValue.length() > 0 && Integer.parseInt(newValue) > 4906) {
+                    esvField.setText("4096");
+                }
+            }
+        });
+        esvField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean wasFocus, Boolean isFocus) {
+                if(wasFocus && !isFocus) {
+                    if(esvField.getText().length() != 0) {
+                        esvField.setText(String.format("%04d", Integer.parseInt(esvField.getText())));
+                    }
+                    controller.updatePokemonESV(userPokemon, esvField.getText());
+                }
+            }
+        });
+        grid.add(labelESV,0,row);
+        grid.add(esvField,1,row);
     }
 
     private void addFormRow(GridPane grid, int row, final UserPokemon userPokemon, final Pane abilityPane) {

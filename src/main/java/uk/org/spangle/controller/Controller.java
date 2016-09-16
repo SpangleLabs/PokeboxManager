@@ -185,6 +185,30 @@ public class Controller {
         }
     }
 
+    public void updatePokemonESV(UserPokemon userPokemon, String newVal) {
+        Transaction tx = null;
+        try {
+            session.refresh(userPokemon);
+            tx = session.beginTransaction();
+            UserPokemonESV upe = userPokemon.getUserPokemonESV();
+            if(newVal.length() == 0) {
+                if(upe != null) session.delete(upe);
+            } else {
+                if (upe == null) {
+                    upe = new UserPokemonESV(userPokemon, Integer.parseInt(newVal));
+                    session.save(upe);
+                } else {
+                    upe.setESV(Integer.parseInt(newVal));
+                    session.update(upe);
+                }
+            }
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+    }
+
     public void updatePokemonForm(UserPokemon userPokemon, PokemonForm old_val, PokemonForm new_val) {
         if(old_val == new_val) return;
         Transaction tx = null;
