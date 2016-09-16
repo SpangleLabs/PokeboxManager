@@ -255,6 +255,7 @@ public class InfoBox {
         } else {
             formDropdown.setValue(upf.getPokemonForm());
         }
+        //TODO: this needs to update ability
         formDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PokemonForm>() {
             @Override
             public void changed(ObservableValue<? extends PokemonForm> observableValue, PokemonForm old_val, PokemonForm new_val) {
