@@ -471,6 +471,11 @@ public class InfoBox {
         return levelField;
     }
 
+    public void close() {
+        // This is so that any text fields who save on losing focus save.
+        infoBoxPane.requestFocus();
+    }
+
     /*
 
     private TableView createTable(UserPokemon userPokemon) {

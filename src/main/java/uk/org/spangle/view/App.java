@@ -54,6 +54,7 @@ public class App extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
+                infoBox.close();
                 dbSession.close();
                 sessionFactory.close();
             }
