@@ -22,9 +22,7 @@ import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
-import java.awt.*;
 import java.io.File;
-import java.util.*;
 import java.util.List;
 
 public class InfoBox {
