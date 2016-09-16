@@ -22,7 +22,6 @@ import uk.org.spangle.controller.Controller;
 import uk.org.spangle.data.*;
 import uk.org.spangle.model.Configuration;
 
-import java.io.File;
 import java.util.List;
 
 public class InfoBox {
@@ -54,7 +53,7 @@ public class InfoBox {
 
         Text speciesText = new Text("Choose species:");
         //ChoiceBox<String> speciesBox = new ChoiceBox<>();
-        final AutoCompleteTextField speciesBox = new AutoCompleteTextField();
+        final AutoCompleteTextField speciesBox = new AutoCompleteTextField(conf);
         List listSpecies = session.createCriteria(Pokemon.class).addOrder(Order.asc("nationalDex")).list();
         for(Object species : listSpecies) {
             speciesBox.getEntries().add((Pokemon)species);
@@ -150,8 +149,7 @@ public class InfoBox {
                             setGraphic(null);
                             setText("Unknown");
                         } else {
-                            File ballFile = new File("pokeball-icons.png");
-                            Image ballImage = new Image(ballFile.toURI().toString());
+                            Image ballImage = conf.getImagePokeballIcons();
                             ImageView view = new ImageView();
                             view.setImage(ballImage);
                             view.setViewport(new Rectangle2D(item.getSpriteX(),item.getSpriteY(),30,30));
@@ -213,8 +211,7 @@ public class InfoBox {
         ComboBox<PokemonForm> formDropdown = new ComboBox<>();
         formDropdown.setItems(FXCollections.observableArrayList((PokemonForm) null));
         formDropdown.getItems().addAll(listForms);
-        File formFile = new File("pokemon-icons.png");
-        final Image formImage = new Image(formFile.toURI().toString()); // TODO: this should be a constant somewhere.
+        final Image formImage = conf.getImagePokemonIcons();
         formDropdown.setCellFactory(new Callback<ListView<PokemonForm>, ListCell<PokemonForm>>() {
             @Override
             public ListCell<PokemonForm> call(ListView<PokemonForm> param) {
