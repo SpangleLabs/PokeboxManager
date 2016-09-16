@@ -80,9 +80,9 @@ public class InfoBox {
 
         Text pokemonImage = new Text("Image would be here");
         GridPane grid = new GridPane();
+        Pane abilityPane = new HBox();
 
         addPokeBallRow(grid, 0, userPokemon);
-
         addEggRow(grid, 1, userPokemon);
 
         Text labelESV = new Text("ESV:");
@@ -93,10 +93,8 @@ public class InfoBox {
         grid.add(labelESV,0,2);
         grid.add(pokemonESV,1,2);
 
-        addFormRow(grid, 3, userPokemon);
-
+        addFormRow(grid, 3, userPokemon, abilityPane);
         addLanguageRow(grid, 4, userPokemon);
-
         addNatureRow(grid, 5, userPokemon);
 
         Text labelNick = new Text("Nickname:");
@@ -108,12 +106,9 @@ public class InfoBox {
         grid.add(pokemonNick,1,6);
 
         addPokerusRow(grid, 7, userPokemon);
-
         addSexRow(grid, 8, userPokemon);
-
         addShinyRow(grid, 9, userPokemon);
-
-        addAbilityRow(grid, 10, userPokemon);
+        addAbilityRow(grid, 10, userPokemon, abilityPane);
 
         Text labelLevel = new Text("Level:");
         Text pokemonLevel = new Text("Unknown");
@@ -194,7 +189,7 @@ public class InfoBox {
         grid.add(eggDropdown,1,row);
     }
 
-    private void addFormRow(GridPane grid, int row, final UserPokemon userPokemon) {
+    private void addFormRow(GridPane grid, int row, final UserPokemon userPokemon, final Pane abilityPane) {
         Text labelForm = new Text("Form:");
         grid.add(labelForm,0,row);
         // Check if only 1 form exists.
@@ -252,10 +247,11 @@ public class InfoBox {
         } else {
             formDropdown.setValue(upf.getPokemonForm());
         }
-        //TODO: this needs to update ability
         formDropdown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PokemonForm>() {
             @Override
             public void changed(ObservableValue<? extends PokemonForm> observableValue, PokemonForm old_val, PokemonForm new_val) {
+                //Update ability dropdown
+                updateAbilityDropdown(userPokemon,abilityPane);
                 controller.updatePokemonForm(userPokemon, old_val, new_val);
             }
         });
@@ -366,15 +362,20 @@ public class InfoBox {
         grid.add(shinyDropdown,1,row);
     }
 
-    private void addAbilityRow(GridPane grid, int row, final UserPokemon userPokemon) {
+    private void addAbilityRow(GridPane grid, int row, final UserPokemon userPokemon, Pane abilityPane) {
         Text labelAbility = new Text("Ability:");
         grid.add(labelAbility,0,row);
+        grid.add(abilityPane,1,row);
+        updateAbilityDropdown(userPokemon, abilityPane);
+    }
+
+    private void updateAbilityDropdown(final UserPokemon userPokemon, final Pane abilityPane) {
 
         // If form unknown, output unknown
         UserPokemonForm upf = userPokemon.getUserPokemonForm();
         if(upf == null) {
             Text pokemonAbility = new Text("Unknown");
-            grid.add(pokemonAbility,1,row);
+            abilityPane.getChildren().setAll(pokemonAbility);
             return;
         }
 
@@ -384,7 +385,7 @@ public class InfoBox {
             //Ensure that current ability is this.
             controller.updatePokemonAbility(userPokemon, null, listAbilities.get(0));
             Text pokemonAbility = new Text(listAbilities.get(0).getAbility().getName());
-            grid.add(pokemonAbility,1,row);
+            abilityPane.getChildren().setAll(pokemonAbility);
             return;
         }
 
@@ -407,7 +408,7 @@ public class InfoBox {
                 controller.updatePokemonAbility(userPokemon, oldVal, newval);
             }
         });
-        grid.add(abilityDropdown,1,row);
+        abilityPane.getChildren().setAll(abilityDropdown);
     }
 
     /*
