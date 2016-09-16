@@ -361,4 +361,28 @@ public class Controller {
             throw e;
         }
     }
+
+    public void updatePokemonLevel(UserPokemon userPokemon, String newVal) {
+        Transaction tx = null;
+        try {
+            session.refresh(userPokemon);
+            tx = session.beginTransaction();
+            UserPokemonLevel upl = userPokemon.getUserPokemonLevel();
+            if(newVal.length() == 0) {
+                if(upl != null) session.delete(upl);
+            } else {
+                if (upl == null) {
+                    upl = new UserPokemonLevel(userPokemon, Integer.parseInt(newVal));
+                    session.save(upl);
+                } else {
+                    upl.setLevel(Integer.parseInt(newVal));
+                    session.update(upl);
+                }
+            }
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            throw e;
+        }
+    }
 }

@@ -101,14 +101,7 @@ public class InfoBox {
         addSexRow(grid, 8, userPokemon);
         addShinyRow(grid, 9, userPokemon);
         addAbilityRow(grid, 10, userPokemon, abilityPane);
-
-        Text labelLevel = new Text("Level:");
-        Text pokemonLevel = new Text("Unknown");
-        if(userPokemon.getUserPokemonLevel() != null) {
-            pokemonLevel.setText(Integer.toString(userPokemon.getUserPokemonLevel().getLevel()));
-        }
-        grid.add(labelLevel,0,11);
-        grid.add(pokemonLevel,1,11);
+        addLevelRow(grid, 11, userPokemon);
 
         // Create IVs and EVs table
         //TableView table = createTable(userPokemon);
@@ -435,6 +428,38 @@ public class InfoBox {
             }
         });
         abilityPane.getChildren().setAll(abilityDropdown);
+    }
+
+    private void addLevelRow(GridPane grid, int row, final UserPokemon userPokemon) {
+        Text labelLevel = new Text("Level:");
+
+        final TextField levelField = new TextField();
+        levelField.setPromptText("Unknown");
+        if(userPokemon.getUserPokemonLevel() != null) {
+            levelField.setText(Integer.toString(userPokemon.getUserPokemonLevel().getLevel()));
+        }
+        levelField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(!newValue.matches("\\d*")) {
+                    newValue = newValue.replaceAll("[^\\d]","");
+                    levelField.setText(newValue);
+                }
+                if(newValue.length() > 0 && Integer.parseInt(newValue) > 100) {
+                    levelField.setText("100");
+                }
+            }
+        });
+        levelField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean wasFocus, Boolean isFocus) {
+                if(wasFocus && !isFocus) {
+                    controller.updatePokemonLevel(userPokemon, levelField.getText());
+                }
+            }
+        });
+        grid.add(labelLevel,0,row);
+        grid.add(levelField,1,row);
     }
 
     /*
