@@ -75,6 +75,12 @@ public class SideBar {
         Button gameButton = new Button("Modify game list");
         Button unknownButton = new Button("Unknown values");
         Button confButton = new Button("Configuration");
+        confButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                controller.viewConfig();
+            }
+        });
 
         // Add everything to the sidebar
         VBox sideBarVBox = new VBox();

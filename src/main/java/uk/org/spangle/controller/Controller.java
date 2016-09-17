@@ -431,4 +431,13 @@ public class Controller {
         app.getSideBar().updateBoxCanvas();
         app.getInfoBox().blankInfoBox();
     }
+
+    public void viewConfig() {
+        app.getInfoBox().viewConfig();
+    }
+
+    public void updateConfigHideEggs(boolean newVal) {
+        conf.setHideEggs(newVal);
+        app.getSideBar().updateBoxCanvas();
+    }
 }

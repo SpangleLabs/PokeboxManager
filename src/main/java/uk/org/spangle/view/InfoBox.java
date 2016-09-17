@@ -522,6 +522,21 @@ public class InfoBox {
         return levelField;
     }
 
+    public void viewConfig() {
+        GridPane grid = new GridPane();
+        CheckBox hideEggsBox = new CheckBox();
+        hideEggsBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
+                controller.updateConfigHideEggs(newVal);
+            }
+        });
+        Text hideEggsText = new Text("Hide eggs");
+        grid.add(hideEggsBox,0,0);
+        grid.add(hideEggsText,1,0);
+        infoBoxPane.getChildren().setAll(grid);
+    }
+
     public void close() {
         // This is so that any text fields who save on losing focus save.
         infoBoxPane.requestFocus();
