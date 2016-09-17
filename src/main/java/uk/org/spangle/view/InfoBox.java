@@ -37,6 +37,10 @@ public class InfoBox {
         this.conf = conf;
         this.controller = controller;
 
+        blankInfoBox();
+    }
+
+    public void blankInfoBox() {
         // Construct infobox
         Text pokemonName = new Text("Pokemon");
         Text pokemonDesc = new Text("Some descriptor");
@@ -46,7 +50,7 @@ public class InfoBox {
         HBox infoBoxContents = new HBox();
         infoBoxContents.getChildren().addAll(infoColumns);
 
-        infoBoxPane.getChildren().add(infoBoxContents);
+        infoBoxPane.getChildren().setAll(infoBoxContents);
     }
 
     public void addNewPokemon(final UserBox userBox, final int position) {
@@ -145,9 +149,16 @@ public class InfoBox {
 
         // Create IVs and EVs table
         //TableView table = createTable(userPokemon);
+        Button removeButton = new Button("Remove pokemon");
+        removeButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                controller.removePokemon(userPokemon);
+            }
+        });
 
         VBox rows = new VBox();
-        rows.getChildren().addAll(pokemonTitle,pokemonImage,grid);//,table);
+        rows.getChildren().addAll(pokemonTitle, pokemonImage, grid, removeButton);//,table);
 
         infoBoxPane.getChildren().setAll(rows);
     }

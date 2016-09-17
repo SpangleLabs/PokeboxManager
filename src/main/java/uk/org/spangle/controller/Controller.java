@@ -124,10 +124,10 @@ public class Controller {
             tx = session.beginTransaction();
             UserPokemon userPokemon = new UserPokemon(userBox, position, pokemon);
             session.save(userPokemon);
+            tx.commit();
             session.refresh(userBox);
             app.getSideBar().updateBoxCanvas();
             app.getInfoBox().displayPokemon(userPokemon);
-            tx.commit();
         } catch (Exception ex) {
             if(tx != null) tx.rollback();
             throw ex;
@@ -414,5 +414,21 @@ public class Controller {
             if(tx != null) tx.rollback();
             throw e;
         }
+    }
+
+    public void removePokemon(UserPokemon userPokemon) {
+        UserBox userBox = userPokemon.getUserBox();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.delete(userPokemon);
+            tx.commit();
+        } catch (Exception ex) {
+            if(tx != null) tx.rollback();
+            throw ex;
+        }
+        session.refresh(userBox);
+        app.getSideBar().updateBoxCanvas();
+        app.getInfoBox().blankInfoBox();
     }
 }
