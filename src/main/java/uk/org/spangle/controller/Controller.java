@@ -95,12 +95,6 @@ public class Controller {
             clickCanvasEmpty(position);
         } else {
             UserPokemon userPokemon = (UserPokemon) list.get(0);
-            UserPokemonNickname upn = userPokemon.getUserPokemonNickname();
-            if(upn == null) {
-                System.out.println("No nickname.");
-            } else {
-                System.out.println(upn.getNickname());
-            }
             clickCanvasPokemon(userPokemon);
         }
 
