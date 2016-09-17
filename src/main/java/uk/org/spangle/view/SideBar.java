@@ -71,9 +71,14 @@ public class SideBar {
         // Box canvas
         boxCanvas = createBoxCanvas();
 
+        // Buttons
+        Button gameButton = new Button("Modify game list");
+        Button unknownButton = new Button("Unknown values");
+        Button confButton = new Button("Configuration");
+
         // Add everything to the sidebar
         VBox sideBarVBox = new VBox();
-        sideBarVBox.getChildren().addAll(titleText,gameDropdown,boxText,boxButtons,boxCanvas);
+        sideBarVBox.getChildren().addAll(titleText,gameDropdown,boxText,boxButtons,boxCanvas,gameButton,unknownButton,confButton);
 
         sideBarPane.getChildren().add(sideBarVBox);
     }
