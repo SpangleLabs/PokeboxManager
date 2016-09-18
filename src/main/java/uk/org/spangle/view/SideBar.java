@@ -74,6 +74,12 @@ public class SideBar {
         // Buttons
         Button gameButton = new Button("Modify game list");
         Button unknownButton = new Button("Unknown values");
+        unknownButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                controller.viewUnknown();
+            }
+        });
         Button confButton = new Button("Configuration");
         confButton.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override

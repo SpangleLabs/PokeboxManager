@@ -440,4 +440,8 @@ public class Controller {
         conf.setHideEggs(newVal);
         app.getSideBar().updateBoxCanvas();
     }
+
+    public void viewUnknown() {
+        app.getInfoBox().viewUnknown();
+    }
 }

@@ -51,6 +51,7 @@ public class App extends Application {
         primaryScene.getStylesheets().add("sample.css");
         primaryStage.setScene(primaryScene);
         primaryStage.show();
+        primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {

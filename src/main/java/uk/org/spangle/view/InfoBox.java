@@ -11,10 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import org.hibernate.Session;
@@ -535,6 +532,38 @@ public class InfoBox {
         grid.add(hideEggsBox,0,0);
         grid.add(hideEggsText,1,0);
         infoBoxPane.getChildren().setAll(grid);
+    }
+
+    public void viewUnknown() {
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setPrefWidth(500.0);
+        scrollPane.setPrefHeight(500.0);
+        infoBoxPane.getChildren().setAll(scrollPane);
+        GridPane unknownGrid = new GridPane();
+        scrollPane.setContent(unknownGrid);
+
+        int row = 1;
+        // Loop games
+        List gameList = session.createCriteria(UserGame.class).addOrder(Order.asc("ordinal")).list();
+        for(Object obj : gameList) {
+            UserGame game = (UserGame)obj;
+            // Loop boxes
+            List<UserBox> listBoxes = game.getUserBoxes();
+            for(UserBox box : listBoxes) {
+                // Loop pokemon
+                List<UserPokemon> listPokemon = box.getUserPokemons();
+                for(UserPokemon pokemon : listPokemon) {
+                    if(pokemon.getUserPokemonBall() == null) {
+                        unknownGrid.add(new Text(game.getName()),0,row);
+                        unknownGrid.add(new Text(box.getName()),1,row);
+                        unknownGrid.add(new Text(Integer.toString(pokemon.getPosition())),2,row);
+                        unknownGrid.add(new Text(pokemon.getPokemon().getName()),3,row);
+                        unknownGrid.add(getPokeBallField(pokemon),4,row);
+                        row++;
+                    }
+                }
+            }
+        }
     }
 
     public void close() {
