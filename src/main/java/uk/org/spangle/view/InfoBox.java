@@ -542,6 +542,15 @@ public class InfoBox {
         GridPane unknownGrid = new GridPane();
         scrollPane.setContent(unknownGrid);
 
+        TableView table = new TableView();
+        TableColumn gameCol = new TableColumn("Game");
+        TableColumn boxCol = new TableColumn("Box");
+        TableColumn colCol = new TableColumn("Col");
+        TableColumn rowCol = new TableColumn("Row");
+        TableColumn pokeCol = new TableColumn("Pokemon");
+        TableColumn varCol = new TableColumn("Variable");
+        TableColumn valCol = new TableColumn("Value");
+        table.getColumns().setAll(gameCol,boxCol,colCol,rowCol,pokeCol,varCol,valCol);
         int row = 1;
         // Loop games
         List gameList = session.createCriteria(UserGame.class).addOrder(Order.asc("ordinal")).list();
